@@ -76,6 +76,8 @@ Welcome to GitHub Copilot! In this lab, you'll learn the fundamentals of using G
    - **Inline:** Writing new code, completing functions
    - **Ask mode:** Questions, explanations, code analysis, refactoring, debugging
 
+4. Close the models.py file and do not save changes to it for now.
+
 **Expected Outcome:**
 - Understand the difference between inline and Ask mode
 - Know when to use each approach
