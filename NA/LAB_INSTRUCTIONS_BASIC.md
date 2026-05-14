@@ -52,25 +52,26 @@ Welcome to GitHub Copilot! In this lab, you'll learn the fundamentals of using G
 
 1. **Inline Suggestions:**
    - Open `app/models.py`
-   - Go to the end of the file (after the SteelProduct class)
+   - Go to the end of the file (after the SteelProductUpdate class)
    - Type a new comment: `# Function to validate product code format`
    - Press Enter and wait - Copilot will suggest code inline
    - Press `Tab` to accept the suggestion, or `Esc` to dismiss it
    - Try pressing `Alt+]` to see alternative suggestions
+   - Review the generated code and understand how it matches your comment
+
 
 2. **Copilot Chat:**
-   - Open Copilot Chat panel (View → Open Chat or click the chat icon)
+   - Open Copilot Chat panel (View → Chat or click the chat icon)
    - Use Ask mode for questions, explanations, and code modifications
    
    **Example questions in Ask mode:**
    ```
    What is FastAPI?
    ```
+   ```
+   What is this file about?
+   ```
    
-   ```
-   Explain how this function works
-   ```
-
 3. **When to use which:**
    - **Inline:** Writing new code, completing functions
    - **Ask mode:** Questions, explanations, code analysis, refactoring, debugging
