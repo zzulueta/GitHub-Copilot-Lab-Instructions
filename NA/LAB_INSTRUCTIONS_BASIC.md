@@ -98,13 +98,16 @@ GitHub Copilot offers different AI models with different strengths:
    - Look at the bottom of the Copilot Chat panel
    - Click on the current model name to see available options
 
-2. **Test different models** - Ask the same question in Ask mode:
+2. **Test different models:**
+
+   Start a new chat. Ask the same question in Ask mode:
    ```
    Explain how the database.py file manages data persistence
    ```
    
    - First try with **Claude Sonnet 4.5**
-   - Then switch to **GPT-4.1** and ask again
+   - Observe the response - note the style, depth, and accuracy
+   - Start a new chat, then switch to **GPT-4.1** and ask again
    - Compare the responses - notice differences in style and depth
 
 3. **When to use each model:**
@@ -135,6 +138,7 @@ Copilot gives better answers when you provide relevant context. There are severa
    ```
    #file:models.py Explain the SteelProduct class
    ```
+   > Note: You would need to manually type the #file syntax in the chat to manually include files.
 
 3. Try with multiple files:
    ```
@@ -156,7 +160,10 @@ Copilot gives better answers when you provide relevant context. There are severa
 #### Method 3: Drag and Drop
 
 1. From the file explorer, drag `app/routers/inventory.py` into Copilot Chat
-2. Ask: `What does this file do?`
+2. Ask: 
+   ```
+   What does this file do?
+   ```
 
 3. Drag the entire `routers` folder:
    ```
