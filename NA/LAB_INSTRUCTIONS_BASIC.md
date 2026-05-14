@@ -173,8 +173,8 @@ Copilot gives better answers when you provide relevant context. There are severa
 #### Method 4: Selecting Code
 
 1. Open `app/utils/steel_utils.py`
-2. Select the `calculate_sheet_weight` function
-3. Right-click → Copilot → Explain
+2. Select the entire `calculate_weight_kg` function
+3. Right-click → Explain
 4. Note how it provides a detailed explanation of the selected code in the chat window.
 5. You can also use #selection in chat:
    ```
@@ -220,7 +220,7 @@ Instead of following manual setup instructions, ask Copilot to guide you through
    ```
    
    **Follow the steps Copilot provides:**
-   - Navigate to steel-inventory-api folder
+   - Navigate to steel-inventory-api folder via terminal
    - Create virtual environment
    - Activate it
 
