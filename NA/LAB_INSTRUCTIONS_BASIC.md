@@ -380,7 +380,10 @@ Now that the app is running, dive deeper into understanding how it works.
 3. **Understand a complex function:**
    - Open `app/database.py`
    - Find the `update_product` function
-   - Select it and ask: `Explain what this function does step by step`
+   - Select it and ask: 
+   ```
+   Explain what this function does step by step
+   ```
 
 4. **Find dependencies:**
    ```
@@ -444,18 +447,14 @@ Good questions lead to better answers. Practice different types of questions:
 **Task:** Use inline suggestions to write new functions
 
 1. **Add a helper function:**
-   - Open `app/utils/steel_utils.py`
+   - Close all files and open `app/utils/steel_utils.py`
    - At the end of the file, add a comment:
    ```python
    # Function to convert dimensions from inches to millimeters
    ```
    - Press Enter and let Copilot suggest the function
    - Review the suggestion, accept with Tab
-   - Test it by adding another comment:
-   ```python
-   # Example: convert 10 inches to mm
-   ```
-
+   
 2. **Add data validation:**
    - Open `app/models.py`
    - After the SteelProduct class, type:
@@ -481,6 +480,8 @@ Good questions lead to better answers. Practice different types of questions:
    - Break complex tasks into smaller functions
    - Press `Alt+]` to cycle through alternatives
 
+5. Close the files and save changes.
+
 **Expected Outcome:**
 - Comfortable using inline completions
 - Code generated matches your intent
@@ -493,6 +494,7 @@ Good questions lead to better answers. Practice different types of questions:
 **Task:** Use Copilot to identify and fix bugs in the code
 
 1. **Find bugs with Copilot:**
+   - Start a new chat session in Ask mode
    - In Ask mode, drag `app` folder into chat:
    ```
    Review this application for potential bugs. Focus on:
@@ -527,6 +529,7 @@ Good questions lead to better answers. Practice different types of questions:
    - Implement the fix
 
 5. **Verify fixes:**
+   - Ensure all files are saved and close them
    - Start the server: `uvicorn app.main:app --reload`
    - Open http://localhost:8000/docs
    - Test creating a product with negative quantity (should fail)
@@ -568,6 +571,7 @@ Good questions lead to better answers. Practice different types of questions:
    - Let Copilot complete it
 
 4. **Test your feature:**
+   - Ensure all files are saved and close them
    - Ensure server is running
    - Go to http://localhost:8000/docs
    - Find your new `/inventory/location/{location}` endpoint
@@ -595,8 +599,11 @@ Good questions lead to better answers. Practice different types of questions:
 
 1. **Add function docstrings:**
    - Open `app/utils/steel_utils.py`
-   - Select the `calculate_sheet_weight` function
-   - In Ask mode, ask: `Add a comprehensive docstring with parameters, return value, and example`
+   - Select the entire `calculate_weight_kg` function
+   - In Ask mode, ask: 
+   ```
+   Add a comprehensive docstring with parameters, return value, and example
+   ```
    - Review and apply the changes to the file
 
 2. **Generate API documentation:**
