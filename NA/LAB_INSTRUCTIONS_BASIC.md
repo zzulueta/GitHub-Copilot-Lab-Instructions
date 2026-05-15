@@ -1,5 +1,5 @@
 # GitHub Copilot Basic Lab Instructions
-**Duration:** 3 hours  
+**Duration:** 3.5 hours  
 **Level:** Beginner (Never used or minimal experience)
 
 ---
@@ -195,7 +195,7 @@ Copilot gives better answers when you provide relevant context. There are severa
 
 ---
 
-## Part 2: Project Onboarding (60 minutes)
+## Part 2: Project Onboarding (70 minutes)
 
 ### Exercise 2.1: Setting Up the Application with Copilot (15 min)
 
@@ -480,7 +480,7 @@ Good questions lead to better answers. Practice different types of questions:
    - Break complex tasks into smaller functions
    - Press `Alt+]` to cycle through alternatives
 
-5. Close the files and save changes.
+5. Save changes and close the files
 
 **Expected Outcome:**
 - Comfortable using inline completions
@@ -612,7 +612,7 @@ Good questions lead to better answers. Practice different types of questions:
    #file:inventory.py Create markdown documentation for all endpoints in this file.
    Include: HTTP method, path, parameters, response format, and example.
    ```
-   - Copy the generated documentation
+   - Copy the generated documentation and save it as `INVENTORY_API_DOCS.md` in the project root
 
 3. **Create a user guide:**
    ```
@@ -623,13 +623,14 @@ Good questions lead to better answers. Practice different types of questions:
    - Available endpoints with examples
    - Common use cases
    ```
-   - Save this as `API_USER_GUIDE.md` in the project root
+   - Copy the generated user guide and save it as `API_USER_GUIDE.md` in the project root
 
 4. **Document the data model:**
    ```
    #file:models.py Create documentation explaining the SteelProduct model fields.
    Format as a table with: Field Name, Type, Description, Example Value.
    ```
+   - Copy the generated documentation and save it as `DATA_MODEL_DOCS.md` in the project root
 
 **Expected Outcome:**
 - Functions have clear docstrings
@@ -644,7 +645,7 @@ Good questions lead to better answers. Practice different types of questions:
 
 1. **Add type hints:**
    - Open `app/database.py`
-   - Select a function without type hints
+   - Select a function with incomplete type hints (e.g., `create` function)
    - In Ask mode, ask: `Add complete type hints to this function`
    - Review and apply the suggested changes
 
@@ -671,6 +672,8 @@ Good questions lead to better answers. Practice different types of questions:
    What improvements would you recommend?
    ```
    - Note down the recommendations
+
+5. Save changes and close the files
 
 **Expected Outcome:**
 - Code has proper type hints
@@ -777,18 +780,18 @@ Good questions lead to better answers. Practice different types of questions:
 ## Lab Completion Checklist
 
 ### Skills Learned
-- [x] Understand Copilot interface (inline vs. Ask mode)
-- [x] Select appropriate AI models
-- [x] Provide context using #file, #codebase, and drag-drop
-- [x] Use Copilot to set up and run applications
-- [x] Use Copilot for project onboarding
-- [x] Generate code with inline completions
-- [x] Explain existing code
-- [x] Find and fix bugs
-- [x] Add new features
-- [x] Write documentation
-- [x] Improve code quality
-- [x] Write tests
+- [ ] Understand Copilot interface (inline vs. Ask mode)
+- [ ] Select appropriate AI models
+- [ ] Provide context using #file, #codebase, and drag-drop
+- [ ] Use Copilot to set up and run applications
+- [ ] Use Copilot for project onboarding
+- [ ] Generate code with inline completions
+- [ ] Explain existing code
+- [ ] Find and fix bugs
+- [ ] Add new features
+- [ ] Write documentation
+- [ ] Improve code quality
+- [ ] Write tests
 
 ### Deliverables
 1. ✅ Fixed 3 bugs (duplicates, negative quantities, update timestamp)
@@ -797,53 +800,6 @@ Good questions lead to better answers. Practice different types of questions:
 4. ✅ Generated API documentation
 5. ✅ Wrote 2 new tests
 6. ✅ Improved code quality (type hints, validation)
-
----
-
-## Next Steps
-
-**Continue Learning:**
-- **Intermediate Lab:** Custom agents, skills, advanced prompting
-- **Advanced Lab:** MCP integration, PR workflows, code reviews
-
-**Practice Daily:**
-- Use Copilot for all coding tasks
-- Experiment with different prompting styles
-- Compare inline vs. Ask mode for different scenarios
-- Try different AI models
-- Practice providing good context with #file and #codebase
-
-**Tips for Success:**
-- Be specific in your requests
-- Provide good context
-- Review suggestions before accepting
-- Iterate and refine your prompts
-- Ask Copilot to explain its suggestions
-
----
-
-## Troubleshooting
-
-**Issue: Copilot not responding**
-- Check your license status
-- Reload VS Code window
-- Check internet connection
-
-**Issue: Poor suggestions**
-- Add more context (#file, #codebase)
-- Be more specific in your prompt
-- Try a different AI model
-- Break down complex requests
-
-**Issue: Server won't start**
-- Ensure virtual environment is activated
-- Reinstall dependencies: `pip install -r requirements.txt`
-- Check for port conflicts
-
-**Get Help:**
-- Ask Copilot! `How do I [your issue]?`
-- Check VS Code output panel
-- Review Copilot logs
 
 ---
 
