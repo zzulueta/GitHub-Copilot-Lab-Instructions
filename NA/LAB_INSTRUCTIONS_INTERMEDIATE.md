@@ -1100,7 +1100,7 @@ You've learned to persist your prompting strategy with two powerful features:
 **Throughout the rest of this lab:**
 - Your instructions will automatically guide Copilot's suggestions
 - You can invoke your custom prompts with `/` commands whenever relevant
-- Notice how both features improve your efficiency in Parts 2-6
+- Notice how both features improve your efficiency in Parts 3-6
 
 ---
 
@@ -1163,6 +1163,7 @@ Test automation means letting Copilot handle the entire test creation workflow -
    ```bash
    pytest tests/test_inventory.py::test_calculate_weight_parametrized -v
    ```
+   > Note: You need to enable the virtual environment before running pytest. Some tests may fail if the function isn't fully implemented yet - this is expected!.
 
 **Expected Outcome:**
 - Complete test automation workflow
@@ -1328,8 +1329,6 @@ You've learned **test automation workflows:**
 
 ---
 
-## Part 3: Advanced Debugging Workflows (20 minutes)
-
 ## Part 4: Advanced Debugging Workflows (20 minutes)
 
 ### Introduction: Strategic Debugging
@@ -1404,6 +1403,7 @@ Debugging workflows benefit from strategic analysis (Plan mode) followed by auto
    ```bash
    pytest tests/test_inventory.py -v -k "area"
    ```
+   > Note: If you encounter failures, copy the error message and ask Copilot for help in debugging.
 
 **Expected Outcome:**
 - Bug fixed with proper validation
@@ -1463,6 +1463,20 @@ Debugging workflows benefit from strategic analysis (Plan mode) followed by auto
 3. **Test the fix:**
    - Start server: `uvicorn app.main:app --reload`
    - Try creating product with quantity=-10 in Swagger UI
+   ```json
+   {
+      "id": 11,
+      "product_code": "STL-011",
+      "grade": "A36",
+      "shape": "sheet",
+      "length_mm": 2400,
+      "width_mm": 1200,
+      "thickness_mm": 6,
+      "quantity": -150,
+      "location": "Warehouse-A",
+      "last_updated": "2026-05-17T13:31:19.525441"
+   }
+   ```
    - Verify 422 status with clear error message
 
 **Expected Outcome:**
