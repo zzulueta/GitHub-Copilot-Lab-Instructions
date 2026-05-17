@@ -7,7 +7,6 @@
 ## Pre-Lab Setup (5 minutes)
 
 ### Prerequisites
-- This repository cloned locally
 - Visual Studio Code installed
 - Python 3.8+ installed
 
