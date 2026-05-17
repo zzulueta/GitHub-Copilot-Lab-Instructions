@@ -435,7 +435,7 @@ The quality of Copilot's output depends heavily on how you ask. Intermediate use
 
 ---
 
-### Module 1 Summary
+### What we covered so far
 
 You've learned three powerful prompting strategies:
 
@@ -447,7 +447,7 @@ You've learned three powerful prompting strategies:
 
 ---
 
-## Part 2.5: Persisting Your Prompting Strategy (40 minutes)
+## Part 2.4: Persisting Your Prompting Strategy (40 minutes)
 
 ### Introduction: Making Your Preferences Persistent
 
@@ -487,7 +487,7 @@ Custom Instructions are markdown files that provide **persistent context** to Co
 
 ---
 
-### Exercise 2.5.1: Create Always-On Workspace Instructions (6 min)
+### Exercise 2.4.1: Create Always-On Workspace Instructions (6 min)
 
 **Task:** Define project-wide coding standards that apply to ALL Copilot interactions
 
@@ -558,7 +558,7 @@ Custom Instructions are markdown files that provide **persistent context** to Co
 
 ---
 
-### Exercise 2.5.2: Create File-Based Instructions with Patterns (8 min)
+### Exercise 2.4.2: Create File-Based Instructions with Patterns (8 min)
 
 **Task:** Create specialized instructions that apply only to specific file types or locations
 
@@ -683,7 +683,7 @@ Custom Instructions are markdown files that provide **persistent context** to Co
 
 ---
 
-### Exercise 2.5.3: Use the Agent Customizations Editor (3 min)
+### Exercise 2.4.3: Use the Agent Customizations Editor (3 min)
 
 **Task:** Discover and manage instructions through the VS Code UI
 
@@ -719,7 +719,7 @@ Custom Instructions are markdown files that provide **persistent context** to Co
 
 ---
 
-### Exercise 2.5.4: Instructions in Practice (3 min)
+### Exercise 2.4.4: Instructions in Practice (3 min)
 
 **Task:** Experience the power of "set it and forget it" context
 
@@ -781,7 +781,7 @@ Custom Prompts (also called slash commands) are **reusable templates** for commo
 
 ---
 
-### Exercise 2.5.5: Create Prompt Files for Common Tasks (9 min)
+### Exercise 2.4.5: Create Prompt Files for Common Tasks (9 min)
 
 **Task:** Build a library of prompt files for development tasks
 
@@ -928,7 +928,7 @@ Custom Prompts (also called slash commands) are **reusable templates** for commo
 
 ---
 
-### Exercise 2.5.6: Use Prompt Files with Slash Commands (5 min)
+### Exercise 2.4.6: Use Prompt Files with Slash Commands (5 min)
 
 **Task:** Invoke and use your custom prompt files
 
@@ -977,7 +977,7 @@ Custom Prompts (also called slash commands) are **reusable templates** for commo
 
 ---
 
-### Exercise 2.5.7: Use the Agent Customizations Editor for Prompts (3 min)
+### Exercise 2.4.7: Use the Agent Customizations Editor for Prompts (3 min)
 
 **Task:** Manage prompt files through the VS Code UI
 
@@ -1022,7 +1022,7 @@ Custom Prompts (also called slash commands) are **reusable templates** for commo
 
 ---
 
-### Exercise 2.5.8: Build Your Prompt Library (3 min)
+### Exercise 2.4.8: Build Your Prompt Library (3 min)
 
 **Task:** Think strategically about reusable prompts
 
@@ -1070,7 +1070,7 @@ Custom Prompts (also called slash commands) are **reusable templates** for commo
 
 ---
 
-### Part 1.5 Summary
+### Part 2.4 Summary
 
 You've learned to persist your prompting strategy with two powerful features:
 
@@ -1645,63 +1645,68 @@ Refactoring improves code structure without changing behavior. With Copilot, you
 
 **Task:** Refactor scattered validation into a dedicated module
 
+**Mode:** Plan mode → Agent mode  
+**Why:** Multi-file refactoring needs strategic planning before execution
+
 Currently, validation logic is mixed throughout the codebase. Let's extract it properly.
 
-1. **Analyze current validation:**
+1. **Analyze and plan the refactoring:**
    
-   In Ask mode:
+   Switch to **Plan mode**:
    ```
-   #codebase Where is validation logic currently located in this application?
-   Identify all places where we validate:
-   - Product codes
-   - Steel grades  
-   - Quantities
-   - Dimensions
-   - Shapes
+   #codebase
    
-   Is validation consistent across all locations?
+   Analyze the current validation logic and plan a refactoring to centralize it.
+   
+   1. Where is validation currently located? (product codes, grades, quantities, dimensions, shapes)
+   2. Is validation consistent across all locations?
+   3. What validation logic should be extracted?
+   4. Design the validators.py module structure with all needed functions
+   5. Which files will need to be updated to import and use the new validators?
+   6. What's the safe implementation order to avoid breaking tests?
+   
+   Provide a detailed refactoring plan with specific files and functions.
    ```
+   
+   - Review the plan
+   - Identify all files that need changes
+   - Understand the implementation sequence
 
-2. **Plan the refactoring:**
+2. **Implement the refactoring:**
+   
+   Switch to **Agent mode**:
    ```
-   I want to create app/validators.py with all validation logic.
+   #codebase
    
-   Design a validators module with:
-   1. validate_product_code(code: str) -> tuple[bool, str]
-   2. validate_grade(grade: str) -> tuple[bool, str, str] 
-   3. validate_quantity(quantity: int) -> tuple[bool, str]
-   4. validate_dimensions(length, width, thickness, shape) -> tuple[bool, str]
-   5. validate_shape(shape: str) -> tuple[bool, str]
+   Implement the validation refactoring plan:
    
-   Each should return (is_valid, message/normalized_value).
-   Include comprehensive docstrings and unit tests.
+   1. Create app/validators.py with centralized validation functions:
+      - validate_product_code(code: str) -> tuple[bool, str]
+      - validate_grade(grade: str) -> tuple[bool, str, str] 
+      - validate_quantity(quantity: int) -> tuple[bool, str]
+      - validate_dimensions(length, width, thickness, shape) -> tuple[bool, str]
+      - validate_shape(shape: str) -> tuple[bool, str]
    
-   Show me the complete validators.py file.
+   2. Update all files that perform validation to import and use the new validators module
+   
+   3. Add comprehensive Google-style docstrings to all validator functions
+   
+   Each validator should return (is_valid, message/normalized_value) tuples.
+   Ensure existing tests continue to pass.
    ```
+   
+   - Watch Agent create the module and update files
+   - Review all changes made
 
-3. **Create the validators module:**
-   - Create `app/validators.py`
-   - Paste the generated code
-   - Review for completeness
-
-4. **Update existing code to use validators:**
-   ```
-   #file:validators.py #file:database.py 
+3. **Verify the refactoring:**
    
-   Update database.py's create method to use the new validators.
-   Before creating a product:
-   1. Validate the product code
-   2. Validate the grade
-   3. Validate the quantity
-   4. Raise HTTPException with appropriate status code if validation fails
-   
-   Show me the updated create method.
+   Run existing tests:
+   ```bash
+   pytest tests/test_inventory.py -v
    ```
-
-5. **Apply changes and test:**
-   - Update `database.py`
-   - Run existing tests: `pytest tests/test_inventory.py -v`
+   
    - Verify tests still pass (refactoring shouldn't break functionality)
+   - If failures occur, use Plan mode to analyze, then Agent mode to fix
 
 **Expected Outcome:**
 - New validators module with centralized validation
@@ -1715,47 +1720,75 @@ Currently, validation logic is mixed throughout the codebase. Let's extract it p
 
 **Task:** Improve error handling in steel_utils.py
 
-1. **Ask Copilot to analyze current error handling:**
+**Mode:** Plan mode → Agent mode  
+**Why:** Error handling strategy requires analysis before implementation
+
+1. **Analyze error handling gaps:**
    
-   In Ask mode:
+   Switch to **Plan mode**:
    ```
-   #file:steel_utils.py Analyze error handling in this file.
+   #file:steel_utils.py
+   
+   Analyze error handling gaps in calculate_weight_kg and related functions.
    
    What could go wrong with:
-   1. Negative dimensions?
+   1. Negative or zero dimensions?
    2. Extremely large values (overflow)?
    3. Invalid shape strings?
-   4. Division by zero scenarios?
+   4. None values for required parameters?
+   5. Division by zero scenarios?
    
-   What errors are not being caught?
+   Plan a comprehensive error handling strategy:
+   - What validation should be added before calculations?
+   - What specific error messages are needed?
+   - What exceptions should be raised?
+   - What test cases are needed to verify error handling?
+   - What reasonable ranges should dimensions be constrained to?
    ```
-
-2. **Implement comprehensive error handling:**
-   ```
-   Update calculate_weight_kg to:
-   1. Validate all dimensions are positive
-   2. Validate dimensions are within reasonable ranges (e.g., < 100,000 mm)
-   3. Raise ValueError with specific messages for each error case
-   4. Add input validation before calculations
-   5. Include examples of valid and invalid inputs in docstring
    
-   Show me the updated function.
-   ```
+   - Review the error handling strategy
+   - Note all validation points identified
 
-3. **Apply the changes:**
-   - Update `steel_utils.py`
-   - Save the file
-
-4. **Generate tests for error cases:**
+2. **Implement error handling and tests:**
+   
+   Switch to **Agent mode**:
    ```
-   Create tests for all the new error conditions in calculate_weight_kg.
-   Add to test_inventory.py.
+   #file:steel_utils.py #file:test_inventory.py
+   
+   Implement comprehensive error handling for calculate_weight_kg:
+   
+   1. Add validation for:
+      - All dimensions are positive (> 0)
+      - Dimensions are within reasonable ranges (e.g., < 100,000 mm)
+      - Required parameters are not None
+      - Shape is valid
+   
+   2. Raise ValueError with specific, helpful messages for each error case
+   
+   3. Update docstring with:
+      - Valid input ranges
+      - Examples of valid inputs
+      - Examples of invalid inputs that raise errors
+   
+   4. Add comprehensive tests to test_inventory.py for all error conditions:
+      - Negative dimensions
+      - Zero dimensions
+      - Oversized dimensions
+      - None values
+      - Invalid shapes
    ```
+   
+   - Watch Agent update the function and add tests
+   - Review error messages for clarity
 
-5. **Run the error handling tests:**
+3. **Run the error handling tests:**
+   
    ```bash
    pytest tests/test_inventory.py -v -k "weight"
    ```
+   
+   - Verify all error conditions are caught
+   - Test error messages are descriptive
 
 **Expected Outcome:**
 - Robust error handling in calculations
@@ -1769,48 +1802,75 @@ Currently, validation logic is mixed throughout the codebase. Let's extract it p
 
 **Task:** Add structured logging for debugging and monitoring
 
-1. **Ask Copilot about logging strategy:**
+**Mode:** Plan mode → Agent mode  
+**Why:** Production logging strategy needs careful planning before implementation
+
+1. **Design logging strategy:**
    
-   In Ask mode:
+   Switch to **Plan mode**:
    ```
    #file:database.py #file:inventory.py
    
-   I want to add logging to this application for production monitoring.
+   Design a production-ready logging strategy for this application.
    
-   Design a logging strategy:
-   1. What operations should be logged?
-   2. What log levels should be used (INFO, WARNING, ERROR)?
-   3. What information should each log include?
-   4. Should we log sensitive data?
+   Determine:
+   1. What operations should be logged? (CRUD operations, errors, validation failures)
+   2. What log levels for each operation? (INFO, WARNING, ERROR)
+   3. What context should each log include? (IDs, product codes, operation type, user context)
+   4. Which files need logging added?
+   5. Should we log sensitive data? What's safe to log?
+   6. How should we format log messages for easy parsing?
    
-   Then show me how to:
-   - Set up Python logging in the application
-   - Add logs to database CRUD operations
-   - Add logs to API endpoints
-   - Format logs with timestamps, operation, and context
+   Provide a detailed logging implementation plan with specific log statements for each operation.
    ```
-
-2. **Implement logging in database.py:**
-   ```
-   Add logging to InMemoryDB class:
-   - Log INFO when products are created (include product_code)
-   - Log INFO when products are updated (include id and what changed)
-   - Log INFO when products are deleted (include id)
-   - Log WARNING when duplicate product codes are attempted
-   - Log ERROR if any operation fails
    
-   Show me the updated database.py with logging.
+   - Review the logging strategy
+   - Verify appropriate log levels chosen
+   - Note which files need updates
+
+2. **Implement logging:**
+   
+   Switch to **Agent mode**:
    ```
+   #file:database.py #file:inventory.py
+   
+   Implement the logging strategy:
+   
+   1. Add logging to InMemoryDB class for all CRUD operations:
+      - INFO: successful creates, updates, deletes (include product IDs/codes)
+      - WARNING: duplicate product codes, validation failures, not found
+      - ERROR: any unexpected operation failures
+   
+   2. Configure logger properly at the top of files:
+      ```python
+      import logging
+      logger = logging.getLogger(__name__)
+      ```
+   
+   3. Include relevant context in each log message:
+      - Operation type (create, update, delete, etc.)
+      - Product identifiers (ID, product code)
+      - Before/after values for updates
+      - Error details for failures
+   
+   4. Use structured logging format: "Operation: {action} | Product: {code} | Result: {status}"
+   ```
+   
+   - Watch Agent add logging throughout the files
+   - Review log messages for clarity and context
 
-3. **Apply logging:**
-   - Update `database.py` with logging
-   - Add `import logging` at the top
-   - Configure logger: `logger = logging.getLogger(__name__)`
-
-4. **Test logging:**
-   - Run the server with logging visible: `uvicorn app.main:app --reload --log-level info`
+3. **Test logging output:**
+   
+   Start the server with verbose logging:
+   ```bash
+   uvicorn app.main:app --reload --log-level info
+   ```
+   
    - Create a product in Swagger UI
+   - Update a product
+   - Delete a product
    - Check terminal for log output
+   - Verify appropriate log levels and messages appear
 
 **Expected Outcome:**
 - Structured logging in place
@@ -1824,19 +1884,39 @@ Currently, validation logic is mixed throughout the codebase. Let's extract it p
 
 **Task:** Ensure all refactoring hasn't broken functionality
 
+**Mode:** Manual testing → Plan mode → Agent mode (if issues)  
+**Why:** Verification requires running tests manually, but debugging uses Plan → Agent
+
 1. **Run the complete test suite:**
+   
    ```bash
    pytest tests/test_inventory.py -v
    ```
 
-2. **Check for failures:**
-   - If tests fail, ask Copilot:
-   ```
-   This test is failing after refactoring: [paste test name and error]
+2. **Debug failures if any:**
    
+   If tests fail, switch to **Plan mode**:
+   ```
    #file:validators.py #file:database.py #file:test_inventory.py
    
-   What did I break? How do I fix it without reverting the refactoring?
+   This test is failing after refactoring: [paste test name and error]
+   
+   Analyze:
+   1. What did the refactoring break?
+   2. What's the root cause of the failure?
+   3. How can we fix it without reverting the refactoring?
+   4. Are other tests likely affected by the same issue?
+   5. What's the safest fix approach?
+   
+   Provide a detailed fix plan.
+   ```
+   
+   Then switch to **Agent mode**:
+   ```
+   #file:validators.py #file:database.py #file:test_inventory.py
+   
+   Implement the fix for the failing tests based on the analysis.
+   Ensure the fix maintains the refactored structure.
    ```
 
 3. **Verify application still works:**
@@ -1859,15 +1939,31 @@ Currently, validation logic is mixed throughout the codebase. Let's extract it p
 
 ---
 
-### Module 5 Summary
+### Part 5 Summary
 
-You've learned to:
-1. **Extract scattered logic** into focused modules
-2. **Add comprehensive error handling** with validation
-3. **Implement structured logging** for production
-4. **Verify refactoring** with automated tests
+You've mastered **refactoring workflows with Copilot:**
 
-**Key Insight:** Refactor with tests as your safety net. Tests give you confidence that behavior hasn't changed.
+1. **Plan → Agent for refactoring** (Ex 5.1, 5.2, 5.3)
+   - Plan analyzes current state and designs strategy
+   - Agent implements changes across multiple files
+   - Automated execution prevents copy/paste errors
+
+2. **Manual verification** (Ex 5.4)
+   - Run tests to verify refactoring
+   - Use Plan → Agent to debug any failures
+
+**Key Workflows Applied:**
+- Extract validation logic (multi-file refactoring)
+- Add error handling (code quality improvement)
+- Implement logging (production readiness)
+- Verify with tests (safety net)
+
+**Key Insight:** Refactoring requires strategic planning before execution. Plan mode prevents breaking changes by thinking through dependencies first. Agent mode then executes the plan reliably across multiple files.
+
+**Pattern Reinforced:**
+```
+Complex Refactoring → Plan (analyze & design) → Agent (execute) → Verify (test)
+```
 
 ---
 
