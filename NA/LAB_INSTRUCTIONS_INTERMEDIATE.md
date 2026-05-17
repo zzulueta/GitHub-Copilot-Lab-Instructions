@@ -939,6 +939,7 @@ Custom Prompts (also called slash commands) are **reusable templates** for commo
    - Open Copilot Chat
    - Type `/generate-tests for the selection and add them in #file:test_inventory.py ` and press Enter
    - Review the generated tests - should be comprehensive and follow test instructions
+   - Undo the changes after reviewing to keep the file clean for the next test
 
 2. **Use the "Add Error Handling" prompt:**
    
@@ -946,6 +947,7 @@ Custom Prompts (also called slash commands) are **reusable templates** for commo
    - Select a function that needs better error handling
    - In Copilot Chat, type `/add-error-handling for the selection and add them in #file:inventory.py ` and press Enter
    - Observe how it adds validation, error messages, and proper status codes
+   - Undo the changes after reviewing to keep the file clean for the next test
 
 3. **Use the "Document Endpoint" prompt:**
    
@@ -953,6 +955,7 @@ Custom Prompts (also called slash commands) are **reusable templates** for commo
    - Select an endpoint function
    - Type `/document-endpoint for the selection and save in a new file called inventory_documentation.py at the root directory` in chat
    - See comprehensive OpenAPI documentation added
+   - Undo the changes after reviewing to keep the repository clean for the next test
 
 4. **Alternative invocation methods:**
    
