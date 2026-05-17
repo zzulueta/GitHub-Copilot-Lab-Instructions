@@ -983,9 +983,7 @@ Custom Prompts (also called slash commands) are **reusable templates** for commo
 
 1. **Open the Agent Customizations editor:**
    
-   - Option 1: Type `/prompts` in Copilot Chat input
-   - Option 2: Press `Ctrl+Shift+P` and run "Chat: Configure Prompt Files"
-   - Option 3: Click the gear icon in Chat view and select Prompts tab
+   - Click the gear icon in the Chat window and select Prompts tab
 
 2. **Explore the prompts list:**
    
@@ -1008,7 +1006,7 @@ Custom Prompts (also called slash commands) are **reusable templates** for commo
 
 4. **Generate a new prompt with AI (Optional):**
    
-   In Copilot Chat, try the slash command:
+   In Copilot Chat **Agent** mode, try the slash command:
    ```
    /create-prompt A prompt that adds pagination to FastAPI endpoints with limit and offset parameters
    ```
