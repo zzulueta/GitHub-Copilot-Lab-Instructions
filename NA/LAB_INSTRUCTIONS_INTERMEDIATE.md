@@ -689,14 +689,12 @@ Custom Instructions are markdown files that provide **persistent context** to Co
 
 1. **Open the Agent Customizations editor:**
    
-   - Option 1: Type `/instructions` in Copilot Chat input
-   - Option 2: Press `Ctrl+Shift+P` and run "Chat: Configure Instructions"
-   - Option 3: Click the gear icon in Chat view and select Instructions tab
+   - Click the gear icon in the Chat window and select Instructions tab
 
 2. **Explore the instructions list:**
    
    You should see:
-   - ✅ Steel Inventory API - Copilot Instructions (always-on)
+   - ✅ Agent Instructions - Copilot Instructions (always-on)
    - ✅ API Router Conventions (applies to `**/routers/**/*.py`)
    - ✅ Test Conventions (applies to `**/tests/**/*.py`)
    
@@ -705,7 +703,7 @@ Custom Instructions are markdown files that provide **persistent context** to Co
 
 3. **Generate instructions with AI (Optional):**
    
-   In Copilot Chat, try the slash command:
+   In Copilot Chat **Agent** mode, try the slash command:
    ```
    /create-instruction Always use pathlib.Path instead of os.path for file operations in Python
    ```
@@ -713,12 +711,6 @@ Custom Instructions are markdown files that provide **persistent context** to Co
    - Copilot will ask clarifying questions
    - It will generate an `.instructions.md` file with appropriate `applyTo` pattern
    - Review and save the generated file
-
-4. **Check diagnostics (Optional):**
-   
-   - Right-click in Chat view → Select "Diagnostics"
-   - View all loaded instruction files
-   - See if any errors or warnings
 
 **Expected Outcome:**
 - Familiarity with the Agent Customizations editor
@@ -735,7 +727,7 @@ Custom Instructions are markdown files that provide **persistent context** to Co
    
    In Ask mode, give a brief high-level request:
    ```
-   #file:inventory.py Add an endpoint to get low stock products below a threshold
+   #file:inventory.py Add an endpoint to get low stock products below a threshold. Use the instructions file.
    ```
    
    - No mention of type hints, docstrings, error handling, or response patterns
