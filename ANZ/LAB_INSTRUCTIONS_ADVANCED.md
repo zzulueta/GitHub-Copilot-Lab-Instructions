@@ -39,7 +39,7 @@ copilot --version
 
 **Note:** If you already have it installed, update it with:
 ```bash
-gh extension upgrade gh-copilot
+copilot update
 ```
 
 ---
@@ -75,33 +75,27 @@ The GitHub MCP server provides tools for interacting with GitHub.com directly fr
 #### Step 1: Install GitHub MCP Server
 
 1. Open **Copilot Chat** in VS Code
-2. Click the **MCP icon** (plug icon) in the chat toolbar, or type `/mcp`
-3. Select **"Browse MCP Registry"** to see available servers
-4. Search for **"GitHub"** in the MCP registry
-5. Select **"GitHub MCP Server"** and click **"Install"** or **"Add to Workspace"**
-
-6. The installation will prompt you to configure authentication:
-   - Go to GitHub.com → Settings → Developer settings → Personal access tokens → Tokens (classic)
-   - Click **"Generate new token (classic)"**
-   - Select scopes: `repo`, `read:org`, `workflow`
-   - Copy the token
-
-7. Configure using `${input:}` syntax for secure secret handling in `.vscode/mcp.json`:
-   ```json
-   {
-     "mcpServers": {
-       "github": {
-         "command": "npx",
-         "args": ["-y", "@modelcontextprotocol/server-github"],
-         "env": {
-           "GITHUB_PERSONAL_ACCESS_TOKEN": "${input:githubToken}"
-         }
-       }
-     }
-   }
-   ```
-
-8. Restart VS Code or reload Copilot Chat window
+2. Click the **Cog icon** (Open Customizations) in the chat toolbar
+3. Select **MCP Servers** tab then select **Browse Marketplace**
+4. Type **"GitHub"** in the search bar
+5. Select **GitHub** and click **Install**
+6. Right-click the GitHub MCP server and select **Start Server**
+7. You will be prompted to authenticate with Github. 
+   - Select Allow to grant permissions to the MCP server
+   - You will be redirected to GitHub.com to authorize Visual Studio code. Select **Continue** and complete the authentication flow.
+8. After successful authentication in the browser, return to VS Code and you should see the GitHub MCP server status as "Running" in the MCP Servers tab.
+9. You can optionally see the MCP json configuration
+   - Click Extensions → MCP Servers - INSTALLED → GitHub
+   - Select Manage → Show Configuration (JSON)
+10. You should see a configuration like this with a Running status:
+```json
+"io.github.github/github-mcp-server": {
+			"type": "http",
+			"url": "https://api.githubcopilot.com/mcp/",
+			"gallery": "https://api.mcp.github.com",
+			"version": "1.0.4"
+		}
+```
 
 #### Step 2: Search Similar Repositories
 
