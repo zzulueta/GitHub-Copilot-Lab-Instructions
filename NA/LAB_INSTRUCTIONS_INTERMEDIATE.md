@@ -1842,10 +1842,10 @@ Currently, validation logic is mixed throughout the codebase. Let's extract it p
       - ERROR: any unexpected operation failures
    
    2. Configure logger properly at the top of files:
-      ```python
+      python
       import logging
       logger = logging.getLogger(__name__)
-      ```
+      
    
    3. Include relevant context in each log message:
       - Operation type (create, update, delete, etc.)
