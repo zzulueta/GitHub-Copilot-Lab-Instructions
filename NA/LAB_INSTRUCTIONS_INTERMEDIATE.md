@@ -1544,6 +1544,15 @@ Debugging workflows benefit from strategic analysis (Plan mode) followed by auto
    - Test with coil shape
    - Test with bar shape
    - Test with tube shape
+   - Example tube request:
+   ```json
+   {
+      "length_mm": 6000,
+      "width_mm": 1800,
+      "thickness_mm": 2.5,
+      "shape": "tube"
+   }
+   ```
    - Verify reasonable results
 
 **Expected Outcome:**
@@ -1567,7 +1576,7 @@ Switch to **Plan mode**:
 ```
 #file:database.py #file:inventory.py
 
-Create a detailed bug report for the missing duplicate product code validation.
+Create a detailed bug report for the missing duplicate product code validation and save it in the root directory.
 
 Include:
 1. Bug title and severity level
