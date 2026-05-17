@@ -1,5 +1,5 @@
 # GitHub Copilot Intermediate Lab Instructions
-**Duration:** 3 hours  
+**Duration:** 2.5 hours  
 **Level:** Intermediate (Completed Basic Lab or equivalent experience)
 
 ---
@@ -79,30 +79,198 @@ Welcome to the **Intermediate GitHub Copilot Lab**! You'll learn advanced techni
 Building on the steel inventory management system from the basic lab, you'll master techniques that professional developers use daily to maximize productivity with Copilot.
 
 ### What You'll Learn
+- [ ] Understanding and using Plan mode and Agent mode effectively
 - [ ] Advanced prompting strategies for better code generation
 - [ ] Persisting your preferences with Custom Instructions and Prompts
 - [ ] Creating reusable prompt templates for common tasks
-- [ ] Comprehensive test automation with Copilot
-- [ ] Multi-file debugging and root cause analysis
-- [ ] Safe refactoring patterns with AI assistance
-- [ ] Using Plan mode for complex feature design
-- [ ] Leveraging Agent mode for autonomous implementation
+- [ ] Automated test generation with Plan → Agent workflows
+- [ ] Multi-file debugging with strategic analysis
+- [ ] Safe refactoring with AI assistance
+- [ ] Complex feature implementation using multiple modes
 
 ### Learning Objectives
 
 By the end of this lab, you will:
-1. Write prompts that consistently produce high-quality code
-2. Create Custom Instructions to persist coding preferences across all work
-3. Build reusable Custom Prompts for repetitive tasks
-4. Generate comprehensive test suites efficiently
-5. Debug complex issues spanning multiple files
-6. Refactor code safely with test verification
-7. Plan complex features before implementation
-8. Use Agent mode to autonomously complete multi-step tasks
+1. Know when to use Plan mode vs. Agent mode vs. Ask mode
+2. Write prompts that consistently produce high-quality code
+3. Create Custom Instructions to persist coding preferences across all work
+4. Build reusable Custom Prompts (slash commands) for repetitive tasks
+5. Automate test generation using Plan → Agent workflows
+6. Debug complex issues with strategic analysis before fixing
+7. Refactor code safely with automated verification
+8. Implement complex features by combining all Copilot modes
 
 ---
 
-## Part 1: Effective Prompting Strategies (15 minutes)
+## Part 1: Understanding Copilot Modes (10 minutes)
+
+### Introduction: Plan and Agent Modes
+
+In the basic lab, you learned **Ask mode** - the conversational mode where Copilot generates code for you to review and apply. Now you'll learn two additional modes that enable more advanced workflows:
+
+**Plan mode** - Strategic planning and research before coding  
+**Agent mode** - Autonomous code execution and file modifications
+
+Understanding when to use each mode is key to maximizing your productivity with Copilot.
+
+---
+
+### Exercise 1.1: Try Plan Mode (4 min)
+
+**Task:** Experience how Plan mode helps design before coding
+
+**Scenario:** You need to add filtering and pagination to the inventory endpoint.
+
+1. **Switch to Plan mode:**
+   
+   - Open Copilot Chat
+   - Select **Plan mode** from the mode selector dropdown
+
+2. **Ask for a design plan:**
+   
+   In Plan mode:
+   ```
+   #file:inventory.py #file:models.py
+   
+   Plan how to add filtering and pagination to the GET /inventory/ endpoint.
+   
+   Filtering by:
+   - grade (steel grade)
+   - shape (product shape)
+   - location (warehouse location)
+   
+   Pagination:
+   - limit and offset parameters
+   - default page size: 20
+   - maximum page size: 100
+   
+   What changes are needed and in what order?
+   ```
+
+3. **Review Plan mode's response:**
+   
+   Notice how Plan mode:
+   - ✅ Breaks down the task into steps
+   - ✅ Identifies which files need changes
+   - ✅ Suggests the implementation order
+   - ✅ Considers edge cases and validation
+   - ✅ Provides a roadmap WITHOUT writing code yet
+
+4. **Key insight:**
+   
+   Plan mode doesn't write code - it helps you **think strategically** before coding. Use it when:
+   - Designing complex features
+   - Unfamiliar with the technology
+   - Need to understand dependencies
+   - Want to explore different approaches
+
+**Expected Outcome:**
+- Understanding of Plan mode's strategic planning capabilities
+- See how it breaks down complex tasks
+- Know when to use Plan mode
+
+---
+
+### Exercise 1.2: Try Agent Mode (4 min)
+
+**Task:** Experience how Agent mode autonomously modifies files
+
+**Scenario:** The functions in steel_utils.py need comprehensive docstrings.
+
+1. **Switch to Agent mode:**
+   
+   - In Copilot Chat
+   - Select **Agent mode** from the mode selector
+
+2. **Give Agent an autonomous task:**
+   
+   In Agent mode:
+   ```
+   #file:steel_utils.py
+   
+   Add comprehensive Google-style docstrings to all functions in steel_utils.py.
+   
+   Include:
+   - Function description
+   - Args with types
+   - Returns with type
+   - Raises (if applicable)
+   - Example usage
+   ```
+
+3. **Watch Agent work:**
+   
+   Notice how Agent mode:
+   - ✅ Reads the file automatically
+   - ✅ Makes decisions about what to document
+   - ✅ Modifies the file directly
+   - ✅ Shows you progress in real-time
+   - ✅ Completes the task without further input
+
+4. **Review the changes:**
+   
+   - Open `steel-inventory-api/app/utils/steel_utils.py`
+   - See the added docstrings
+   - Agent made the changes for you!
+
+5. **Key insight:**
+   
+   Agent mode **executes autonomously** and modifies files. Use it when:
+   - Requirements are clear
+   - Task is routine (documentation, formatting, refactoring)
+   - Multi-file changes needed
+   - You want to review results, not guide every step
+
+**Expected Outcome:**
+- Understanding of Agent mode's autonomous execution
+- See real-time file modifications
+- Know when to use Agent mode
+- Confidence that changes can be reviewed/undone
+
+---
+
+### Exercise 1.3: Mode Selection Guide (2 min)
+
+**Task:** Learn when to use each mode
+
+**The Three Modes:**
+
+| Mode | Purpose | When to Use | Output |
+|------|---------|-------------|--------|
+| **Ask** | Generate code for review | Need to review before applying<br>Learning/exploring<br>Specific code snippets | Code in chat<br>You copy/paste |
+| **Plan** | Strategic planning | Complex features<br>Unfamiliar technology<br>Need design first<br>Explore approaches | Plan/roadmap<br>No code yet |
+| **Agent** | Autonomous execution | Clear requirements<br>Multi-file changes<br>Routine tasks<br>Implement a plan | Direct file edits<br>Autonomous work |
+
+**Common Workflows:**
+
+1. **Simple task:** Ask mode → Copy/paste
+2. **Complex feature:** Plan mode → Review plan → Agent mode → Verify
+3. **Routine task:** Agent mode → Review changes
+4. **Learning:** Ask mode → Understand → Agent mode → Apply
+
+**Decision Tree:**
+
+```
+Do you need to design/think first?
+├─ YES → Use Plan mode
+└─ NO → Do you want code to review or automatic changes?
+    ├─ Review first → Use Ask mode
+    └─ Automatic changes → Use Agent mode
+```
+
+**Throughout this lab:**
+- You'll practice all three modes
+- Learn which mode fits which scenario
+- Build intuition for mode selection
+
+**Expected Outcome:**
+- Clear mental model of three modes
+- Decision framework for choosing modes
+- Ready to apply modes throughout the lab
+
+---
+
+## Part 2: Effective Prompting Strategies (15 minutes)
 
 ### Introduction: The Art of Prompting
 
@@ -112,7 +280,7 @@ The quality of Copilot's output depends heavily on how you ask. Intermediate use
 
 ---
 
-### Exercise 1.1: Vague vs. Specific Prompts (5 min)
+### Exercise 2.1: Vague vs. Specific Prompts (5 min)
 
 **Task:** Learn how prompt specificity impacts code quality
 
@@ -160,7 +328,7 @@ The quality of Copilot's output depends heavily on how you ask. Intermediate use
 
 ---
 
-### Exercise 1.2: Iterative Refinement (5 min)
+### Exercise 2.2: Iterative Refinement (5 min)
 
 **Task:** Learn to refine prompts based on Copilot's responses
 
@@ -206,7 +374,7 @@ The quality of Copilot's output depends heavily on how you ask. Intermediate use
 
 ---
 
-### Exercise 1.3: Using Examples in Prompts (5 min)
+### Exercise 2.3: Using Examples in Prompts (5 min)
 
 **Task:** Learn few-shot prompting with concrete examples
 
@@ -276,7 +444,7 @@ You've learned three powerful prompting strategies:
 
 ---
 
-## Part 1.5: Persisting Your Prompting Strategy (30 minutes)
+## Part 2.5: Persisting Your Prompting Strategy (40 minutes)
 
 ### Introduction: Making Your Preferences Persistent
 
@@ -296,28 +464,39 @@ This module teaches you to set up both features for maximum productivity.
 
 ---
 
-### Section A: Custom Instructions (15 minutes)
+### Section A: Custom Instructions (20 minutes)
 
 Custom Instructions are markdown files that provide **persistent context** to Copilot. They apply automatically without you mentioning them in every prompt.
 
-**Instruction file types:**
-- `.github/copilot-instructions.md` - Workspace-level (entire project)
-- `<directory>/.instructions.md` - Directory-level (specific folders)
-- `<file>.instructions.md` - File-level (specific files)
+**Two types of instruction files:**
+
+1. **Always-on instructions** - Apply to ALL chat requests in the workspace
+   - `.github/copilot-instructions.md` - Workspace-wide coding standards
+
+2. **File-based instructions** - Apply conditionally based on file patterns
+   - `*.instructions.md` files stored in `.github/instructions/` folder (or other configured locations)
+   - Use YAML frontmatter with `applyTo` glob patterns to specify when they apply
+
+**Key Concepts:**
+- Instructions are combined from multiple sources (workspace, user profile, organization)
+- Higher priority: User > Workspace > Organization
+- You can also create user-level instructions that apply across all workspaces
 
 ---
 
-### Exercise 1.5.1: Create Workspace-Level Instructions (6 min)
+### Exercise 2.5.1: Create Always-On Workspace Instructions (6 min)
 
-**Task:** Define project-wide coding standards for the steel inventory API
+**Task:** Define project-wide coding standards that apply to ALL Copilot interactions
 
 1. **Create the instructions file:**
    
    Create a new file: `.github/copilot-instructions.md` in your workspace root
+   
+   **Tip:** You can use the slash command `/instructions` in Copilot Chat to quickly access the instructions editor.
 
 2. **Add comprehensive project instructions:**
    
-   Copy this content:
+   Copy this content then **SAVE** the file:
    ```markdown
    # Steel Inventory API - Copilot Instructions
 
@@ -371,20 +550,32 @@ Custom Instructions are markdown files that provide **persistent context** to Co
 
 **Expected Outcome:**
 - `.github/copilot-instructions.md` file created
-- Understanding that instructions apply to ALL Copilot interactions
+- Understanding that always-on instructions apply to ALL Copilot interactions
 - See automatic application of coding standards
 
 ---
 
-### Exercise 1.5.2: Directory-Specific Instructions (6 min)
+### Exercise 2.5.2: Create File-Based Instructions with Patterns (8 min)
 
-**Task:** Create specialized instructions for different parts of the codebase
+**Task:** Create specialized instructions that apply only to specific file types or locations
 
-1. **Create router-specific instructions:**
+**Important:** File-based instructions use **YAML frontmatter** with an `applyTo` property to define glob patterns.
+
+1. **Create the instructions folder:**
    
-   Create file: `steel-inventory-api/app/routers/.instructions.md`
+   Create directory: `.github/instructions/` in your workspace root
+
+2. **Create router-specific instructions:**
    
+   Create file: `.github/instructions/router-conventions.instructions.md`
+   
+   **Note the YAML frontmatter:**
    ```markdown
+   ---
+   name: 'API Router Conventions'
+   description: 'Coding conventions for FastAPI router files'
+   applyTo: '**/routers/**/*.py'
+   ---
    # API Router Instructions
 
    ## Endpoint Structure
@@ -412,11 +603,16 @@ Custom Instructions are markdown files that provide **persistent context** to Co
    - Return meaningful error messages
    ```
 
-2. **Create test-specific instructions:**
+3. **Create test-specific instructions:**
    
-   Create file: `steel-inventory-api/tests/.instructions.md`
+   Create file: `.github/instructions/test-conventions.instructions.md`
    
    ```markdown
+   ---
+   name: 'Test Conventions'
+   description: 'Standards for pytest test files'
+   applyTo: '**/tests/**/*.py'
+   ---
    # Test Instructions
 
    ## Test Organization
@@ -447,28 +643,81 @@ Custom Instructions are markdown files that provide **persistent context** to Co
    - Cover all code paths with parameters
    ```
 
-3. **Test directory-specific instructions:**
+4. **Understanding the frontmatter:**
+   - `name`: Display name shown in VS Code UI
+   - `description`: Short description (shown on hover)
+   - `applyTo`: Glob pattern defining when instructions apply
+     - `**/routers/**/*.py` = All Python files in any `routers` folder
+     - `**/tests/**/*.py` = All Python files in any `tests` folder
+     - `**/*.py` = All Python files in workspace
+
+5. **Test pattern-based instructions:**
    
-   Open a file in `steel-inventory-api/tests/` and ask Copilot:
-   ```
-   Create a test for the delete product endpoint
-   ```
-   
-   Then open a file in `steel-inventory-api/app/routers/` and ask:
+   Open a file in `steel-inventory-api/app/routers/` and ask Copilot:
    ```
    Create a new endpoint to get products by location
    ```
    
-   - Notice how Copilot applies different patterns based on which directory you're in!
+   Then open a file in `steel-inventory-api/tests/` and ask:
+   ```
+   Create a test for the delete product endpoint
+   ```
+   
+   - Notice how Copilot applies different patterns based on which file matches the `applyTo` pattern!
+   - Check the **References** section in the chat response to see which instruction files were applied
 
 **Expected Outcome:**
-- Two `.instructions.md` files created in specific directories
-- Understanding of instruction scope and hierarchy
-- See context-aware suggestions based on directory
+- Two `.instructions.md` files created in `.github/instructions/` folder
+- Understanding of YAML frontmatter and `applyTo` patterns
+- See pattern-based application of instructions
 
 ---
 
-### Exercise 1.5.3: Instructions in Practice (3 min)
+### Exercise 2.5.3: Use the Agent Customizations Editor (3 min)
+
+**Task:** Discover and manage instructions through the VS Code UI
+
+1. **Open the Agent Customizations editor:**
+   
+   - Option 1: Type `/instructions` in Copilot Chat input
+   - Option 2: Press `Ctrl+Shift+P` and run "Chat: Configure Instructions"
+   - Option 3: Click the gear icon in Chat view and select Instructions tab
+
+2. **Explore the instructions list:**
+   
+   You should see:
+   - ✅ Steel Inventory API - Copilot Instructions (always-on)
+   - ✅ API Router Conventions (applies to `**/routers/**/*.py`)
+   - ✅ Test Conventions (applies to `**/tests/**/*.py`)
+   
+   - Hover over each to see the description
+   - Note the source location (workspace)
+
+3. **Generate instructions with AI (Optional):**
+   
+   In Copilot Chat, try the slash command:
+   ```
+   /create-instruction Always use pathlib.Path instead of os.path for file operations in Python
+   ```
+   
+   - Copilot will ask clarifying questions
+   - It will generate an `.instructions.md` file with appropriate `applyTo` pattern
+   - Review and save the generated file
+
+4. **Check diagnostics (Optional):**
+   
+   - Right-click in Chat view → Select "Diagnostics"
+   - View all loaded instruction files
+   - See if any errors or warnings
+
+**Expected Outcome:**
+- Familiarity with the Agent Customizations editor
+- Know how to view and manage instructions
+- Understanding of `/create-instruction` command
+
+---
+
+### Exercise 2.5.4: Instructions in Practice (3 min)
 
 **Task:** Experience the power of "set it and forget it" context
 
@@ -506,9 +755,9 @@ Custom Instructions are markdown files that provide **persistent context** to Co
 
 ---
 
-### Section B: Custom Prompts (15 minutes)
+### Section B: Custom Prompts (20 minutes)
 
-Custom Prompts are **reusable templates** for common tasks. Unlike instructions (passive), prompts are **actively invoked** when you need them.
+Custom Prompts (also called slash commands) are **reusable templates** for common tasks stored as individual `.prompt.md` files. Unlike instructions (passive), prompts are **actively invoked** when you need them.
 
 **Use Custom Prompts for:**
 - Repetitive tasks with specific requirements
@@ -516,38 +765,51 @@ Custom Prompts are **reusable templates** for common tasks. Unlike instructions 
 - Team-standard procedures
 - Complex prompts you don't want to retype
 
-**Accessing Custom Prompts:**
-- Type `@` in Copilot Chat and select from prompt library
-- Use Quick Pick (Ctrl+Shift+P → "Copilot: Use Custom Prompt")
-- Prompts can include parameters and context
+**Prompt File Format:**
+- Each prompt is a **separate `.prompt.md` file**
+- Stored in `.github/prompts/` folder (or configured location)
+- Uses YAML frontmatter for configuration
+- Invoked with `/` slash commands in chat (e.g., `/generate-tests`)
+
+**Key Concepts:**
+- Prompt files can specify which agent to use (`ask`, `agent`, `plan`)
+- Can include tool restrictions and model selection
+- Support variables and user input with `${input:variableName}` syntax
+- Can reference instructions and other workspace files
 
 ---
 
-### Exercise 1.5.4: Create Reusable Prompt Templates (7 min)
+### Exercise 2.5.5: Create Prompt Files for Common Tasks (9 min)
 
-**Task:** Build a library of common development tasks
+**Task:** Build a library of prompt files for development tasks
 
-1. **Create the prompts file:**
+**Important:** Each prompt is a **separate file** with `.prompt.md` extension.
+
+1. **Create the prompts folder:**
    
-   Create file: `.prompts.md` in your workspace root
-
-2. **Add general-purpose prompts:**
+   Create directory: `.github/prompts/` in your workspace root
    
+   **Tip:** You can use the slash command `/prompts` in Copilot Chat to quickly access the prompts editor.
+
+2. **Create "Generate Tests" prompt:**
+   
+   Create file: `.github/prompts/generate-tests.prompt.md`
+   
+   **Note the YAML frontmatter:**
    ```markdown
-   # Custom Prompts for Steel Inventory API
-
-   ## Generate Comprehensive Tests
-   ```prompt
-   title: Generate Comprehensive Tests
-   context: selection
    ---
-   Analyze the selected function/endpoint and generate comprehensive pytest tests.
+   name: generate-tests
+   description: Generate comprehensive pytest tests for selected code
+   argument-hint: Select a function or endpoint first
+   agent: ask
+   ---
+   Analyze the selected code and generate comprehensive pytest tests.
 
    Requirements:
    - Test happy path with valid inputs
    - Test edge cases (boundary values, empty inputs, None values)
    - Test error conditions (invalid inputs, exceptions)
-   - Use parametrize for multiple similar test cases
+   - Use pytest.mark.parametrize for multiple similar test cases
    - Include descriptive test names and docstrings
    - Verify both functionality AND error messages
    - Add fixtures if needed for test data setup
@@ -555,10 +817,16 @@ Custom Prompts are **reusable templates** for common tasks. Unlike instructions 
    Return the complete test code ready to add to the test file.
    ```
 
-   ## Add Error Handling
-   ```prompt
-   title: Add Comprehensive Error Handling
-   context: selection
+3. **Create "Add Error Handling" prompt:**
+   
+   Create file: `.github/prompts/add-error-handling.prompt.md`
+   
+   ```markdown
+   ---
+   name: add-error-handling
+   description: Add comprehensive error handling to selected code
+   argument-hint: Select the code to enhance
+   agent: ask
    ---
    Enhance the selected code with comprehensive error handling.
 
@@ -567,7 +835,7 @@ Custom Prompts are **reusable templates** for common tasks. Unlike instructions 
    - Add try-except blocks where appropriate
    - Raise HTTPException with descriptive messages
    - Include relevant context in error details
-   - Use appropriate HTTP status codes
+   - Use appropriate HTTP status codes (400, 404, 422, 500)
    - Add logging for errors
    - Handle edge cases (None, empty, invalid types)
    - Maintain existing functionality
@@ -575,19 +843,25 @@ Custom Prompts are **reusable templates** for common tasks. Unlike instructions 
    Return the enhanced code with all error handling added.
    ```
 
-   ## Document API Endpoint
-   ```prompt
-   title: Document API Endpoint
-   context: selection
+4. **Create "Document API Endpoint" prompt:**
+   
+   Create file: `.github/prompts/document-endpoint.prompt.md`
+   
+   ```markdown
    ---
-   Add comprehensive OpenAPI documentation to the selected endpoint.
+   name: document-endpoint
+   description: Add comprehensive OpenAPI docs to an endpoint
+   argument-hint: Select an API endpoint function
+   agent: ask
+   ---
+   Add comprehensive OpenAPI documentation to the selected FastAPI endpoint.
 
    Requirements:
    - Add summary (one line description)
    - Add detailed description explaining purpose and behavior
    - Document all parameters (path, query, body)
    - Document all possible response status codes
-   - Include example request/response bodies
+   - Include example request/response bodies in docstring
    - Add response_model if not present
    - Include notes about validation or business rules
    - Add tags for API organization
@@ -595,35 +869,16 @@ Custom Prompts are **reusable templates** for common tasks. Unlike instructions 
    Return the endpoint with complete documentation.
    ```
 
-   ## Optimize Database Query
-   ```prompt
-   title: Optimize Database Query
-   context: selection
-   ---
-   Analyze and optimize the selected database query for performance.
-
-   Requirements:
-   - Identify N+1 query problems
-   - Add appropriate eager loading (.options(joinedload()))
-   - Add indexes recommendations in comments
-   - Reduce number of database round trips
-   - Use efficient filtering and pagination
-   - Add query result caching if beneficial
-   - Maintain existing functionality
-   - Add comments explaining optimizations
-
-   Return the optimized query with explanatory comments.
-   ```
-   ```
-
-3. **Add steel-industry specific prompts:**
+5. **Create "Steel Grade Validation" domain-specific prompt:**
    
-   Append to `.prompts.md`:
+   Create file: `.github/prompts/add-grade-validation.prompt.md`
+   
    ```markdown
-   ## Add Steel Grade Validation
-   ```prompt
-   title: Add Steel Grade Validation
-   context: selection
+   ---
+   name: add-grade-validation
+   description: Add steel grade validation to selected code
+   argument-hint: Select code that needs grade validation
+   agent: ask
    ---
    Add comprehensive steel grade validation to the selected code.
 
@@ -635,93 +890,124 @@ Custom Prompts are **reusable templates** for common tasks. Unlike instructions 
    Requirements:
    - Accept grades case-insensitive
    - Normalize to uppercase
-   - Validate against allowed list
-   - Return tuple: (is_valid, normalized_grade, category)
+   - Validate against allowed list above
+   - Return tuple: (is_valid: bool, normalized_grade: str, category: str)
    - Raise ValueError with helpful message for invalid grades
    - Include all valid grades in error message
+   - Add type hints and docstring
 
    Return the code with validation added.
    ```
 
-   ## Create Inventory Report Endpoint
-   ```prompt
-   title: Create Inventory Report Endpoint
-   context: file
-   ---
-   Create a new GET endpoint for inventory reporting.
-
-   Endpoint: GET /inventory/report
-   Query Parameters:
-   - group_by: Optional[str] = "grade" (grade, shape, location)
-   - include_totals: bool = True
-   - min_quantity: Optional[int] = None
-
-   Response should include:
-   - Grouped inventory data
-   - Total quantity per group
-   - Total weight per group
-   - Number of unique products per group
-   - Overall totals if include_totals=True
-
-   Requirements:
-   - Follow all router patterns from .instructions.md
-   - Use proper response model
-   - Add comprehensive documentation
-   - Include error handling
-   - Optimize database query
-
-   Return the complete endpoint ready to add to the router.
-   ```
-   ```
+6. **Understanding the frontmatter:**
+   - `name`: Command name after `/` (e.g., `/generate-tests`)
+   - `description`: Short description shown in prompt picker
+   - `argument-hint`: Hint text shown in chat input
+   - `agent`: Which mode to use (`ask`, `agent`, or `plan`)
+   - `model`: (Optional) Specific model to use
+   - `tools`: (Optional) Restrict which tools are available
 
 **Expected Outcome:**
-- `.prompts.md` file created with 6 reusable prompts
-- Understanding of prompt syntax (title, context, requirements)
+- Four `.prompt.md` files created in `.github/prompts/` folder
+- Understanding of proper prompt file format with YAML frontmatter
 - Recognition of when to create custom prompts
 
 ---
 
-### Exercise 1.5.5: Use Custom Prompts (5 min)
+### Exercise 2.5.6: Use Prompt Files with Slash Commands (5 min)
 
-**Task:** Invoke and apply your custom prompts
+**Task:** Invoke and use your custom prompt files
 
-1. **Use the "Generate Comprehensive Tests" prompt:**
+1. **Use the "Generate Tests" prompt:**
    
    - Open `steel-inventory-api/app/utils/steel_utils.py`
    - Select the `validate_grade` function
    - Open Copilot Chat
-   - Type `@` and select "Generate Comprehensive Tests" from the prompt library
-   - Or use Quick Pick: Ctrl+Shift+P → "Copilot: Use Custom Prompt" → select prompt
+   - Type `/generate-tests` and press Enter
    - Review the generated tests - should be comprehensive and follow test instructions
 
 2. **Use the "Add Error Handling" prompt:**
    
    - Open `steel-inventory-api/app/routers/inventory.py`
    - Select a function that needs better error handling
-   - Invoke the "Add Comprehensive Error Handling" prompt via `@` mention
+   - In Copilot Chat, type `/add-error-handling`
    - Observe how it adds validation, error messages, and proper status codes
 
-3. **Use the steel-specific prompt:**
+3. **Use the "Document Endpoint" prompt:**
    
    - Open `steel-inventory-api/app/routers/inventory.py`
-   - Invoke "Add Steel Grade Validation" prompt
-   - See how domain-specific prompts capture your business logic
+   - Select an endpoint function
+   - Type `/document-endpoint` in chat
+   - See comprehensive OpenAPI documentation added
 
-4. **Observe the synergy:**
+4. **Alternative invocation methods:**
+   
+   - **Command Palette:** Press `Ctrl+Shift+P` → "Chat: Run Prompt" → Select prompt
+   - **Prompt file editor:** Open any `.prompt.md` file → Click play button in title bar to test it
+   - **Type `/` in chat:** See all available prompts listed
+
+5. **Observe the synergy:**
    
    Notice how **Custom Prompts + Custom Instructions work together**:
    - Prompt defines WHAT to do (generate tests, add error handling)
-   - Instructions define HOW to do it (code style, patterns)
+   - Instructions define HOW to do it (code style, patterns from `.instructions.md`)
    - Result: Consistent, high-quality output every time
 
 **Expected Outcome:**
-- Comfortable invoking custom prompts via @ mentions
+- Comfortable using `/` slash commands to invoke prompts
 - See how prompts + instructions complement each other
 - Experience faster execution of common tasks
 
 ---
 
-### Exercise 1.5.6: Build Your Prompt Library (3 min)
+### Exercise 2.5.7: Use the Agent Customizations Editor for Prompts (3 min)
+
+**Task:** Manage prompt files through the VS Code UI
+
+1. **Open the Agent Customizations editor:**
+   
+   - Option 1: Type `/prompts` in Copilot Chat input
+   - Option 2: Press `Ctrl+Shift+P` and run "Chat: Configure Prompt Files"
+   - Option 3: Click the gear icon in Chat view and select Prompts tab
+
+2. **Explore the prompts list:**
+   
+   You should see:
+   - ✅ generate-tests
+   - ✅ add-error-handling
+   - ✅ document-endpoint
+   - ✅ add-grade-validation
+   
+   - Hover over each to see the description
+   - Note the source location (workspace)
+   - Click to open and edit
+
+3. **Test a prompt directly from the editor:**
+   
+   - Open `.github/prompts/generate-tests.prompt.md`
+   - Click the **play button** (▶) in the editor title bar
+   - Choose "Run in current chat" or "Run in new chat"
+   - This is useful for testing prompts as you develop them
+
+4. **Generate a new prompt with AI (Optional):**
+   
+   In Copilot Chat, try the slash command:
+   ```
+   /create-prompt A prompt that adds pagination to FastAPI endpoints with limit and offset parameters
+   ```
+   
+   - Copilot will ask clarifying questions
+   - It will generate a `.prompt.md` file with appropriate frontmatter
+   - Review and save the generated file
+
+**Expected Outcome:**
+- Familiarity with the Agent Customizations editor for prompts
+- Know how to test prompts with the play button
+- Understanding of `/create-prompt` command
+
+---
+
+### Exercise 2.5.8: Build Your Prompt Library (3 min)
 
 **Task:** Think strategically about reusable prompts
 
@@ -736,12 +1022,13 @@ Custom Prompts are **reusable templates** for common tasks. Unlike instructions 
    
    Think about the steel inventory project. What task might you repeat?
    Examples:
-   - "Add Pagination to Endpoint"
-   - "Create Migration Script"
-   - "Add Request Logging"
-   - "Generate Mock Data"
+   - Add pagination to endpoints
+   - Create database migration scripts
+   - Add request logging
+   - Generate mock data
    
-   Add your own prompt to `.prompts.md`
+   Create a new `.prompt.md` file in `.github/prompts/` for one of these tasks.
+   Use the `/create-prompt` command or create it manually.
 
 3. **Key Decision Framework:**
    
@@ -754,7 +1041,7 @@ Custom Prompts are **reusable templates** for common tasks. Unlike instructions 
    
    Use **Prompts** when:
    - ✅ Specific task you invoke intentionally
-   - ✅ Multi-step workflow
+   - ✅ Multi-step workflow with clear steps
    - ✅ "Do this when I ask"
    
    Use **Both** when:
@@ -772,460 +1059,542 @@ Custom Prompts are **reusable templates** for common tasks. Unlike instructions 
 
 You've learned to persist your prompting strategy with two powerful features:
 
-**Custom Instructions (.instructions.md)**
+**Custom Instructions (`.instructions.md`)**
 - Provide persistent context automatically
 - Define coding style, patterns, and standards
-- Scope: workspace, directory, or file level
-- Passive - always applied in background
+- Two types: always-on (workspace-wide) and file-based (pattern-matched with `applyTo`)
+- Passive - applied automatically based on context
 
-**Custom Prompts (.prompts.md)**
-- Create reusable templates for common tasks
-- Define specific workflows and requirements
-- Invoke actively when needed
-- Active - used when you call them
+**Custom Prompts (`.prompt.md`)**
+- Create reusable slash commands for common tasks
+- Each prompt is a separate file in `.github/prompts/` folder
+- Invoked with `/` slash commands (e.g., `/generate-tests`)
+- Use YAML frontmatter to configure agent, model, and tools
+- Active - used when you explicitly call them
 
 **Key Takeaways:**
 1. Instructions reduce prompt length while improving consistency
 2. Prompts eliminate repetitive typing for common tasks
 3. Together they form a powerful productivity system
 4. Both features enhance ALL Copilot modes (Ask, Plan, Agent)
+5. Use `/instructions` and `/prompts` to configure via UI
+6. Use `/create-instruction` and `/create-prompt` to generate with AI
 
 **Best Practice:** Start with instructions for your coding style, then add prompts as you identify repetitive tasks.
 
 **Throughout the rest of this lab:**
 - Your instructions will automatically guide Copilot's suggestions
-- You can invoke your custom prompts whenever relevant
+- You can invoke your custom prompts with `/` commands whenever relevant
 - Notice how both features improve your efficiency in Parts 2-6
 
 ---
 
-## Part 2: Test Automation with Copilot (25 minutes)
+## Part 3: Test Automation with Copilot (25 minutes)
 
-### Introduction: Testing with AI Assistance
+### Introduction: True Test Automation
 
-Comprehensive testing is critical for maintainable code, but writing tests can be tedious. Copilot excels at generating test cases, especially for edge cases you might miss. This module teaches you to leverage Copilot for **test-driven development** and **comprehensive test coverage**.
+Test automation means letting Copilot handle the entire test creation workflow - planning what's needed and automatically adding tests to files. This is more efficient than generating code in chat and manually copying it.
+
+**Workflow:** Plan Mode → Agent Mode for fully automated test creation
 
 ---
 
-### Exercise 2.1: Parametrized Tests for Multiple Scenarios (8 min)
+### Exercise 3.1: Automate Parametrized Tests (8 min)
 
-**Task:** Generate comprehensive parametrized tests for weight calculations
+**Task:** Use Plan → Agent workflow to automatically create parametrized tests
 
-The `calculate_weight_kg` function in `steel_utils.py` needs thorough testing across different shapes and edge cases.
+**Mode:** Plan mode → Agent mode  
+**Why:** Plan identifies all test cases, Agent writes them to file
 
-1. **Ask Copilot to generate parametrized tests:**
+1. **Plan the tests:**
    
-   Open Copilot Chat in Ask mode:
+   Switch to **Plan mode** and ask:
    ```
-   #file:steel_utils.py #file:test_inventory.py 
+   #file:steel_utils.py #file:test_inventory.py
    
-   I need comprehensive parametrized tests for the calculate_weight_kg function.
+   Analyze the calculate_weight_kg function and plan comprehensive parametrized tests.
+   
+   What test cases are needed for:
+   - All supported shapes (sheet, plate)
+   - Edge cases (minimum/maximum dimensions, zero thickness)
+   - Unsupported shapes (coil, bar, tube) - should raise NotImplementedError
+   - Missing width for shapes that require it
+   - Accurate weight calculations
+   
+   Create a test plan with specific test cases and expected values.
+   ```
+   
+   - Review the plan - does it cover all scenarios?
+
+2. **Implement with Agent:**
+   
+   Switch to **Agent mode** and ask:
+   ```
+   #file:test_inventory.py #file:steel_utils.py
+   
+   Implement the parametrized test plan for calculate_weight_kg.
    
    Requirements:
-   1. Use pytest.mark.parametrize
-   2. Test all supported shapes: sheet, plate
-   3. Include edge cases: minimum dimensions, maximum dimensions, zero thickness
-   4. Test the unsupported shapes (coil, bar, tube) to ensure NotImplementedError
-   5. Test ValueError for missing width on sheet/plate
-   6. Verify weight calculations are accurate (provide expected values)
-   7. Name the test function test_calculate_weight_parametrized
-   
-   Add these tests to test_inventory.py.
+   - Use pytest.mark.parametrize
+   - Name: test_calculate_weight_parametrized
+   - Add all test cases from the plan
+   - Include test IDs for clarity
+   - Add to test_inventory.py
    ```
-
-2. **Review and apply the generated tests:**
-   - Copy the generated test code
-   - Add it to `tests/test_inventory.py`
-   - Make sure imports are included (pytest, calculate_weight_kg)
-
-3. **Run the tests:**
    
-   In the terminal:
+   - Watch Agent add tests to the file automatically
+
+3. **Run and verify:**
    ```bash
-   cd steel-inventory-api
    pytest tests/test_inventory.py::test_calculate_weight_parametrized -v
    ```
 
-4. **Verify coverage:**
-   ```
-   How many test cases did you generate? Do they cover all edge cases?
-   ```
-
 **Expected Outcome:**
-- Parametrized test suite with 8-10 test cases
-- Tests pass for implemented shapes (sheet, plate)
-- Tests correctly verify NotImplementedError for unimplemented shapes
-- Understanding of parametrized testing benefits
+- Complete test automation workflow
+- 8-10 parametrized test cases automatically added
+- Understanding of Plan → Agent for test creation
 
 ---
 
-### Exercise 2.2: Comprehensive CRUD Test Suite (8 min)
+### Exercise 3.2: Automate CRUD Test Suite (8 min)
 
-**Task:** Generate a complete test suite for inventory operations
+**Task:** Use Plan → Agent workflow for comprehensive CRUD testing
 
-1. **Generate tests for all CRUD operations:**
+**Mode:** Plan mode → Agent mode  
+**Why:** Complex test suite needs planning before implementation
+
+1. **Plan comprehensive CRUD tests:**
    
-   In Ask mode:
+   Switch to **Plan mode**:
    ```
-   #file:inventory.py #file:test_inventory.py #file:database.py
+   #file:inventory.py #file:database.py #file:test_inventory.py
    
-   Generate a comprehensive test suite for all inventory CRUD operations.
+   Plan a comprehensive test suite for all CRUD operations.
    
-   Tests needed:
-   1. test_create_product_success - Valid product creation
-   2. test_create_product_duplicate_code - Should prevent duplicates (currently a bug!)
-   3. test_get_product_by_id_success - Retrieve existing product
-   4. test_get_product_by_id_not_found - 404 for non-existent ID
-   5. test_update_product_success - Update quantity and location
-   6. test_update_product_not_found - 404 for non-existent ID
-   7. test_delete_product_success - Successful deletion
-   8. test_delete_product_not_found - 404 for non-existent ID
-   9. test_list_all_products - Returns list of products
+   Identify:
+   - All CRUD endpoints that need testing
+   - Success cases for each operation
+   - Error cases (not found, validation failures, duplicates)
+   - Edge cases
+   - What fixtures or test data setup is needed
    
-   Use FastAPI TestClient and include:
-   - Proper status code assertions
-   - Response body validation
-   - Test isolation (each test should be independent)
-   
-   Add these to test_inventory.py.
+   Create a structured test plan.
    ```
+   
+   - Review the plan
+   - Note which tests reveal bugs (e.g., duplicate product codes)
 
-2. **Review the generated tests:**
-   - Check that each test is properly isolated
-   - Verify status code assertions
-   - Ensure response validation is thorough
+2. **Implement with Agent:**
+   
+   Switch to **Agent mode**:
+   ```
+   Implement the CRUD test plan in test_inventory.py.
+   
+   Requirements:
+   - Use FastAPI TestClient
+   - Test isolation (each test independent)
+   - Assert both status codes AND response body
+   - Descriptive test names
+   - Add all tests to test_inventory.py
+   ```
+   
+   - Watch Agent create the complete test suite
 
-3. **Add the tests to test_inventory.py:**
-   - Place them after the existing tests
-   - Ensure all imports are present
-
-4. **Run the CRUD test suite:**
+3. **Run and analyze:**
    ```bash
-   pytest tests/test_inventory.py -v -k "test_create or test_get or test_update or test_delete or test_list"
+   pytest tests/test_inventory.py -v -k "crud or create or update or delete"
    ```
-
-5. **Analyze failures:**
-   - Note which tests fail (hint: duplicate checking isn't implemented yet!)
-   - This demonstrates how tests reveal bugs
+   
+   - Note which tests fail (reveals missing features)
+   - This demonstrates tests driving development
 
 **Expected Outcome:**
-- Complete CRUD test suite with 9 tests
-- Understanding of test isolation principles
-- Identified the duplicate product bug through testing
+- 9-10 CRUD tests automatically added
+- Some failures revealing bugs (expected!)
+- Test-driven development approach
 
 ---
 
-### Exercise 2.3: Testing Error Handling and Validation (5 min)
+### Exercise 3.3: Automate Validation Tests (5 min)
 
-**Task:** Generate tests for edge cases and error conditions
+**Task:** Direct automation with Agent mode
 
-1. **Ask Copilot to focus on error scenarios:**
-   
-   In Ask mode:
-   ```
-   #file:inventory.py #file:models.py
-   
-   Create tests for validation and error handling:
-   
-   1. test_create_product_invalid_shape - Shape not in allowed list
-   2. test_create_product_negative_quantity - Quantity < 0
-   3. test_create_product_zero_thickness - Thickness = 0
-   4. test_create_product_missing_width - Sheet without width
-   5. test_update_product_negative_quantity - Update with negative quantity
-   
-   Each test should:
-   - Verify appropriate HTTP status code (400 or 422)
-   - Check that error message is descriptive
-   - Ensure database state is unchanged after error
-   
-   Add to test_inventory.py.
-   ```
+**Mode:** Agent mode (direct automation)  
+**Why:** Clear requirements, no planning needed
 
-2. **Add and run the error handling tests:**
-   ```bash
-   pytest tests/test_inventory.py -v -k "invalid or negative or zero or missing"
-   ```
+**Direct automation with Agent:**
 
-3. **Note which validations are missing:**
-   - Some tests may fail because validation isn't implemented
-   - This is good! Tests drive development
+Switch to **Agent mode**:
+```
+#file:inventory.py #file:models.py #file:test_inventory.py
+
+Add validation error tests to test_inventory.py:
+
+1. test_create_product_invalid_shape - Shape not in allowed list
+2. test_create_product_negative_quantity - Quantity < 0  
+3. test_create_product_zero_thickness - Thickness = 0
+4. test_create_product_missing_width - Sheet without width
+5. test_update_product_negative_quantity - Update with invalid quantity
+
+Each test should:
+- Verify 422 status code
+- Check error message is descriptive
+- Ensure database unchanged after error
+
+Add all tests to test_inventory.py.
+```
+
+**Run tests:**
+```bash
+pytest tests/test_inventory.py -v -k "invalid or negative or zero or missing"
+```
+
+- Some may fail (validation not yet implemented)
+- This is good - tests drive implementation!
 
 **Expected Outcome:**
-- 5 error handling tests created
-- Understanding of validation testing
-- Identified missing validation logic
+- 5 validation tests automatically added
+- Understanding of Agent mode for straightforward tasks
+- Tests revealing missing validation
 
 ---
 
-### Exercise 2.4: Identifying Untested Code Paths (4 min)
+### Exercise 3.4: Analyze Coverage with Plan Mode (4 min)
 
-**Task:** Use Copilot to find gaps in test coverage
+**Task:** Use Plan mode for analysis and strategic thinking
 
-1. **Ask about coverage gaps:**
-   
-   In Ask mode:
-   ```
-   #file:inventory.py #file:test_inventory.py
-   
-   Analyze the test coverage for inventory.py. What code paths or scenarios are NOT tested yet?
-   
-   Consider:
-   - Boundary conditions
-   - Error paths
-   - Different data combinations
-   - Edge cases in business logic
-   ```
+**Mode:** Plan mode  
+**Why:** Analysis and strategic thinking
 
-2. **Review Copilot's analysis:**
-   - What untested scenarios did it identify?
-   - Are there any surprising gaps?
+Switch to **Plan mode**:
+```
+#file:inventory.py #file:test_inventory.py
 
-3. **Generate tests for one gap:**
-   
-   Pick one untested scenario and ask:
-   ```
-   Generate a test for [specific untested scenario you identified]
-   ```
+Analyze test coverage for inventory.py endpoints.
+
+What scenarios are NOT tested yet?
+- Boundary conditions?
+- Different data combinations?
+- Business logic edge cases?
+- Performance considerations?
+
+Provide a prioritized list of missing test coverage.
+```
+
+Review the analysis:
+- What gaps did Plan mode identify?
+- Which are most critical?
+- Save this for future test implementation
 
 **Expected Outcome:**
-- Awareness of test coverage gaps
-- Know how to use Copilot for coverage analysis
-- Additional tests for previously untested paths
+- Comprehensive coverage analysis
+- Prioritized test gaps
+- Strategic view of testing needs
 
 ---
 
-### Module 2 Summary
+### Part 3 Summary
 
-You've learned to:
-1. **Generate parametrized tests** for multiple scenarios efficiently
-2. **Create comprehensive CRUD test suites** with proper isolation
-3. **Test error conditions** and validation logic
-4. **Identify coverage gaps** with Copilot's help
+You've learned **test automation workflows:**
 
-**Key Insight:** Tests should be generated alongside code, not as an afterthought. Use Copilot to make testing faster and more thorough.
+1. **Plan → Agent:** Complex test suites (Ex 3.1, 3.2)
+   - Plan identifies all cases
+   - Agent implements automatically
+   
+2. **Direct Agent:** Simple test additions (Ex 3.3)
+   - Clear requirements
+   - No planning needed
+   
+3. **Plan for Analysis:** Coverage gaps (Ex 3.4)
+   - Strategic thinking
+   - Prioritization
+
+**Key Insight:** True automation means Plan → Agent, not Ask → manual copy/paste!
 
 ---
 
 ## Part 3: Advanced Debugging Workflows (20 minutes)
 
-### Introduction: Multi-File Debugging
+## Part 4: Advanced Debugging Workflows (20 minutes)
 
-Real bugs rarely exist in isolation. They often span multiple files, involve complex interactions, and require understanding the full context. This module teaches you to use Copilot for **systematic debugging** across your codebase.
+### Introduction: Strategic Debugging
+
+Debugging workflows benefit from strategic analysis (Plan mode) followed by automated fixes (Agent mode). This prevents quick fixes that miss root causes and ensures comprehensive solutions.
+
+**Workflow:** Plan Mode → Agent Mode for systematic debugging
 
 ---
 
-### Exercise 3.1: Debug the calculate_area_m2 Bug (6 min)
+### Exercise 4.1: Debug calculate_area_m2 Bug (6 min)
 
-**Task:** Investigate and fix the None width bug with full analysis
+**Task:** Use Plan → Agent workflow to understand and fix bugs systematically
 
-The `calculate_area_m2` function in `steel_utils.py` has a bug when width is None.
+**Mode:** Plan mode → Agent mode  
+**Why:** Understand root cause before fixing
 
-1. **Start with investigation:**
+**Scenario:** The `calculate_area_m2` function crashes when width_mm is None.
+
+1. **Analyze the bug with Plan:**
    
-   In Ask mode:
+   Switch to **Plan mode**:
    ```
-   #file:steel_utils.py I found a bug in calculate_area_m2. When width_mm is None 
-   (which is valid for shapes like 'bar' or 'tube'), the function crashes.
+   #file:steel_utils.py
    
-   Please:
-   1. Explain why this bug occurs
-   2. Identify all shapes that could trigger this bug
-   3. Show me where this function is called from
-   4. Suggest a fix that handles None width appropriately
-   5. Should area calculation even make sense for shapes without width?
+   There's a bug in calculate_area_m2 - it crashes when width_mm is None.
+   
+   Analyze:
+   1. Why does this bug occur?
+   2. Which shapes can have None width? Which require width?
+   3. Where is this function called from?
+   4. What's the appropriate fix?
+   5. Should we calculate area for shapes without width?
+   6. What validation/error handling is needed?
+   
+   Provide a comprehensive fix plan.
+   ```
+   
+   - Review the root cause analysis
+   - Understand which shapes need width
+   - Review the proposed solution
+
+2. **Implement fix with Agent:**
+   
+   Switch to **Agent mode**:
+   ```
+   #file:steel_utils.py
+   
+   Implement the fix for calculate_area_m2 based on the analysis:
+   
+   - Add validation for None width
+   - Raise ValueError with clear message for shapes without width
+   - Update docstring explaining which shapes are valid
+   - Add note about which shapes have width (sheet, plate, coil) vs not (bar, tube)
+   ```
+   
+   - Watch Agent apply the fix
+
+3. **Create regression test:**
+   
+   Still in **Agent mode**:
+   ```
+   #file:test_inventory.py
+   
+   Add regression tests for calculate_area_m2:
+   - Test with valid width (should succeed)
+   - Test with None width (should raise ValueError)
+   - Test error message is descriptive
    ```
 
-2. **Analyze Copilot's response:**
-   - Does it identify the root cause?
-   - Does it consider the broader context (which shapes have width)?
-   - Is the suggested fix appropriate?
-
-3. **Ask for implementation:**
-   ```
-   Based on your analysis, implement a fix that:
-   - Raises a ValueError with a clear message for shapes without width
-   - Includes a docstring explaining which shapes are valid
-   - Add a note about which shapes have width (sheet, plate, coil) vs. not (bar, tube)
-   ```
-
-4. **Apply the fix:**
-   - Update the `calculate_area_m2` function in `steel_utils.py`
-   - Save the file
-
-5. **Create a regression test:**
-   ```
-   #file:steel_utils.py Create a test that verifies calculate_area_m2 raises 
-   ValueError when width is None, and succeeds when width is provided.
-   Add to test_inventory.py.
+4. **Verify:**
+   ```bash
+   pytest tests/test_inventory.py -v -k "area"
    ```
 
 **Expected Outcome:**
 - Bug fixed with proper validation
-- Understanding of root cause
-- Regression test in place
-- Appreciation for context in debugging
+- Root cause understood
+- Regression test prevents recurrence
+- Plan → Agent debugging workflow
 
 ---
 
-### Exercise 3.2: Trace Request Flow for Failed Validation (5 min)
+### Exercise 4.2: Trace and Fix Request Flow Bug (5 min)
 
-**Task:** Debug why negative quantities aren't being rejected
+**Task:** Debug multi-file bugs with comprehensive analysis
 
-A user reported they can create products with negative quantities, which shouldn't be allowed.
+**Mode:** Plan mode → Agent mode  
+**Why:** Multi-file bugs need comprehensive analysis
 
-1. **Start by tracing the request flow:**
+**Scenario:** Users report they can create products with negative quantities.
+
+1. **Trace the flow with Plan:**
    
-   In Ask mode:
+   Switch to **Plan mode**:
    ```
-   #codebase When a user creates a product with quantity=-10, 
-   trace the complete request flow:
+   #codebase
+   
+   When a user creates a product with quantity=-10, trace the request flow:
    
    1. Which endpoint receives the request?
    2. What model validates the input?
    3. What database method stores it?
    4. Where should validation happen?
    5. Why isn't negative quantity being rejected?
+   6. What's the proper fix location?
    
-   Show me the exact code path and identify the missing validation.
+   Provide the exact code path and identify the missing validation.
    ```
-
-2. **Review the flow analysis:**
-   - Does Copilot identify all the layers?
-   - Where is validation missing?
-
-3. **Ask for the fix:**
-   ```
-   #file:models.py Add validation to the SteelProduct and SteelProductCreate models 
-   to ensure quantity is always >= 0. Use Pydantic's Field validator.
    
-   Also add validation for SteelProductUpdate to prevent updating to negative quantity.
-   ```
+   - Review the flow analysis
+   - Identify validation gap
+   - Understand layered architecture
 
-4. **Apply the fix and test:**
-   - Update `models.py`
-   - Start the server: `uvicorn app.main:app --reload`
-   - Try to create a product with negative quantity in Swagger UI
-   - Verify it's rejected with 422 status
+2. **Fix with Agent:**
+   
+   Switch to **Agent mode**:
+   ```
+   #file:models.py
+   
+   Add validation to prevent negative quantities:
+   
+   - SteelProductCreate: quantity must be >= 0
+   - SteelProductUpdate: quantity must be >= 0 (if provided)
+   - Use Pydantic Field validators
+   - Add descriptive error messages
+   ```
+   
+   - Watch Agent add validation
+
+3. **Test the fix:**
+   - Start server: `uvicorn app.main:app --reload`
+   - Try creating product with quantity=-10 in Swagger UI
+   - Verify 422 status with clear error message
 
 **Expected Outcome:**
-- Traced bug through multiple files
-- Identified exact validation gap
-- Implemented model-level validation
-- Verified fix in running application
+- Bug traced through multiple layers
+- Validation added at proper layer (model)
+- Understanding of request flow
+- Verified in running application
 
 ---
 
-### Exercise 3.3: Debug Incomplete Weight Calculations (5 min)
+### Exercise 4.3: Debug and Implement Missing Features (5 min)
 
-**Task:** Investigate why weight calculation fails for coils, bars, and tubes
+**Task:** Use Plan → Agent for complex implementations
 
-1. **Ask Copilot about the issue:**
+**Mode:** Plan mode → Agent mode  
+**Why:** Complex implementation needs design first
+
+**Scenario:** Weight calculation fails for coils, bars, and tubes (NotImplementedError).
+
+1. **Plan the implementation:**
    
-   In Ask mode:
+   Switch to **Plan mode**:
    ```
-   #file:steel_utils.py #file:calculations.py 
+   #file:steel_utils.py #file:calculations.py
    
-   Users are getting "NotImplementedError" when calculating weight for 
-   coils, bars, and tubes. 
+   Users get NotImplementedError for coils, bars, and tubes.
    
-   Tasks:
-   1. Explain what calculations are needed for each shape:
+   Plan the implementation:
+   1. What calculations are needed for each shape?
       - Coil: rolled sheet, treat as sheet
-      - Bar: solid circular cross-section (use thickness as diameter)
+      - Bar: solid circular cross-section (thickness = diameter)
       - Tube: hollow circular cross-section (need inner and outer diameter)
-   2. Provide the mathematical formulas
-   3. Implement calculate_weight_kg for these three shapes
-   4. Consider: how do we handle tube inner diameter (we only have thickness)?
-   ```
-
-2. **Review the proposed solution:**
-   - Are the formulas correct?
-   - Is the tube implementation reasonable given our data model?
-
-3. **Implement the fix:**
+   2. What are the mathematical formulas?
+   3. For tubes, we only have thickness - what's a reasonable approach?
+   4. What assumptions should we document?
+   5. What validation is needed?
    
-   If the tube implementation needs more data:
+   Provide formulas and implementation approach.
    ```
-   For tubes, we don't have inner diameter. What's a reasonable approach?
-   Should we:
-   a) Assume thickness is wall thickness and need to add an inner_diameter field?
-   b) Assume thickness is the full diameter and calculate as solid bar?
-   c) Make an assumption about wall thickness percentage?
    
-   Recommend the best approach for a production system.
+   - Review the formulas
+   - Understand the tube limitation
+   - Decide on reasonable assumptions
+
+2. **Implement with Agent:**
+   
+   Switch to **Agent mode**:
    ```
+   #file:steel_utils.py
+   
+   Implement calculate_weight_kg for coil, bar, and tube:
+   
+   - Coil: treat as sheet (same calculation)
+   - Bar: solid cylinder using thickness as diameter
+   - Tube: [use approach from plan - document assumption]
+   - Add comments explaining formulas
+   - Add comments documenting assumptions (especially for tube)
+   - Update docstring with all supported shapes
+   ```
+   
+   - Watch Agent implement calculations
 
-4. **Apply the implementation:**
-   - Update `calculate_weight_kg` in `steel_utils.py`
-   - Add comments explaining assumptions
-
-5. **Test it:**
-   - Use the `/calculations/weight` endpoint in Swagger UI
-   - Test with coil, bar, and tube shapes
+3. **Test in Swagger:**
+   - Use `/calculations/weight` endpoint
+   - Test with coil shape
+   - Test with bar shape
+   - Test with tube shape
+   - Verify reasonable results
 
 **Expected Outcome:**
-- Weight calculations implemented for all shapes
+- Complete weight calculations implemented
+- Documented assumptions
 - Understanding of geometric calculations
-- Awareness of data model limitations
-- Documented assumptions in code
+- All shapes now supported
 
 ---
 
-### Exercise 3.4: Create Bug Report with Reproduction Steps (4 min)
+### Exercise 4.4: Document Bug with Plan Mode (4 min)
 
-**Task:** Document the duplicate product code bug properly
+**Task:** Use Plan mode for analysis and documentation
 
-1. **Ask Copilot to help create a bug report:**
-   
-   In Ask mode:
-   ```
-   #file:database.py #file:inventory.py 
-   
-   Create a detailed bug report for the missing duplicate product code validation.
-   
-   Include:
-   1. Bug title and severity
-   2. Steps to reproduce
-   3. Expected behavior
-   4. Actual behavior
-   5. Root cause (which file and function)
-   6. Suggested fix location
-   7. Impact analysis (what could go wrong?)
-   8. Sample curl commands to reproduce
-   
-   Format as a GitHub issue in Markdown.
-   ```
+**Mode:** Plan mode  
+**Why:** Analysis and documentation task
 
-2. **Review the bug report:**
-   - Is it detailed enough for another developer?
-   - Does it include reproduction steps?
-   - Is the suggested fix clear?
+**Scenario:** Document the duplicate product code bug for the team.
 
-3. **Key Learning:**
-   - Good bug reports save debugging time
-   - Reproduction steps are critical
-   - Root cause analysis prevents partial fixes
+Switch to **Plan mode**:
+```
+#file:database.py #file:inventory.py
+
+Create a detailed bug report for the missing duplicate product code validation.
+
+Include:
+1. Bug title and severity level
+2. Steps to reproduce (with example curl commands)
+3. Expected behavior
+4. Actual behavior (what happens now)
+5. Root cause analysis (which file and function)
+6. Suggested fix location and approach
+7. Impact analysis (what could go wrong in production)
+8. Related code that might have similar issues
+
+Format as a professional GitHub issue in Markdown.
+```
+
+Review the bug report:
+- Is it detailed enough for another developer?
+- Are reproduction steps clear?
+- Is root cause analysis accurate?
+- Save this for future implementation
 
 **Expected Outcome:**
 - Professional bug report created
-- Understanding of bug documentation best practices
-- Clear reproduction steps for testing
+- Understanding of proper bug documentation
+- Clear path to fix for development team
+- Reusable template for future bugs
 
 ---
 
-### Module 3 Summary
+### Part 4 Summary
 
-You've learned to:
-1. **Investigate bugs systematically** with root cause analysis
-2. **Trace request flow** across multiple files
-3. **Debug incomplete implementations** with proper formulas
-4. **Document bugs professionally** with reproduction steps
+You've learned **debugging workflows with Copilot:**
 
-**Key Insight:** Debugging is about understanding context, not just fixing symptoms. Use Copilot to trace flows and analyze root causes.
+1. **Plan → Agent for bug fixes** (Ex 4.1, 4.2, 4.3)
+   - Plan analyzes root cause
+   - Agent implements the fix
+   - Prevents band-aid solutions
+   
+2. **Plan for documentation** (Ex 4.4)
+   - Professional bug reports
+   - Clear communication
+   
+3. **Multi-file debugging**
+   - Trace through layers
+   - Fix at the right place
+   - Comprehensive solutions
+
+**Key Workflow:**
+```
+Bug Report → Plan (analyze) → Agent (fix) → Verify → Document
+```
+
+**Key Insight:** Strategic debugging means understanding *why* before fixing *what*. Plan mode prevents hasty fixes that miss root causes!
 
 ---
 
-## Part 4: Code Quality & Refactoring Patterns (30 minutes)
+## Part 5: Code Quality & Refactoring Patterns (30 minutes)
 
 ### Introduction: Safe Refactoring with AI
 
@@ -1463,34 +1832,27 @@ You've learned to:
 
 ---
 
-## Part 5: Plan Mode for Complex Tasks (25 minutes)
+## Part 6: Complex Feature Implementation (30 minutes)
 
-### Introduction: Strategic Planning with Copilot
+### Introduction: Combining Modes for Complex Work
 
-**Plan mode** is designed for research, design, and strategic thinking. Unlike direct coding or Agent mode, Plan mode focuses on **breaking down complex tasks, researching approaches, and creating actionable roadmaps** before writing code.
+Complex features require the full spectrum of Copilot modes: Plan for design, Agent for implementation, and Ask for refinement. This module brings together everything you've learned.
 
-**When to use Plan mode:**
-- Complex features requiring multiple steps
-- Unfamiliar technologies or patterns
-- Need to understand trade-offs between approaches
-- Want to design before implementing
-- Multi-file changes with dependencies
+**Workflow:** Plan → Agent → Verify → Refine
 
 ---
 
-### Exercise 5.1: Plan Batch Operations Endpoint (8 min)
+### Exercise 6.1: Plan Batch Operations Feature (10 min)
 
 **Task:** Design a comprehensive batch operations API
 
-**Scenario:** BlueScope wants to add batch operations to create, update, or delete multiple products in a single API call.
+**Mode:** Plan mode  
+**Why:** Complex feature needs thorough planning
 
-1. **Switch to Plan mode:**
-   - Open Copilot Chat
-   - Select **Plan mode** from the mode selector
+**Scenario:** The warehouse needs to process multiple products in a single API call (bulk imports, bulk updates).
 
-2. **Ask for a comprehensive plan:**
+1. **Switch to Plan mode and design the feature:**
    
-   In Plan mode:
    ```
    #codebase I need to add batch operations to the steel inventory API.
    
@@ -1501,7 +1863,7 @@ You've learned to:
    
    Design considerations:
    - What if some operations succeed and others fail?
-   - Should it be transactional (all-or-nothing)?
+   - Should it be transactional (all-or-nothing) or allow partial success?
    - How to return detailed results for each operation?
    - What's the maximum batch size?
    - How to handle duplicate product codes in the batch?
@@ -1509,7 +1871,7 @@ You've learned to:
    
    Create a detailed implementation plan including:
    1. API endpoint design (request/response models)
-   2. Error handling strategy
+   2. Error handling strategy (partial success approach)
    3. Validation approach
    4. Database changes needed
    5. Testing strategy
@@ -1517,252 +1879,47 @@ You've learned to:
    7. Potential edge cases
    ```
 
-3. **Review the plan:**
-   - Does it address all your requirements?
-   - Are the steps actionable?
-   - Does it consider edge cases?
+2. **Review and refine the plan:**
+   - Does it address all requirements?
+   - Are error handling strategies clear?
+   - Is the implementation order logical?
 
-4. **Iterate on the plan:**
-   
-   If something is unclear or you want more detail:
+3. **Ask for clarification if needed:**
    ```
-   I like the plan, but can you elaborate on the error handling strategy?
+   I like the plan. Can you elaborate on the partial success approach?
    
    Specifically:
-   - Should partial success be allowed?
-   - How should the response format look for mixed success/failure?
-   - Should failed operations roll back successful ones?
+   - What should the response format look like?
+   - How should we handle rollback scenarios?
+   - Should we validate all items before processing any?
    ```
 
-5. **Refine until satisfied:**
-   - Keep asking questions until the plan is complete
-   - Don't implement yet - focus on design
-
 **Expected Outcome:**
-- Comprehensive plan for batch operations
+- Comprehensive implementation plan
 - Clear API design with request/response models
 - Error handling strategy defined
-- Implementation steps identified
-- Ready to implement (in next module!)
+- Ready to implement
 
 ---
 
-### Exercise 5.2: Design Low-Stock Alert System (7 min)
+### Exercise 6.2: Implement with Agent Mode (15 min)
 
-**Task:** Plan a notification system for low inventory
+**Task:** Let Agent implement the batch operations plan
 
-**Scenario:** The warehouse manager needs automatic alerts when products fall below threshold quantities.
+**Mode:** Agent mode  
+**Why:** Clear plan exists, ready for autonomous execution
 
-1. **Create a new Plan mode session:**
+1. **Switch to Agent mode and give implementation task:**
    
-   In Plan mode:
    ```
-   #codebase Design a low-stock alert system for the inventory API.
+   #codebase Implement the batch operations endpoints based on our plan.
    
-   Features needed:
-   1. Endpoint to get all products below a threshold
-   2. Configurable thresholds per product or per warehouse
-   3. Alert severity levels (low, critical)
-   4. Historical tracking (when did stock go low?)
-   5. Notification mechanism (email, webhook, or both?)
-   
-   Research and plan:
-   - Data model changes needed
-   - New endpoints required
-   - Background job for checking stock levels?
-   - Integration points for notifications
-   - Configuration storage
-   - Testing approach
-   
-   Consider:
-   - Should thresholds be per-product or global?
-   - How often should we check for low stock?
-   - What if the same product triggers alerts multiple times?
-   - Do we need alert history?
-   
-   Provide a phased implementation plan (MVP first, then enhancements).
-   ```
-
-2. **Review the phased approach:**
-   - Does the MVP deliver value?
-   - Are enhancements prioritized correctly?
-   - Is the plan realistic?
-
-3. **Ask about specific technical decisions:**
-   ```
-   For the notification mechanism, what are the pros/cons of:
-   1. Synchronous webhook on every update
-   2. Background job checking periodically
-   3. Event-driven architecture with message queue
-   
-   Which should we choose for this application?
-   ```
-
-4. **Document the final plan:**
-   - Note the key decisions
-   - Save the implementation order
-   - Identify dependencies
-
-**Expected Outcome:**
-- Complete alert system design
-- Phased implementation plan (MVP + enhancements)
-- Technical decisions made with rationale
-- Clear next steps for implementation
-
----
-
-### Exercise 5.3: Plan Advanced Filtering with Pagination (5 min)
-
-**Task:** Design a robust search and filter system
-
-**Scenario:** Users need to search inventory with multiple filters and paginated results.
-
-1. **Plan the filtering system:**
-   
-   In Plan mode:
-   ```
-   #file:inventory.py #file:models.py
-   
-   Design an advanced filtering and pagination system for GET /inventory/.
-   
-   Filter capabilities:
-   - By grade (multiple)
-   - By shape (multiple)
-   - By location (multiple)
-   - By quantity range (min/max)
-   - By dimension ranges
-   - By last updated date range
-   - Text search in product_code
-   
-   Pagination:
-   - Limit and offset
-   - Or cursor-based?
-   - Default page size: 20
-   - Maximum page size: 100
-   
-   Sorting:
-   - By any field
-   - Ascending or descending
-   - Default: last_updated descending
-   
-   Plan:
-   1. Query parameter design
-   2. Filter logic in database layer
-   3. Response format with pagination metadata
-   4. Performance considerations
-   5. Validation of filter parameters
-   
-   Show me the request/response model and implementation steps.
-   ```
-
-2. **Review the query parameter design:**
-   - Is it intuitive?
-   - Does it support all requirements?
-   - Is it RESTful?
-
-3. **Ask about implementation challenges:**
-   ```
-   What are the biggest challenges in implementing this filtering system?
-   How do we keep the code maintainable as filters grow?
-   ```
-
-**Expected Outcome:**
-- Complete filtering and pagination design
-- Query parameter structure defined
-- Implementation challenges identified
-- Ready for implementation
-
----
-
-### Exercise 5.4: Iterate on a Plan Based on Constraints (5 min)
-
-**Task:** Refine a plan when new constraints emerge
-
-**Scenario:** After planning batch operations, you learn the database will be migrated to PostgreSQL soon.
-
-1. **Revisit the batch operations plan:**
-   
-   In Plan mode (same chat as Exercise 5.1):
-   ```
-   New information: We're migrating from in-memory database to PostgreSQL 
-   within 2 months.
-   
-   How should this affect the batch operations implementation?
-   
-   Consider:
-   - Should we design for transactions now?
-   - Will the implementation need significant changes?
-   - Should we wait for PostgreSQL migration?
-   - Or implement with future migration in mind?
-   
-   Revise the implementation plan to account for this.
-   ```
-
-2. **Review the revised plan:**
-   - Does it balance current needs with future changes?
-   - Is there a migration path?
-
-3. **Key Learning:**
-   - Plans should be flexible
-   - Consider future constraints early
-   - Sometimes it's worth waiting or phasing differently
-
-**Expected Outcome:**
-- Revised plan accounting for database migration
-- Understanding of how to adjust plans for new constraints
-- Balance between current needs and future changes
-
----
-
-### Module 5 Summary
-
-You've learned to:
-1. **Use Plan mode** for complex feature design
-2. **Create phased implementation plans** (MVP first)
-3. **Design APIs** with clear request/response models
-4. **Adapt plans** when constraints change
-
-**Key Insight:** Planning before coding saves time. Use Plan mode to think through complexity before writing a single line of code.
-
----
-
-## Part 6: Agent Mode Deep-Dive (35 minutes)
-
-### Introduction: Autonomous Development with Agent Mode
-
-**Agent mode** is Copilot's most autonomous mode. It can read files, write code, run commands, and make decisions on its own. Unlike Plan mode (research) or Ask mode (answers), Agent mode **executes** multi-step tasks with minimal supervision.
-
-**When to use Agent mode:**
-- Implementing a clear plan from Plan mode
-- Multi-file changes with known requirements
-- Repetitive but complex tasks
-- Refactoring across multiple files
-- When you want to review final results rather than guide each step
-
-**Important:** Agent mode works best with clear instructions and constraints. You'll still review and approve changes.
-
----
-
-### Exercise 6.1: Implement Batch Operations with Agent (12 min)
-
-**Task:** Use Agent mode to implement the batch operations plan from Exercise 5.1
-
-1. **Switch to Agent mode:**
-   - Open Copilot Chat
-   - Select **Agent mode** from the mode selector
-
-2. **Give Agent the implementation task:**
-   
-   In Agent mode:
-   ```
-   #codebase Implement the batch operations endpoints we planned earlier.
-   
-   Requirements (based on our plan):
+   Requirements:
    1. Create POST /inventory/batch endpoint for creating multiple products
       - Accept list of SteelProductCreate objects
-      - Return list of results (success/failure for each)
+      - Return list of results with success/failure for each
       - Continue processing even if some fail
-      - Response format: { "successful": [...], "failed": [...] }
+      - Response format: { "successful": [...], "failed": [{product, error}] }
    
    2. Create PATCH /inventory/batch endpoint for updating multiple products
       - Accept list of { "id": int, "updates": SteelProductUpdate }
@@ -1773,12 +1930,11 @@ You've learned to:
       - Same response format
    
    4. Add comprehensive error handling
-   
    5. Add validation for batch size (max 100 items)
    
    6. Create tests for all three endpoints covering:
       - Successful batch operations
-      - Partial failures
+      - Partial failures (some succeed, some fail)
       - Validation errors
       - Empty batches
       - Oversized batches
@@ -1790,273 +1946,240 @@ You've learned to:
    - Add all tests to test_inventory.py
    - Follow existing code style and patterns
    
-   Please implement all of this, then provide a summary of changes made.
+   Implement all of this end-to-end.
    ```
 
-3. **Monitor Agent progress:**
-   - Agent will show what it's doing in real-time
-   - Watch as it reads files, writes code, creates tests
-   - You can stop it at any time if it goes off track
+2. **Monitor Agent progress:**
+   - Watch as it reads files and makes changes
+   - You can stop it if it goes off track
 
-4. **Review Agent's changes:**
-   - Read through all modified files
-   - Check if the implementation matches requirements
-   - Verify tests are comprehensive
+3. **Review Agent's changes:**
+   - Check all modified files
+   - Verify implementation matches plan
 
-5. **Test the implementation:**
+4. **Run tests:**
    ```bash
-   # Run tests
    pytest tests/test_inventory.py -v -k "batch"
-   
-   # Start server
+   ```
+
+5. **Start server and test in Swagger UI:**
+   ```bash
    uvicorn app.main:app --reload
    ```
-
-6. **Test in Swagger UI:**
+   
    - Go to http://localhost:8000/docs
-   - Try POST /inventory/batch with 3 products (2 valid, 1 duplicate)
-   - Verify partial success handling
-   - Try PATCH /inventory/batch
-   - Try DELETE /inventory/batch
+   - Try POST /inventory/batch with mixed valid/invalid products
+   - Verify partial success handling works
 
-7. **If Agent made mistakes:**
+6. **If issues arise, use Ask or Agent to fix:**
    
-   In the same Agent mode chat:
+   In Ask mode:
    ```
-   The batch create endpoint has an issue: [describe the problem]
+   The batch create has an issue: [describe problem]
+   How should I fix this?
+   ```
    
-   Please fix this by [specific correction needed]
+   Or in Agent mode:
+   ```
+   Fix the batch create issue: [describe problem]
    ```
 
 **Expected Outcome:**
 - Batch operations fully implemented
 - Tests passing
-- Endpoints working in Swagger UI
-- Understanding of Agent mode workflow
+- Partial success handling working
+- All three endpoints functional
 
 ---
 
-### Exercise 6.2: Implement Low-Stock Alerts Autonomously (10 min)
+### Exercise 6.3: Test and Refine (5 min)
 
-**Task:** Let Agent implement the low-stock alert system MVP
+**Task:** Verify complete functionality and refine as needed
 
-1. **Start a new Agent mode session:**
+1. **Comprehensive testing in Swagger UI:**
    
-   In Agent mode:
+   Test POST /inventory/batch:
+   - Batch with all valid products
+   - Batch with all invalid products
+   - Mixed batch (some valid, some duplicate codes, some invalid data)
+   - Empty batch
+   - Oversized batch (> 100 items)
+   
+   Test PATCH /inventory/batch:
+   - Valid updates
+   - Updates with non-existent IDs
+   - Mixed valid/invalid
+   
+   Test DELETE /inventory/batch:
+   - Valid deletions
+   - Non-existent IDs
+   - Mixed
+
+2. **Review response format:**
+   - Is success/failure clear?
+   - Are error messages helpful?
+   - Can you tell which specific items failed and why?
+
+3. **If refinements needed:**
+   
+   Use Ask mode to understand what to change:
    ```
-   #codebase Implement the MVP for the low-stock alert system we planned.
-   
-   MVP Features:
-   1. GET /inventory/low-stock endpoint
-      - Query parameter: threshold (default: 50)
-      - Returns products with quantity < threshold
-      - Sorted by quantity ascending (most critical first)
-      - Include percentage below threshold
-      - Include calculated "days until stockout" (assume 5 units/day usage)
-   
-   2. Add a LowStockProduct response model with:
-      - All SteelProduct fields
-      - current_quantity: int
-      - threshold: int
-      - percentage_below: float
-      - days_until_stockout: float
-   
-   3. Add method to database.py:
-      - get_low_stock(threshold: int) -> List[SteelProduct]
-   
-   4. Create tests for:
-      - Default threshold
-      - Custom threshold
-      - Empty results when no low stock
-      - Correct sorting
-      - Correct calculations
-   
-   Implementation constraints:
-   - Add model to models.py
-   - Add endpoint to inventory.py
-   - Add database method to database.py
-   - Add tests to test_inventory.py
-   - Use existing code patterns
-   
-   Implement all of this end-to-end.
+   The error messages for failed batch items aren't descriptive enough.
+   How can I improve them to include:
+   - Which item failed (by product_code or index)
+   - Specific validation error
+   - Example of correct format
    ```
-
-2. **Let Agent work:**
-   - Don't interrupt unless it's clearly going wrong
-   - Observe how it plans its own steps
-
-3. **Review and test:**
-   ```bash
-   pytest tests/test_inventory.py -v -k "low_stock"
-   ```
-
-4. **Test in Swagger UI:**
-   - Try GET /inventory/low-stock
-   - Try with different threshold values
-   - Verify calculations are correct
+   
+   Then use Agent mode to apply the improvements.
 
 **Expected Outcome:**
-- Low-stock endpoint working
-- Calculations correct
-- Tests passing
-- Autonomous implementation successful
+- Fully tested batch operations
+- Clear success/failure reporting
+- Helpful error messages
+- Production-ready feature
 
 ---
 
-### Exercise 6.3: Add Filtering with Agent (8 min)
+### Part 6 Summary
 
-**Task:** Implement basic filtering for the inventory list endpoint
+You've implemented a complex feature using the complete workflow:
 
-1. **Use Agent mode for enhancement:**
-   
-   In Agent mode:
-   ```
-   #file:inventory.py #file:database.py
-   
-   Enhance GET /inventory/ endpoint with filtering capabilities.
-   
-   Add query parameters:
-   - grade: Optional[str] - filter by steel grade
-   - shape: Optional[str] - filter by shape
-   - location: Optional[str] - filter by warehouse location
-   - min_quantity: Optional[int] - minimum quantity
-   - max_quantity: Optional[int] - maximum quantity
-   
-   Implementation:
-   1. Update get_all_products endpoint to accept these parameters
-   2. Add get_filtered() method to database.py that applies filters
-   3. Return filtered results
-   4. Handle case where no filters are provided (return all)
-   
-   Testing:
-   - Test each filter individually
-   - Test combining multiple filters
-   - Test with no filters
-   - Test with no matching results
-   
-   Add to existing files following the current patterns.
-   ```
+1. **Plan mode:** Strategic design and architecture
+2. **Agent mode:** Autonomous implementation
+3. **Ask mode:** Refinement and fixes
+4. **Verification:** Comprehensive testing
 
-2. **Review Agent's implementation:**
-   - Check the filtering logic
-   - Verify it handles all cases
+**Key Insight:** Complex features are easier when you break them into: Design → Implement → Verify → Refine. Each step uses the right mode for the job!
 
-3. **Test the filtering:**
-   ```bash
-   pytest tests/test_inventory.py -v -k "filter"
-   ```
+---
 
-4. **Test in Swagger UI:**
-   - Filter by grade: ?grade=A36
-   - Filter by location: ?location=Warehouse-A
-   - Combine filters: ?grade=304&shape=sheet
-   - Test with no matches
+## Part 7: Putting It All Together (10 minutes)
+
+### Introduction: Your Turn!
+
+Time to demonstrate everything you've learned. You'll implement a feature with minimal guidance, choosing the right modes and workflows yourself.
+
+---
+
+### Exercise 7.1: Low-Stock Alert System - You Choose! (10 min)
+
+**Task:** Implement a low-stock alert system using the modes YOU think are appropriate
+
+**Scenario:** The warehouse manager needs automatic alerts when products fall below threshold quantities.
+
+**Requirements:**
+1. GET /inventory/low-stock endpoint
+   - Query parameter: threshold (default: 50)
+   - Returns products with quantity < threshold
+   - Sorted by quantity ascending (most critical first)
+   - Include additional calculated fields:
+     - percentage_below: float (how far below threshold)
+     - severity: string ("critical" if < 20% of threshold, "warning" otherwise)
+
+2. Add a LowStockProduct response model
+
+3. Add method to database.py: get_low_stock(threshold: int)
+
+4. Create comprehensive tests
+
+**Your Decisions:**
+- Should you start with Plan mode to design it? Or go straight to implementation?
+- Use Agent mode for implementation? Or Ask mode with manual application?
+- How will you test it?
+- What edge cases should you consider?
+
+**Instructions:**
+1. **Choose your approach** - there's no single right answer!
+2. **Implement the feature** using whatever modes make sense
+3. **Test thoroughly** - unit tests AND Swagger UI
+4. **Refine as needed** - use Ask/Agent to fix issues
+
+**Guiding Questions:**
+- Is the requirement clear enough to skip planning?
+- Is this a good candidate for autonomous Agent implementation?
+- Do you need to research anything first?
+
+**Verify Your Solution:**
+- [ ] Endpoint returns correct products below threshold
+- [ ] Default threshold of 50 works
+- [ ] Custom thresholds work
+- [ ] Percentage calculation is correct
+- [ ] Severity logic is correct (critical vs warning)
+- [ ] Products sorted by quantity ascending
+- [ ] Tests cover all scenarios
+- [ ] Works in Swagger UI
+
+**Time Challenge:** Can you complete this in 10 minutes using what you've learned?
 
 **Expected Outcome:**
-- Filtering working for all parameters
-- Can combine multiple filters
-- Tests comprehensive
-- Agent handled end-to-end implementation
+- Working low-stock endpoint
+- Comprehensive tests
+- Confidence in mode selection
+- Demonstration of learned skills
+- Pride in autonomous work!
 
 ---
 
-### Exercise 6.4: Handle Agent Errors and Course-Correct (5 min)
+### Part 7 Summary
 
-**Task:** Learn to guide Agent when it makes mistakes
+You've demonstrated:
+- **Autonomous mode selection** - choosing the right tool for the job
+- **Independent implementation** - completing features with minimal guidance
+- **Complete workflow** - design, implement, test, verify
+- **Production-ready code** - with tests and error handling
 
-**Scenario:** Intentionally give Agent an ambiguous instruction to see how to correct it.
-
-1. **Give Agent an ambiguous task:**
-   
-   In Agent mode:
-   ```
-   #file:inventory.py Add sorting to the inventory list endpoint.
-   ```
-   
-   (Note: This is vague - no sort fields specified, no direction specified)
-
-2. **Observe what Agent does:**
-   - What assumptions does it make?
-   - What did it choose to sort by?
-
-3. **Provide correction:**
-   ```
-   Good attempt, but I need more specific sorting:
-   
-   - Add query parameter: sort_by (field name)
-   - Add query parameter: sort_order (asc or desc)
-   - Supported sort fields: product_code, quantity, last_updated, grade, location
-   - Default: sort by last_updated descending
-   - Validate sort_by is a supported field
-   - Return 400 if invalid sort_by value
-   
-   Please update the implementation.
-   ```
-
-4. **Verify the correction:**
-   - Check if Agent fixed the issues
-   - Test in Swagger UI
-
-5. **Key Learning:**
-   - Vague instructions lead to assumptions
-   - Be specific with Agent mode
-   - Easy to course-correct in the same conversation
-
-**Expected Outcome:**
-- Understanding that Agent needs clear instructions
-- Ability to correct Agent's path
-- Sorting properly implemented
+**Congratulations!** You've completed the GitHub Copilot Intermediate Lab. You can now:
+- Use Plan, Agent, and Ask modes effectively
+- Automate test creation
+- Debug systematically
+- Implement complex features
+- Work autonomously with AI assistance
 
 ---
 
-### Module 6 Summary
 
-You've learned to:
-1. **Use Agent mode** for autonomous multi-step implementation
-2. **Implement complete features** end-to-end with minimal guidance
-3. **Monitor and guide** Agent during execution
-4. **Course-correct** when Agent makes wrong assumptions
-
-**Key Insight:** Agent mode is powerful for execution when you know what you want. Use it to implement plans from Plan mode, not to figure out what to build.
-
----
 
 ## Lab Completion Checklist
 
 ### Skills Mastered
+- [ ] Understand when to use Plan, Agent, and Ask modes
 - [ ] Write specific, constrained prompts for better results
 - [ ] Use iterative refinement to improve code generation
 - [ ] Apply few-shot prompting with examples
+- [ ] Create Custom Instructions for persistent coding standards
+- [ ] Build Custom Prompts for reusable slash commands
+- [ ] Automate test generation with Plan → Agent workflow
 - [ ] Generate comprehensive parametrized test suites
 - [ ] Test error conditions and edge cases
-- [ ] Debug issues spanning multiple files
-- [ ] Trace request flow for root cause analysis
-- [ ] Extract validation logic into focused modules
+- [ ] Debug systematically with Plan → Agent workflow
+- [ ] Trace bugs through multiple files
+- [ ] Implement fixes with Agent mode autonomously
+- [ ] Extract and refactor code safely
 - [ ] Add comprehensive error handling
 - [ ] Implement structured logging
 - [ ] Refactor safely with test verification
-- [ ] Use Plan mode for complex feature design
-- [ ] Create phased implementation plans
-- [ ] Adapt plans when constraints change
-- [ ] Use Agent mode for autonomous implementation
-- [ ] Guide and course-correct Agent mode
+- [ ] Design complex features with Plan mode
+- [ ] Implement complex features with Agent mode
+- [ ] Choose appropriate modes for different tasks
 
 ### Deliverables Completed
-1. ✅ Enhanced validation with validators module
-2. ✅ Comprehensive test suite (parametrized, CRUD, error handling)
-3. ✅ Fixed bugs: area calculation, validation gaps, incomplete implementations
-4. ✅ Refactored code with extracted validators and logging
-5. ✅ Batch operations endpoints (create, update, delete)
-6. ✅ Low-stock alerts endpoint with calculations
-7. ✅ Filtering and sorting for inventory list
-8. ✅ Professional bug reports and documentation
+1. ✅ Custom Instructions for project coding standards
+2. ✅ Custom Prompts library (slash commands)
+3. ✅ Comprehensive automated test suite
+4. ✅ Fixed bugs systematically (area calculation, validation, weight calculations)
+5. ✅ Refactored code with improved structure
+6. ✅ Batch operations feature (create, update, delete)
+7. ✅ Low-stock alerts endpoint
+8. ✅ Professional documentation and bug reports
 
 ### Key Metrics
+- **Modes Mastered:** Plan, Agent, Ask - all three
 - **Test Coverage:** Significantly increased from basic lab
 - **Code Quality:** Improved with validation, logging, error handling
 - **Features Added:** 5+ new endpoints and capabilities
 - **Bugs Fixed:** 6+ issues resolved
-- **Refactoring:** Multiple modules improved
+- **Workflow Efficiency:** Plan → Agent automation mastered
 
 ---
 
@@ -2226,8 +2349,8 @@ Finalize: Document with [specific details]
 2. **Expand Your Custom Setup**
    - Add more domain-specific instructions for your industry
    - Create prompts for your most repetitive tasks
-   - Share your .instructions.md and .prompts.md files with your team
-   - Version control your custom configurations
+   - Share your `.instructions.md` and `.prompt.md` files with your team
+   - Version control your custom configurations (`.github/instructions/` and `.github/prompts/`)
 
 3. **Advanced Integrations**
    - Integrate custom instructions with CI/CD pipelines
