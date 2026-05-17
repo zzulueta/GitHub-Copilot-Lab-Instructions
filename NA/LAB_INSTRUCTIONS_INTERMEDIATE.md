@@ -1,6 +1,6 @@
 # GitHub Copilot Intermediate Lab Instructions
-**Duration:** 2.5 hours  
-**Level:** Intermediate (Completed Basic Lab or equivalent experience)
+**Duration:** 3.0 hours  
+**Level:** Intermediate 
 
 ---
 
@@ -447,11 +447,11 @@ You've learned three powerful prompting strategies:
 
 ---
 
-## Part 2.4: Persisting Your Prompting Strategy (40 minutes)
+## Part 3: Persisting Your Prompting Strategy (40 minutes)
 
 ### Introduction: Making Your Preferences Persistent
 
-In Part 1, you learned how to craft effective prompts. But what if you want Copilot to **always** follow certain patterns without repeating yourself every time? This is where **Custom Instructions** and **Custom Prompts** come in.
+In Part 2, you learned how to craft effective prompts. But what if you want Copilot to **always** follow certain patterns without repeating yourself every time? This is where **Custom Instructions** and **Custom Prompts** come in.
 
 **Two complementary features:**
 - **Custom Instructions** = Persistent context ("Always do X") - PASSIVE background context
@@ -487,7 +487,7 @@ Custom Instructions are markdown files that provide **persistent context** to Co
 
 ---
 
-### Exercise 2.4.1: Create Always-On Workspace Instructions (6 min)
+### Exercise 3.1: Create Always-On Workspace Instructions (6 min)
 
 **Task:** Define project-wide coding standards that apply to ALL Copilot interactions
 
@@ -558,7 +558,7 @@ Custom Instructions are markdown files that provide **persistent context** to Co
 
 ---
 
-### Exercise 2.4.2: Create File-Based Instructions with Patterns (8 min)
+### Exercise 3.2: Create File-Based Instructions with Patterns (8 min)
 
 **Task:** Create specialized instructions that apply only to specific file types or locations
 
@@ -683,7 +683,7 @@ Custom Instructions are markdown files that provide **persistent context** to Co
 
 ---
 
-### Exercise 2.4.3: Use the Agent Customizations Editor (3 min)
+### Exercise 3.3: Use the Agent Customizations Editor (3 min)
 
 **Task:** Discover and manage instructions through the VS Code UI
 
@@ -719,7 +719,7 @@ Custom Instructions are markdown files that provide **persistent context** to Co
 
 ---
 
-### Exercise 2.4.4: Instructions in Practice (3 min)
+### Exercise 3.4: Instructions in Practice (3 min)
 
 **Task:** Experience the power of "set it and forget it" context
 
@@ -781,7 +781,7 @@ Custom Prompts (also called slash commands) are **reusable templates** for commo
 
 ---
 
-### Exercise 2.4.5: Create Prompt Files for Common Tasks (9 min)
+### Exercise 3.5: Create Prompt Files for Common Tasks (9 min)
 
 **Task:** Build a library of prompt files for development tasks
 
@@ -928,7 +928,7 @@ Custom Prompts (also called slash commands) are **reusable templates** for commo
 
 ---
 
-### Exercise 2.4.6: Use Prompt Files with Slash Commands (5 min)
+### Exercise 3.6: Use Prompt Files with Slash Commands (5 min)
 
 **Task:** Invoke and use your custom prompt files
 
@@ -937,7 +937,7 @@ Custom Prompts (also called slash commands) are **reusable templates** for commo
    - Open `steel-inventory-api/app/utils/steel_utils.py`
    - Select the `validate_grade` function
    - Open Copilot Chat
-   - Type `/generate-tests for the selection and add them in #file:test_inventory.py ` and press Enter
+   - Type `/generate-tests for the selection and add them in #file:test_inventory.py` and press Enter
    - Review the generated tests - should be comprehensive and follow test instructions
    - Undo the changes after reviewing to keep the file clean for the next test
 
@@ -945,7 +945,7 @@ Custom Prompts (also called slash commands) are **reusable templates** for commo
    
    - Open `steel-inventory-api/app/routers/inventory.py`
    - Select a function that needs better error handling
-   - In Copilot Chat, type `/add-error-handling for the selection and add them in #file:inventory.py ` and press Enter
+   - In Copilot Chat, type `/add-error-handling for the selection and add them in #file:inventory.py` and press Enter
    - Observe how it adds validation, error messages, and proper status codes
    - Undo the changes after reviewing to keep the file clean for the next test
 
@@ -977,7 +977,7 @@ Custom Prompts (also called slash commands) are **reusable templates** for commo
 
 ---
 
-### Exercise 2.4.7: Use the Agent Customizations Editor for Prompts (3 min)
+### Exercise 3.7: Use the Agent Customizations Editor for Prompts (3 min)
 
 **Task:** Manage prompt files through the VS Code UI
 
@@ -1022,7 +1022,7 @@ Custom Prompts (also called slash commands) are **reusable templates** for commo
 
 ---
 
-### Exercise 2.4.8: Build Your Prompt Library (3 min)
+### Exercise 3.8: Build Your Prompt Library (3 min)
 
 **Task:** Think strategically about reusable prompts
 
@@ -1070,7 +1070,7 @@ Custom Prompts (also called slash commands) are **reusable templates** for commo
 
 ---
 
-### Part 2.4 Summary
+### Part 3 Summary
 
 You've learned to persist your prompting strategy with two powerful features:
 
@@ -1100,11 +1100,11 @@ You've learned to persist your prompting strategy with two powerful features:
 **Throughout the rest of this lab:**
 - Your instructions will automatically guide Copilot's suggestions
 - You can invoke your custom prompts with `/` commands whenever relevant
-- Notice how both features improve your efficiency in Parts 3-6
+- Notice how both features improve your efficiency in Parts 4-7
 
 ---
 
-## Part 3: Test Automation with Copilot (25 minutes)
+## Part 4: Test Automation with Copilot (25 minutes)
 
 ### Introduction: True Test Automation
 
@@ -1114,7 +1114,7 @@ Test automation means letting Copilot handle the entire test creation workflow -
 
 ---
 
-### Exercise 3.1: Automate Parametrized Tests (8 min)
+### Exercise 4.1: Automate Parametrized Tests (8 min)
 
 **Task:** Use Plan → Agent workflow to automatically create parametrized tests
 
@@ -1163,7 +1163,7 @@ Test automation means letting Copilot handle the entire test creation workflow -
    ```bash
    pytest tests/test_inventory.py::test_calculate_weight_parametrized -v
    ```
-   > Note: You need to enable the virtual environment before running pytest. Some tests may fail if the function isn't fully implemented yet - this is expected!.
+   > Note: You need to enable the virtual environment before running pytest. Some tests may fail if the function isn't fully implemented yet - this is expected!
 
 **Expected Outcome:**
 - Complete test automation workflow
@@ -1172,7 +1172,7 @@ Test automation means letting Copilot handle the entire test creation workflow -
 
 ---
 
-### Exercise 3.2: Automate CRUD Test Suite (8 min)
+### Exercise 4.2: Automate CRUD Test Suite (8 min)
 
 **Task:** Use Plan → Agent workflow for comprehensive CRUD testing
 
@@ -1222,7 +1222,7 @@ Test automation means letting Copilot handle the entire test creation workflow -
    ```
    
    - Note which tests fail (reveals missing features)
-   - This demonstrates tests driving development
+   - This demonstrates tests-driven development
 
 **Expected Outcome:**
 - 9-10 CRUD tests automatically added
@@ -1231,7 +1231,7 @@ Test automation means letting Copilot handle the entire test creation workflow -
 
 ---
 
-### Exercise 3.3: Automate Validation Tests (5 min)
+### Exercise 4.3: Automate Validation Tests (5 min)
 
 **Task:** Direct automation with Agent mode
 
@@ -1275,7 +1275,7 @@ pytest tests/test_inventory.py -v -k "invalid or negative or zero or missing"
 
 ---
 
-### Exercise 3.4: Analyze Coverage with Plan Mode (4 min)
+### Exercise 4.4: Analyze Coverage with Plan Mode (4 min)
 
 **Task:** Use Plan mode for analysis and strategic thinking
 
@@ -1309,19 +1309,19 @@ Review the analysis:
 
 ---
 
-### Part 3 Summary
+### Part 4 Summary
 
 You've learned **test automation workflows:**
 
-1. **Plan → Agent:** Complex test suites (Ex 3.1, 3.2)
+1. **Plan → Agent:** Complex test suites (Ex 4.1, 4.2)
    - Plan identifies all cases
    - Agent implements automatically
    
-2. **Direct Agent:** Simple test additions (Ex 3.3)
+2. **Direct Agent:** Simple test additions (Ex 4.3)
    - Clear requirements
    - No planning needed
    
-3. **Plan for Analysis:** Coverage gaps (Ex 3.4)
+3. **Plan for Analysis:** Coverage gaps (Ex 4.4)
    - Strategic thinking
    - Prioritization
 
@@ -1329,7 +1329,7 @@ You've learned **test automation workflows:**
 
 ---
 
-## Part 4: Advanced Debugging Workflows (20 minutes)
+## Part 5: Advanced Debugging Workflows (20 minutes)
 
 ### Introduction: Strategic Debugging
 
@@ -1339,7 +1339,7 @@ Debugging workflows benefit from strategic analysis (Plan mode) followed by auto
 
 ---
 
-### Exercise 4.1: Debug calculate_area_m2 Bug (6 min)
+### Exercise 5.1: Debug calculate_area_m2 Bug (6 min)
 
 **Task:** Use Plan → Agent workflow to understand and fix bugs systematically
 
@@ -1413,7 +1413,7 @@ Debugging workflows benefit from strategic analysis (Plan mode) followed by auto
 
 ---
 
-### Exercise 4.2: Trace and Fix Request Flow Bug (5 min)
+### Exercise 5.2: Trace and Fix Request Flow Bug (5 min)
 
 **Task:** Debug multi-file bugs with comprehensive analysis
 
@@ -1487,7 +1487,7 @@ Debugging workflows benefit from strategic analysis (Plan mode) followed by auto
 
 ---
 
-### Exercise 4.3: Debug and Implement Missing Features (5 min)
+### Exercise 5.3: Debug and Implement Missing Features (5 min)
 
 **Task:** Use Plan → Agent for complex implementations
 
@@ -1563,7 +1563,7 @@ Debugging workflows benefit from strategic analysis (Plan mode) followed by auto
 
 ---
 
-### Exercise 4.4: Document Bug with Plan Mode (4 min)
+### Exercise 5.4: Document Bug with Plan Mode (4 min)
 
 **Task:** Use Plan mode for analysis and documentation
 
@@ -1606,16 +1606,16 @@ Review the bug report:
 
 ---
 
-### Part 4 Summary
+### Part 5 Summary
 
 You've learned **debugging workflows with Copilot:**
 
-1. **Plan → Agent for bug fixes** (Ex 4.1, 4.2, 4.3)
+1. **Plan → Agent for bug fixes** (Ex 5.1, 5.2, 5.3)
    - Plan analyzes root cause
    - Agent implements the fix
    - Prevents band-aid solutions
    
-2. **Plan for documentation** (Ex 4.4)
+2. **Plan for documentation** (Ex 5.4)
    - Professional bug reports
    - Clear communication
    
@@ -1633,7 +1633,7 @@ Bug Report → Plan (analyze) → Agent (fix) → Verify → Document
 
 ---
 
-## Part 5: Code Quality & Refactoring Patterns (30 minutes)
+## Part 6: Code Quality & Refactoring Patterns (30 minutes)
 
 ### Introduction: Safe Refactoring with AI
 
@@ -1641,7 +1641,7 @@ Refactoring improves code structure without changing behavior. With Copilot, you
 
 ---
 
-### Exercise 5.1: Extract Validation Logic (10 min)
+### Exercise 6.1: Extract Validation Logic (10 min)
 
 **Task:** Refactor scattered validation into a dedicated module
 
@@ -1716,7 +1716,7 @@ Currently, validation logic is mixed throughout the codebase. Let's extract it p
 
 ---
 
-### Exercise 5.2: Add Comprehensive Error Handling (8 min)
+### Exercise 6.2: Add Comprehensive Error Handling (8 min)
 
 **Task:** Improve error handling in steel_utils.py
 
@@ -1798,7 +1798,7 @@ Currently, validation logic is mixed throughout the codebase. Let's extract it p
 
 ---
 
-### Exercise 5.3: Add Logging to Critical Operations (7 min)
+### Exercise 6.3: Add Logging to Critical Operations (7 min)
 
 **Task:** Add structured logging for debugging and monitoring
 
@@ -1880,7 +1880,7 @@ Currently, validation logic is mixed throughout the codebase. Let's extract it p
 
 ---
 
-### Exercise 5.4: Verify Refactoring with Tests (5 min)
+### Exercise 6.4: Verify Refactoring with Tests (5 min)
 
 **Task:** Ensure all refactoring hasn't broken functionality
 
@@ -1939,16 +1939,16 @@ Currently, validation logic is mixed throughout the codebase. Let's extract it p
 
 ---
 
-### Part 5 Summary
+### Part 6 Summary
 
 You've mastered **refactoring workflows with Copilot:**
 
-1. **Plan → Agent for refactoring** (Ex 5.1, 5.2, 5.3)
+1. **Plan → Agent for refactoring** (Ex 6.1, 6.2, 6.3)
    - Plan analyzes current state and designs strategy
    - Agent implements changes across multiple files
    - Automated execution prevents copy/paste errors
 
-2. **Manual verification** (Ex 5.4)
+2. **Manual verification** (Ex 6.4)
    - Run tests to verify refactoring
    - Use Plan → Agent to debug any failures
 
@@ -1967,7 +1967,7 @@ Complex Refactoring → Plan (analyze & design) → Agent (execute) → Verify (
 
 ---
 
-## Part 6: Complex Feature Implementation (30 minutes)
+## Part 7: Complex Feature Implementation (30 minutes)
 
 ### Introduction: Combining Modes for Complex Work
 
@@ -1977,7 +1977,7 @@ Complex features require the full spectrum of Copilot modes: Plan for design, Ag
 
 ---
 
-### Exercise 6.1: Plan Batch Operations Feature (10 min)
+### Exercise 7.1: Plan Batch Operations Feature (10 min)
 
 **Task:** Design a comprehensive batch operations API
 
@@ -2037,7 +2037,7 @@ Complex features require the full spectrum of Copilot modes: Plan for design, Ag
 
 ---
 
-### Exercise 6.2: Implement with Agent Mode (15 min)
+### Exercise 7.2: Implement with Agent Mode (15 min)
 
 **Task:** Let Agent implement the batch operations plan
 
@@ -2127,7 +2127,7 @@ Complex features require the full spectrum of Copilot modes: Plan for design, Ag
 
 ---
 
-### Exercise 6.3: Test and Refine (5 min)
+### Exercise 7.3: Test and Refine (5 min)
 
 **Task:** Verify complete functionality and refine as needed
 
@@ -2176,7 +2176,7 @@ Complex features require the full spectrum of Copilot modes: Plan for design, Ag
 
 ---
 
-### Part 6 Summary
+### Part 7 Summary
 
 You've implemented a complex feature using the complete workflow:
 
@@ -2189,7 +2189,7 @@ You've implemented a complex feature using the complete workflow:
 
 ---
 
-## Part 7: Putting It All Together (10 minutes)
+## Part 8: Putting It All Together (10 minutes)
 
 ### Introduction: Your Turn!
 
@@ -2197,7 +2197,7 @@ Time to demonstrate everything you've learned. You'll implement a feature with m
 
 ---
 
-### Exercise 7.1: Low-Stock Alert System - You Choose! (10 min)
+### Exercise 8.1: Low-Stock Alert System - You Choose! (10 min)
 
 **Task:** Implement a low-stock alert system using the modes YOU think are appropriate
 
@@ -2256,7 +2256,7 @@ Time to demonstrate everything you've learned. You'll implement a feature with m
 
 ---
 
-### Part 7 Summary
+### Part 8 Summary
 
 You've demonstrated:
 - **Autonomous mode selection** - choosing the right tool for the job
@@ -2318,151 +2318,6 @@ You've demonstrated:
 
 ---
 
-## Appendix: Intermediate Tips and Best Practices
-
-### Keyboard Shortcuts (Review)
-- `Tab` - Accept inline suggestion
-- `Esc` - Dismiss suggestion
-- `Alt+]` - Next suggestion
-- `Alt+[` - Previous suggestion
-- `Ctrl+I` - Open inline chat
-- `Ctrl+Shift+I` - Open Copilot Chat panel
-
-### Mode Selection Guide
-
-| Mode | Use When | Best For |
-|------|----------|----------|
-| **Ask** | Quick questions, explanations | Learning, understanding code |
-| **Plan** | Complex features, design decisions | Research, architecture, planning |
-| **Agent** | Clear implementation tasks | Execution, multi-file changes |
-
-### Prompt Engineering Patterns
-
-#### Pattern 1: Constraint-Heavy Prompt
-```
-#file:example.py Create a function that:
-- Input: [specific types]
-- Output: [specific format]
-- Validates: [specific conditions]
-- Raises: [specific exceptions]
-- Style: [specific patterns]
-- Include: [specific elements]
-```
-
-#### Pattern 2: Example-Driven Prompt
-```
-#file:example.py I need consistent formatting.
-
-Good example:
-[paste example code]
-
-Bad example:
-[paste what to avoid]
-
-Apply this pattern to [specific files/functions].
-```
-
-#### Pattern 3: Iterative Refinement
-```
-Initial: Create a function for [basic description]
-↓
-Refine: Add [specific requirement] to the function
-↓
-Refine: Also handle [edge case]
-↓
-Finalize: Document with [specific details]
-```
-
-### Testing Best Practices with Copilot
-
-1. **Test First, Code Second**
-   - Ask Copilot to generate tests before implementation
-   - Tests define expected behavior clearly
-
-2. **Parametrize Everything**
-   - Use `@pytest.mark.parametrize` for multiple scenarios
-   - Ask Copilot to generate comprehensive parameter lists
-
-3. **Test Edge Cases**
-   - Explicitly ask for edge case tests
-   - Include negative tests (what should fail)
-
-4. **Independent Tests**
-   - Each test should be runnable independently
-   - Use fixtures for setup/teardown
-
-### Debugging Workflow with Copilot
-
-1. **Reproduce** → Ask Copilot to help create reproduction steps
-2. **Trace** → Use #codebase to trace request flow
-3. **Isolate** → Ask for root cause in specific files
-4. **Fix** → Request fix with tests
-5. **Verify** → Run tests to confirm fix
-6. **Document** → Create bug report for records
-
-### Refactoring Safely
-
-1. **Tests First** → Ensure good test coverage before refactoring
-2. **Small Steps** → Refactor incrementally, test after each change
-3. **One Thing at a Time** → Extract method, then rename, then optimize
-4. **Ask for Review** → Have Copilot review refactored code
-5. **Verify Behavior** → All tests should still pass
-
-### Plan Mode Best Practices
-
-- **Research first** → Ask about approaches before choosing
-- **Phased planning** → MVP first, then enhancements
-- **Consider trade-offs** → Ask about pros/cons of each approach
-- **Document decisions** → Keep the plan for reference
-- **Iterate freely** → Planning is cheap, refine until clear
-
-### Agent Mode Best Practices
-
-- **Clear requirements** → Specific is better than vague
-- **Set constraints** → Tell Agent what NOT to do
-- **Monitor progress** → Watch for wrong turns early
-- **Review everything** → Agent is good, not perfect
-- **Correct quickly** → Don't let Agent go too far wrong
-- **Use with Plan** → Implement plans from Plan mode
-
-### Common Pitfalls to Avoid
-
-❌ **Vague prompts** → Be specific about requirements  
-❌ **No context** → Always use #file or #codebase  
-❌ **Blind acceptance** → Review all generated code  
-❌ **No testing** → Always generate tests with code  
-❌ **Large changes without tests** → Refactor with test safety net  
-❌ **Agent for exploration** → Use Plan mode for design, Agent for execution  
-❌ **Ignoring errors** → Fix issues immediately, don't accumulate debt  
-
-### Advanced Context Techniques
-
-1. **Multi-file context:**
-   ```
-   #file:models.py #file:database.py #file:inventory.py
-   How do these three files interact?
-   ```
-
-2. **Codebase search:**
-   ```
-   #codebase Where is validation logic currently implemented?
-   ```
-
-3. **Selective context:**
-   ```
-   [Select specific function in editor]
-   #selection Refactor this function following DRY principles
-   ```
-
-4. **Architecture questions:**
-   ```
-   #codebase Describe the overall architecture and data flow
-   ```
-
----
-
-## Next Steps
-
 **Congratulations!** You've completed the GitHub Copilot Intermediate Lab. You now have advanced skills for:
 
 - Engineering effective prompts
@@ -2473,45 +2328,3 @@ Finalize: Document with [specific details]
 - Planning strategically with Plan mode
 - Implementing autonomously with Agent mode
 
-### Continue Learning
-
-1. **Practice on Real Projects**
-   - Apply these techniques to your actual work
-   - Refine your custom instructions based on your team's standards
-   - Expand your custom prompt library with project-specific tasks
-   - Experiment with different prompt styles
-
-2. **Expand Your Custom Setup**
-   - Add more domain-specific instructions for your industry
-   - Create prompts for your most repetitive tasks
-   - Share your `.instructions.md` and `.prompt.md` files with your team
-   - Version control your custom configurations (`.github/instructions/` and `.github/prompts/`)
-
-3. **Advanced Integrations**
-   - Integrate custom instructions with CI/CD pipelines
-   - Create workspace-specific patterns for different project types
-   - Build organization-wide prompt libraries
-   - Combine with other VS Code extensions
-
-4. **Share Knowledge**
-   - Teach these techniques to your team
-   - Demonstrate the productivity gains from custom instructions/prompts
-   - Collaborate on team-wide prompt libraries
-   - Document your most effective patterns
-
-4. **Stay Updated**
-   - Copilot evolves rapidly
-   - New models and modes are added
-   - Follow GitHub Copilot updates
-
-### Feedback
-
-This lab is continuously improved. Share your experience:
-- What worked well?
-- What was confusing?
-- What exercises would you add?
-- How did this help your workflow?
-
----
-
-**You're now an intermediate Copilot user!** Use these skills to code faster, debug smarter, and build better software with AI assistance.
