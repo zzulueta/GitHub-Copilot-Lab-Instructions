@@ -797,13 +797,14 @@ Custom Prompts (also called slash commands) are **reusable templates** for commo
    
    Create file: `.github/prompts/generate-tests.prompt.md`
    
-   **Note the YAML frontmatter:**
+   Copy this content then SAVE the file:
    ```markdown
    ---
    name: generate-tests
    description: Generate comprehensive pytest tests for selected code
    argument-hint: Select a function or endpoint first
-   agent: ask
+   agent: agent
+   model: Claude Sonnet 4.5 (copilot)
    ---
    Analyze the selected code and generate comprehensive pytest tests.
 
@@ -823,12 +824,14 @@ Custom Prompts (also called slash commands) are **reusable templates** for commo
    
    Create file: `.github/prompts/add-error-handling.prompt.md`
    
+   Copy this content then SAVE the file:
    ```markdown
    ---
    name: add-error-handling
    description: Add comprehensive error handling to selected code
    argument-hint: Select the code to enhance
-   agent: ask
+   agent: agent
+   model: Claude Sonnet 4.5 (copilot)
    ---
    Enhance the selected code with comprehensive error handling.
 
@@ -849,12 +852,14 @@ Custom Prompts (also called slash commands) are **reusable templates** for commo
    
    Create file: `.github/prompts/document-endpoint.prompt.md`
    
+   Copy this content then SAVE the file:
    ```markdown
    ---
    name: document-endpoint
    description: Add comprehensive OpenAPI docs to an endpoint
    argument-hint: Select an API endpoint function
-   agent: ask
+   agent: agent
+   model: Claude Sonnet 4.5 (copilot)
    ---
    Add comprehensive OpenAPI documentation to the selected FastAPI endpoint.
 
@@ -875,12 +880,14 @@ Custom Prompts (also called slash commands) are **reusable templates** for commo
    
    Create file: `.github/prompts/add-grade-validation.prompt.md`
    
+   Copy this content then SAVE the file:
    ```markdown
    ---
    name: add-grade-validation
    description: Add steel grade validation to selected code
    argument-hint: Select code that needs grade validation
-   agent: ask
+   agent: agent
+   model: Claude Sonnet 4.5 (copilot)
    ---
    Add comprehensive steel grade validation to the selected code.
 
