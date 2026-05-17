@@ -210,13 +210,18 @@ Visit http://localhost:8000 to confirm the web UI loads.
 
 #### Step 3: Basic UI Smoke Tests
 
-1. Test homepage load:
+1. Test homepage load.
+
+   Select Agent Mode and ask Playwright MCP server to automate a browser test:
    ```
    Use Playwright MCP server to:
    1. Navigate to http://localhost:8000
    2. Verify the page title contains "Steel Inventory"
    3. Take a screenshot and save it as "homepage.png"
    ```
+   > Note: You may be prompted to install chromium. In addition you will be prompted for approvals. Select Allow in this session for each request.
+
+   Verify the screenshot is saved in your project folder.
 
 2. Test product list display:
    ```
@@ -243,30 +248,34 @@ Visit http://localhost:8000 to confirm the web UI loads.
    ```
    Use Playwright MCP to:
    1. Click "Add Product" button to open modal
-   2. Verify all required form fields are present: grade, thickness, width, length, quantity
+   2. Verify all required form fields are present: grade, shape, thickness, width, length, quantity, location
    3. Fill in sample data:
-      - Grade: "COLORBOND® Steel"
+      - Grade: 304
+      - Shape: Sheet
       - Thickness: 0.55
       - Width: 1200
       - Length: 2400
       - Quantity: 100
+      - Location: Warehouse-B
    4. Take screenshot as "add-product-filled.png"
    5. Close modal without submitting
    ```
 
 #### Step 5: Generate Test Suite
 
-Ask Copilot to create a reusable test file:
-```
-Based on the Playwright tests we just ran, generate a complete test file 'tests/test_ui_smoke.py' that uses pytest and playwright library to automate these UI tests. Include:
-- Test for homepage loading
-- Test for product list display
-- Test for add product modal
-- Test for form field validation
-- Proper setup and teardown
-```
+1. Ask Copilot to create a reusable test file:
 
-Review and save the generated test file.
+   Select Agent Mode and prompt:
+   ```
+   Based on the Playwright tests we just ran, generate a complete test file 'tests/test_ui_smoke.py' that uses pytest and playwright library to automate these UI tests. Include:
+   - Test for homepage loading
+   - Test for product list display
+   - Test for add product modal
+   - Test for form field validation
+   - Proper setup and teardown
+   ```
+
+2. Review and save the generated test file.
 
 **Expected Outcome:**
 - Playwright MCP successfully automates browser testing
@@ -274,13 +283,18 @@ Review and save the generated test file.
 - Understand how MCP extends Copilot to browser automation
 - Reusable UI test suite created
 
-**Commit:**
-Go to Source Control and use Copilot to generate a semantic commit message for MCP configuration and test files:
-```
-Generate a semantic commit message for the MCP server configuration and UI test files I just added
-```
+#### Step 6: Use GitHub MCP to Generate Commit Message and Push Changes
 
-Commit and push the changes.
+1. Ask GitHub MCP server to generate a semantic commit message for the new test file:
+
+   Select Agent Mode and prompt:
+   ```
+   Use the GitHub MCP server to generate a semantic commit message for the MCP server configuration and UI test files I just added. Then commit and push the changes
+   ```
+   > Note: You will be prompted to Allow the commit and push operations on GitHub.com. Select Allow.
+
+2. Verify the commit and push were successful on GitHub.com
+
 
 ---
 
