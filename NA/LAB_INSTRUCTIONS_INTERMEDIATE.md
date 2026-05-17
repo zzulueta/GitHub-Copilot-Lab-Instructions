@@ -805,6 +805,7 @@ Custom Prompts (also called slash commands) are **reusable templates** for commo
    argument-hint: Select a function or endpoint first
    agent: agent
    model: Claude Sonnet 4.5 (copilot)
+   tools: [read, edit, search]
    ---
    Analyze the selected code and generate comprehensive pytest tests.
 
@@ -832,6 +833,7 @@ Custom Prompts (also called slash commands) are **reusable templates** for commo
    argument-hint: Select the code to enhance
    agent: agent
    model: Claude Sonnet 4.5 (copilot)
+   tools: [read, edit, search]
    ---
    Enhance the selected code with comprehensive error handling.
 
@@ -860,6 +862,7 @@ Custom Prompts (also called slash commands) are **reusable templates** for commo
    argument-hint: Select an API endpoint function
    agent: agent
    model: Claude Sonnet 4.5 (copilot)
+   tools: [read, edit, search]
    ---
    Add comprehensive OpenAPI documentation to the selected FastAPI endpoint.
 
@@ -888,6 +891,7 @@ Custom Prompts (also called slash commands) are **reusable templates** for commo
    argument-hint: Select code that needs grade validation
    agent: agent
    model: Claude Sonnet 4.5 (copilot)
+   tools: [read, edit, search]
    ---
    Add comprehensive steel grade validation to the selected code.
 
@@ -907,8 +911,9 @@ Custom Prompts (also called slash commands) are **reusable templates** for commo
 
    Return the code with validation added.
    ```
+6. Close all open files to minimize context for the next exercises.
 
-6. **Understanding the frontmatter:**
+7. **Understanding the frontmatter:**
    - `name`: Command name after `/` (e.g., `/generate-tests`)
    - `description`: Short description shown in prompt picker
    - `argument-hint`: Hint text shown in chat input
@@ -932,21 +937,21 @@ Custom Prompts (also called slash commands) are **reusable templates** for commo
    - Open `steel-inventory-api/app/utils/steel_utils.py`
    - Select the `validate_grade` function
    - Open Copilot Chat
-   - Type `/generate-tests` and press Enter
+   - Type `/generate-tests for the selection and add them in #file:test_inventory.py ` and press Enter
    - Review the generated tests - should be comprehensive and follow test instructions
 
 2. **Use the "Add Error Handling" prompt:**
    
    - Open `steel-inventory-api/app/routers/inventory.py`
    - Select a function that needs better error handling
-   - In Copilot Chat, type `/add-error-handling`
+   - In Copilot Chat, type `/add-error-handling for the selection and add them in #file:inventory.py ` and press Enter
    - Observe how it adds validation, error messages, and proper status codes
 
 3. **Use the "Document Endpoint" prompt:**
    
    - Open `steel-inventory-api/app/routers/inventory.py`
    - Select an endpoint function
-   - Type `/document-endpoint` in chat
+   - Type `/document-endpoint for the selection and save in a new file called inventory_documentation.py at the root directory` in chat
    - See comprehensive OpenAPI documentation added
 
 4. **Alternative invocation methods:**
