@@ -212,6 +212,10 @@ Understanding when to use each mode is key to maximizing your productivity with 
    - Open `steel-inventory-api/app/utils/steel_utils.py`
    - See the added docstrings
    - Agent made the changes for you!
+   - Use the up and down arrows to see each change made by the agent
+   - You are provided the option to Keep or Undo each change, giving you control over the final result.
+   - Select Keep for all changes to accept the docstrings
+   
 
 5. **Key insight:**
    
@@ -285,8 +289,7 @@ The quality of Copilot's output depends heavily on how you ask. Intermediate use
 **Task:** Learn how prompt specificity impacts code quality
 
 1. **Start with a vague prompt:**
-   
-   Open Copilot Chat in Ask mode:
+   Close all open files in VS Code to minimize context. Then, open Copilot Chat in Ask mode:
    ```
    #file:steel_utils.py Add validation for steel grades
    ```
@@ -569,7 +572,7 @@ Custom Instructions are markdown files that provide **persistent context** to Co
    
    Create file: `.github/instructions/router-conventions.instructions.md`
    
-   **Note the YAML frontmatter:**
+   Copy this content then SAVE the file:
    ```markdown
    ---
    name: 'API Router Conventions'
@@ -607,6 +610,7 @@ Custom Instructions are markdown files that provide **persistent context** to Co
    
    Create file: `.github/instructions/test-conventions.instructions.md`
    
+   Copy this content then SAVE the file:
    ```markdown
    ---
    name: 'Test Conventions'
@@ -653,18 +657,24 @@ Custom Instructions are markdown files that provide **persistent context** to Co
 
 5. **Test pattern-based instructions:**
    
-   Open a file in `steel-inventory-api/app/routers/` and ask Copilot:
+   Open steel-inventory-api/app/routers/inventory.py.
+   Select **Agent mode** and try:
    ```
-   Create a new endpoint to get products by location
+   Create a new endpoint to get products by location. Use the proper instructions for API router conventions.
    ```
-   
-   Then open a file in `steel-inventory-api/tests/` and ask:
+   Review the generated code - it should follow the router conventions from your instructions!
+   Undo the changes to keep the file clean for the next test.
+
+   Open steel-inventory-api/app/tests/test_inventory.py.
+   Select **Agent mode** and try:
    ```
-   Create a test for the delete product endpoint
+   Create a test for the delete product endpoint. Use the proper instructions for testing conventions.
    ```
-   
+   Review the generated test - it should follow the test conventions from your instructions!
+   Undo the changes after reviewing.
+
    - Notice how Copilot applies different patterns based on which file matches the `applyTo` pattern!
-   - Check the **References** section in the chat response to see which instruction files were applied
+   - Check the **Reviewed** section in the chat response to see which instruction files were applied
 
 **Expected Outcome:**
 - Two `.instructions.md` files created in `.github/instructions/` folder
