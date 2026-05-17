@@ -1590,6 +1590,7 @@ Include:
 
 Format as a professional GitHub issue in Markdown.
 ```
+> Note: Since the Plan mode doesn't have access to the file system, it won't be able to create an actual file. Instead, it will generate the content for the bug report. 
 
 Review the bug report:
 - Is it detailed enough for another developer?
@@ -1640,7 +1641,7 @@ Refactoring improves code structure without changing behavior. With Copilot, you
 
 ---
 
-### Exercise 4.1: Extract Validation Logic (10 min)
+### Exercise 5.1: Extract Validation Logic (10 min)
 
 **Task:** Refactor scattered validation into a dedicated module
 
@@ -1710,7 +1711,7 @@ Currently, validation logic is mixed throughout the codebase. Let's extract it p
 
 ---
 
-### Exercise 4.2: Add Comprehensive Error Handling (8 min)
+### Exercise 5.2: Add Comprehensive Error Handling (8 min)
 
 **Task:** Improve error handling in steel_utils.py
 
@@ -1764,7 +1765,7 @@ Currently, validation logic is mixed throughout the codebase. Let's extract it p
 
 ---
 
-### Exercise 4.3: Add Logging to Critical Operations (7 min)
+### Exercise 5.3: Add Logging to Critical Operations (7 min)
 
 **Task:** Add structured logging for debugging and monitoring
 
@@ -1819,7 +1820,7 @@ Currently, validation logic is mixed throughout the codebase. Let's extract it p
 
 ---
 
-### Exercise 4.4: Verify Refactoring with Tests (5 min)
+### Exercise 5.4: Verify Refactoring with Tests (5 min)
 
 **Task:** Ensure all refactoring hasn't broken functionality
 
@@ -1858,7 +1859,7 @@ Currently, validation logic is mixed throughout the codebase. Let's extract it p
 
 ---
 
-### Module 4 Summary
+### Module 5 Summary
 
 You've learned to:
 1. **Extract scattered logic** into focused modules
