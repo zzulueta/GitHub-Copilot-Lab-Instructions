@@ -304,19 +304,7 @@ Copilot cloud agent runs on GitHub.com and can autonomously implement features, 
 
 ### Exercise 2.1: Enable and Assign Issue to Cloud Agent (10 min)
 
-#### Step 1: Enable Copilot Cloud Agent
-
-1. Go to your GitHub repository: `https://github.com/YOUR_USERNAME/bluescope-copilot-ANZ-advanced`
-
-2. Click **Settings** → **Code & automation** → **Copilot**
-
-3. Enable **"Copilot cloud agent"**
-
-4. Configure repository access:
-   - Allow Copilot cloud agent to access this repository
-   - Review the permissions granted (read/write code, create PRs, run actions)
-
-#### Step 2: Assign Low Inventory Check Issue to @copilot
+#### Step 1: Assign Low Inventory Check Issue to @copilot
 
 1. Go to your repository's **Issues** tab
 
@@ -324,35 +312,32 @@ Copilot cloud agent runs on GitHub.com and can autonomously implement features, 
 
 3. Click on the issue to open it
 
-4. In the sidebar, under **Assignees**, type `@copilot`
+4. In the sidebar, under **Assignees**, select the Cog icon to manage assignees
 
-5. Select **@copilot** from the dropdown
+5. Select **Copilot** from the dropdown
 
-6. Watch the issue - @copilot will:
-   - Post a comment acknowledging the assignment
-   - Analyze the requirements
-   - Create a new branch (e.g., `copilot/low-inventory-check`)
-   - Start working on implementation
+6. An Assign agent to issue dialog will appear. Select **Assign** to confirm
 
-#### Step 3: Monitor Initial Progress
+7. Watch the issue - Copilot will link a Pull Request that will close the issue once the implementation is complete.
 
-1. @copilot will post updates in the issue comments
+#### Step 2: Monitor Initial Progress
 
-2. Click the link to the draft PR that @copilot creates
+1. Click the link to the Pull Request that Copilot creates
 
-3. Watch as initial commits appear:
+2. Watch as Copilot does the following:
+   - Creates a checklist of tasks based on the issue requirements
    - Model changes for inventory_threshold
    - Backend endpoint implementation
    - Frontend UI updates
    - Test file creation
 
-4. Note: The agent runs on GitHub-hosted infrastructure, not your local machine!
+3. Scroll down the Pull Request and select View session. The agent runs on GitHub-hosted infrastructure, not your local machine!
 
 **Expected Outcome:**
 - Copilot cloud agent enabled for repository
 - "Low Inventory Check" issue assigned to @copilot
-- Draft PR created automatically
-- Initial commits visible in the PR
+- Pull Request created automatically
+- Session shows agent working on implementation in the cloud
 - Understand that cloud agent works independently
 
 ---
@@ -365,7 +350,7 @@ Copilot cloud agent runs on GitHub.com and can autonomously implement features, 
 
 1. Go to repository **Pull requests** tab
 
-2. Open the draft PR created by @copilot (should mention "Low Inventory Check")
+2. Open the Pull Request created by Copilot (should mention "Low Inventory Check")
 
 3. Review the **Files changed** tab - expected changes:
    - `app/models.py` - Added `inventory_threshold` field to SteelProduct model
@@ -375,9 +360,9 @@ Copilot cloud agent runs on GitHub.com and can autonomously implement features, 
    - `static/index.html` - Low stock filter/badge UI elements
    - `tests/test_inventory.py` - Tests for threshold logic
 
-#### Step 2: Read @copilot's PR Comments
+#### Step 2: Read Copilot's PR Comments
 
-1. Review @copilot's comments on the PR:
+1. Review Copilot's comments on the PR:
    - **Approach explanation** - How the feature was implemented
    - **Code walkthroughs** - Inline comments explaining key changes
    - **Testing strategy** - What tests were added and why
