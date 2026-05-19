@@ -318,7 +318,7 @@ Copilot cloud agent runs on GitHub.com and can autonomously implement features, 
 
 6. An Assign agent to issue dialog will appear. Select **Assign** to confirm
 
-7. Watch the issue - Copilot will link a Pull Request that will close the issue once the implementation is complete.
+7. Watch the issue - Copilot will link a Pull Request that will close the issue once the implementation is complete. The Pull Request will have a title like "[WIP] Implement Low Inventory Check System - Work in Progress by Copilot"
 
 #### Step 2: Monitor Initial Progress
 
@@ -410,7 +410,7 @@ Part B: Provide general feedback (comment on PR conversation tab):
 
 **Task:** Approve the PR, merge it, and test the Low Inventory Check feature locally.
 
-#### Step 1: Final Review and Approval
+#### Step 1: Final Review, Approval and Merge the PR
 
 1. Review all files in the **Files changed** tab one more time
 
@@ -422,21 +422,15 @@ Part B: Provide general feedback (comment on PR conversation tab):
    - ✓ Configurable thresholds
    - ✓ Tests included
 
-3. If everything looks good, click **"Ready for review"** to convert from draft
+3. If everything looks good, scroll down to the bottom of the PR and click **"Ready for review"** to convert from draft
 
-4. Click **"Approve"**
+4. Click **"Approve"** → **Merge Pull Request** → **Confirm merge**
 
-#### Step 2: Merge the PR
+5. Delete the branch after merging (GitHub will offer this option)
 
-1. Click **"Merge pull request"**
+6. Check that the issue is automatically closed
 
-2. Confirm the merge
-
-3. Delete the branch after merging (GitHub will offer this option)
-
-4. Check that the issue is automatically closed or updated
-
-#### Step 3: Pull Changes Locally and Test
+#### Step 2: Pull Changes Locally and Test
 
 1. Pull the merged changes:
    ```bash
@@ -470,6 +464,8 @@ Part B: Provide general feedback (comment on PR conversation tab):
    ```
 
 6. Verify all tests pass
+
+7. If there are any issues in the implementation. If there are any front or backend issues, have GitHub Copilot fix them. Use Playwright MCP to automate testing of the UI issues.
 
 **Expected Outcome:**
 - PR successfully merged
@@ -1276,7 +1272,7 @@ Review your accomplishments:
 ## Key Takeaways
 
 1. **MCP extends Copilot's reach** - GitHub MCP enables repository search and issue creation; Playwright MCP enables UI testing - integrate any external tool or service
-2. **Cloud agents enable async autonomous work** - Assign issues to @copilot and get complete implementations with PRs while you do other work
+2. **Cloud agents enable async autonomous work** - Assign issues to Copilot and get complete implementations with PRs while you do other work
 3. **CLI vs Chat: Choose based on context** - CLI for terminal-native workflows (git, DevOps, automation); Chat for editor-centric work (coding, refactoring)
 4. **Terminal-native workflows are powerful** - CLI eliminates context switching for git operations, system administration, and CI/CD integration
 5. **Governance ensures safe enterprise adoption** - Control tool access, audit usage, enforce compliance policies at scale
@@ -1284,7 +1280,7 @@ Review your accomplishments:
 
 **Core Workflow Learned:**
 1. Use MCP to research and create feature requirements (GitHub issue)
-2. Assign issue to cloud agent for autonomous implementation
+2. Assign issue to Copilot cloud agent for autonomous implementation
 3. Use CLI for terminal operations and automation
 4. Apply governance policies to ensure security and compliance
 
