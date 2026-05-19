@@ -7,8 +7,9 @@
 ## Pre-Lab Setup (15 minutes before lab)
 
 ### 1. Prerequisites
-- **GitHub CLI (`gh`)** installed - [Download from github.com/cli/cli](https://github.com/cli/cli#installation)
 - **Git configured** and repository pushed to GitHub
+- **PowerShell v6 or higher** (for Windows users)
+- **Node.js 22 or later** (if installing via npm)
 
 ### 2. Verify Setup
 
@@ -23,18 +24,23 @@ uvicorn app.main:app --reload
 Visit http://localhost:8000/docs - you should see the API documentation.
 
 Install and verify Copilot CLI:
-```bash
-# Install GitHub Copilot CLI extension
-gh extension install github/gh-copilot
 
-# Verify installation
+**Windows (WinGet - Recommended):**
+```powershell
+winget install GitHub.Copilot
+```
+
+**Alternative: npm (All Platforms):**
+```bash
+npm install -g @github/copilot
+```
+
+**Verify installation:**
+```bash
 copilot --version
 ```
 
-**Note:** If you already have it installed, update it with:
-```bash
-copilot update
-```
+You should see output like: `copilot version 1.x.x`
 
 ---
 
@@ -465,7 +471,7 @@ Part B: Provide general feedback (comment on PR conversation tab):
 
 6. Verify all tests pass
 
-7. If there are any issues in the implementation. If there are any front or backend issues, have GitHub Copilot fix them. Use Playwright MCP to automate testing of the UI issues.
+7. If there are any front or backend issues, have GitHub Copilot fix them. Use Playwright MCP to automate testing of the UI issues.
 
 **Expected Outcome:**
 - PR successfully merged
@@ -538,14 +544,28 @@ Many developers use CLI 30-40% of the time for terminal-centric work and Chat 60
 1. Open a terminal (PowerShell or WSL)
 
 2. Install GitHub Copilot CLI (if not already installed):
-   ```bash
-   # Verify GitHub CLI is installed
-   gh --version
-   
-   # If not installed, download from: https://github.com/cli/cli#installation
-   # Then install Copilot CLI extension
-   gh extension install github/gh-copilot
+
+   **Windows (WinGet - Recommended):**
+   ```powershell
+   winget install GitHub.Copilot
    ```
+   
+   **Alternative: npm (All Platforms):**
+   ```bash
+   npm install -g @github/copilot
+   ```
+   
+   **macOS/Linux (Homebrew):**
+   ```bash
+   brew install copilot-cli
+   ```
+   
+   **macOS/Linux (Install Script):**
+   ```bash
+   curl -fsSL https://gh.io/copilot-install | bash
+   ```
+   
+   For more installation options, see: [Official Installation Guide](https://docs.github.com/en/copilot/how-tos/copilot-cli/set-up-copilot-cli/install-copilot-cli)
 
 3. Verify Copilot CLI installation:
    ```bash
