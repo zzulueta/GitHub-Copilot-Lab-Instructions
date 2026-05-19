@@ -48,7 +48,7 @@ In this advanced lab, you'll extend GitHub Copilot's capabilities by integrating
 - [ ] Install and configure MCP servers (GitHub, Playwright)
 - [ ] Use GitHub MCP to search repositories and create issues
 - [ ] Use Playwright MCP to automate UI testing
-- [ ] Assign GitHub issues to @copilot cloud agent
+- [ ] Assign GitHub issues to Copilot cloud agent
 - [ ] Review and interact with cloud agent PRs
 - [ ] Merge and test cloud agent implementations
 - [ ] Understand when to use CLI vs Chat interfaces
@@ -480,7 +480,7 @@ Part B: Provide general feedback (comment on PR conversation tab):
 - **Complete workflow:** Issue created → Cloud agent implemented → Reviewed → Merged → Tested ✅
 
 **Key Insight:**
-This is the power of cloud agents - you created an issue with requirements, and @copilot implemented a complete feature with frontend, backend, and tests while you could have been doing other work!
+This is the power of cloud agents - you created an issue with requirements, and Copilot implemented a complete feature with frontend, backend, and tests while you could have been doing other work!
 
 ---
 
@@ -1236,7 +1236,7 @@ Review your accomplishments:
 
 ### Part 2: Copilot Cloud Agent
 - [ ] Enabled Copilot cloud agent in repository settings
-- [ ] Assigned "Low Inventory Check" issue to @copilot
+- [ ] Assigned "Low Inventory Check" issue to Copilot
 - [ ] Monitored draft PR created by cloud agent
 - [ ] Reviewed cloud agent's implementation and comments
 - [ ] Provided feedback and requested improvements
