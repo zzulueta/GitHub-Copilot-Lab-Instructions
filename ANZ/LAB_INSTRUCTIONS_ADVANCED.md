@@ -300,11 +300,11 @@ Visit http://localhost:8000 to confirm the web UI loads.
 
 ## Part 2: Copilot Cloud Agent Delegation (35 minutes)
 
-Copilot cloud agent runs on GitHub.com and can autonomously implement features, create PRs, and work in the background even when your local machine is off. In this section, you'll assign the "Low Inventory Check" issue from Part 1 to @copilot and watch it work!
+Copilot cloud agent runs on GitHub.com and can autonomously implement features, create PRs, and work in the background even when your local machine is off. In this section, you'll assign the "Low Inventory Check" issue from Part 1 to Copilot and watch it work!
 
 ### Exercise 2.1: Enable and Assign Issue to Cloud Agent (10 min)
 
-#### Step 1: Assign Low Inventory Check Issue to @copilot
+#### Step 1: Assign Low Inventory Check Issue to Copilot
 
 1. Go to your repository's **Issues** tab
 
@@ -322,7 +322,7 @@ Copilot cloud agent runs on GitHub.com and can autonomously implement features, 
 
 #### Step 2: Monitor Initial Progress
 
-1. Click the link to the Pull Request that Copilot creates
+1. Click the link to the Pull Request that Copilot creates in order to go to the Pull Request page
 
 2. Watch as Copilot does the following:
    - Creates a checklist of tasks based on the issue requirements
@@ -335,7 +335,7 @@ Copilot cloud agent runs on GitHub.com and can autonomously implement features, 
 
 **Expected Outcome:**
 - Copilot cloud agent enabled for repository
-- "Low Inventory Check" issue assigned to @copilot
+- "Low Inventory Check" issue assigned to Copilot
 - Pull Request created automatically
 - Session shows agent working on implementation in the cloud
 - Understand that cloud agent works independently
@@ -346,68 +346,62 @@ Copilot cloud agent runs on GitHub.com and can autonomously implement features, 
 
 **Task:** Review the cloud agent's implementation and provide feedback.
 
-#### Step 1: Navigate to the Draft PR
+#### Step 1: Navigate to the Pull Request and Read Copilot's Description
 
 1. Go to repository **Pull requests** tab
 
 2. Open the Pull Request created by Copilot (should mention "Low Inventory Check")
 
-3. Review the **Files changed** tab - expected changes:
-   - `app/models.py` - Added `inventory_threshold` field to SteelProduct model
-   - `app/routers/inventory.py` - New `/api/inventory/low-stock` endpoint
-   - `static/app.js` - Frontend logic for low-stock indicators
-   - `static/style.css` - Red badge styling for low inventory
-   - `static/index.html` - Low stock filter/badge UI elements
-   - `tests/test_inventory.py` - Tests for threshold logic
+3. Note the following changes:
+   - The [WIP] tag in the title has been removed, indicating the agent has completed its initial implementation
+   - At the top you see a message "Copilot requested your review on this pull request." Then a button "Add your review" is available for you to click and provide feedback
 
-#### Step 2: Read Copilot's PR Comments
-
-1. Review Copilot's comments on the PR:
+4. Review Copilot's description on the PR:
    - **Approach explanation** - How the feature was implemented
-   - **Code walkthroughs** - Inline comments explaining key changes
+   - **Code changes** - Key changes made to the codebase
    - **Testing strategy** - What tests were added and why
    - **Questions** - Any clarifications needed from you
 
-2. Check the PR description for:
-   - Summary of changes
-   - How acceptance criteria were addressed
-   - Any assumptions made
+5. Review the **Files changed** tab. You should see changes across multiple files.
 
-#### Step 3: Request Improvements
+#### Step 2: Request Improvements
 
-Provide feedback by commenting on the PR. Try:
+Part A: Provide feedback by commenting on the PR. Try:
 
-**Comment on specific code lines:**
-- Click a line number in the diff → Click "+" icon → Add comment
-- Example: "Can we make the default threshold configurable via environment variable?"
+1. Go to the **Files changed** tab. Got to models.py where the default inventory threshold field was added.
 
-**General feedback** (comment on PR conversation tab):
+2. Click a line number in the diff → Click "+" icon
+
+3. Add a comment: "Can we make the default threshold configurable by placing it in the environment file?"
+
+4. Click "Start a review".
+
+5. Scroll to the top and click "Submit Review" → Select "Request changes" → then Submit review.
+
+Part B: Provide general feedback (comment on PR conversation tab):
+
+1. Go to the **Conversation** tab of the PR
+
+2. Scroll to the bottom and add a comment:
 ```
 @copilot Great work! Can you also add:
-1. Email notification when products fall below threshold (optional feature)
-2. Admin configuration endpoint: PUT /api/config/inventory-threshold
-3. Dashboard widget showing total count of low-stock items
-4. Update the README with information about this feature
+1. Admin configuration endpoint: PUT /api/config/inventory-threshold for me to change the default threshold without redeploying
+2. Dashboard widget showing total count of low-stock items
+3. Update the README with information about this feature
 ```
+3. Click "Comment" to submit 
 
-#### Step 4: Wait for Agent Response
+#### Step 3: Wait for Agent Response
 
-1. @copilot will read your comments
+1. Copilot will read your review and comment
 
-2. It may ask clarifying questions:
-   - "Should email notifications be sent immediately or batched daily?"
-   - "Which email service should I use (SMTP, SendGrid, etc.)?"
+2. A session will open showing Copilot processing your feedback and making additional commits to address the requested changes
 
-3. Answer any questions
-
-4. Watch as @copilot makes additional commits addressing your feedback
-
-5. Review the new commits
+3. Go to the **Commits** tab to review the new commits
 
 **Expected Outcome:**
 - Understand cloud agent's implementation approach
-- Can review AI-generated code effectively
-- @copilot responds to feedback and makes improvements
+- Copilot responds to feedback and makes improvements
 - Iterative collaboration with AI agent
 
 ---
@@ -430,7 +424,7 @@ Provide feedback by commenting on the PR. Try:
 
 3. If everything looks good, click **"Ready for review"** to convert from draft
 
-4. Click **"Approve"** (or have a teammate approve if in a team)
+4. Click **"Approve"**
 
 #### Step 2: Merge the PR
 
