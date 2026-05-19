@@ -46,9 +46,9 @@ You should see output like: `copilot version 1.x.x`
 
 ## Lab Overview
 
-In this advanced lab, you'll extend GitHub Copilot's capabilities by integrating external tools via MCP, delegate work to Copilot cloud agent for automated feature implementation, master terminal-native workflows with Copilot CLI, and implement enterprise governance controls.
+In this advanced lab, you'll extend GitHub Copilot's capabilities by integrating external tools via MCP, delegate work to Copilot cloud agent for automated feature implementation, and use Copilot CLI to complete a real-world FastAPI project with terminal-native workflows. You'll also implement enterprise governance controls for safe adoption at scale.
 
-**Lab Flow:** You'll use GitHub MCP to research similar projects and create a "Low Inventory Check" feature issue, immediately assign it to Copilot cloud agent for implementation, then learn CLI as a powerful terminal-native alternative for DevOps and automation workflows.
+**Lab Flow:** You'll use GitHub MCP to research similar projects and create a "Low Inventory Check" feature issue, immediately assign it to Copilot cloud agent for implementation, then use CLI to complete the BlueScope Steel Inventory API by implementing weight calculations, running tests, and automating git workflows — all from the terminal.
 
 ### Learning Objectives Checklist
 - [ ] Install and configure MCP servers (GitHub, Playwright)
@@ -57,9 +57,11 @@ In this advanced lab, you'll extend GitHub Copilot's capabilities by integrating
 - [ ] Assign GitHub issues to Copilot cloud agent
 - [ ] Review and interact with cloud agent PRs
 - [ ] Merge and test cloud agent implementations
-- [ ] Understand when to use CLI vs Chat interfaces
-- [ ] Master CLI for terminal-native git workflows
-- [ ] Use CLI plan mode for DevOps and automation scenarios
+- [ ] Complete a real FastAPI project using Copilot CLI
+- [ ] Master CLI's plan mode for structured feature implementation
+- [ ] Run test-driven development loops from terminal
+- [ ] Automate git workflows (commit, branch, PR) with CLI
+- [ ] Use programmatic mode for CI/CD automation
 - [ ] Configure enterprise governance policies
 
 ---
@@ -486,406 +488,446 @@ This is the power of cloud agents - you created an issue with requirements, and 
 
 ---
 
-## Part 3: GitHub Copilot CLI (50 minutes)
+## Part 3: GitHub Copilot CLI - Complete the BlueScope Steel Inventory API (70 minutes)
 
-### Introduction: Why Use CLI vs Chat? (5 min)
+### Overview
 
-You've been using Copilot Chat in VS Code throughout the intermediate lab and Parts 1-2 of this lab. Now let's understand when and why to use the CLI interface.
+In this hands-on lab, you'll use GitHub Copilot CLI to complete a partially implemented steel inventory API. The API has the basic structure in place, but critical features like CRUD operations, weight calculations, and comprehensive tests are missing. You'll learn how CLI's terminal-native interface, plan mode, and programmatic capabilities make it ideal for structured development workflows.
 
-#### The Main Reason: Terminal-Native AI Without Context Switching
+**Repository:** `copilot-bluescope/steel-inventory-api` (FastAPI, partially implemented)
 
-If you're already working in the terminal (git operations, DevOps tasks, system administration), **CLI lets you use Copilot without leaving your terminal workflow**. No need to switch to VS Code or break your flow state.
-
-#### CLI Advantages
-
-✅ **Terminal-native workflows** - Stay in your terminal for git, DevOps, system tasks  
-✅ **Automation & scripting** - Use `-p` flag in CI/CD pipelines, pre-commit hooks, batch scripts  
-✅ **GitHub.com integration** - Create PRs, manage issues, review code from terminal  
-✅ **Plan mode** - Structured multi-step planning with clarifying questions  
-✅ **Programmatic interface** - Headless operations, no GUI required  
-✅ **Session persistence** - Resume conversations with `--continue`
-
-#### Chat Advantages
-
-✅ **Visual interface** - See diffs, file explorer, syntax highlighting  
-✅ **Learning & exploration** - Better for understanding code  
-✅ **Inline suggestions** - Real-time as-you-type completions  
-✅ **File navigation** - Visual context selection with drag-and-drop  
-✅ **Refactoring** - Side-by-side diff view before applying
-
-#### When to Use Which?
-
-| Scenario | Use CLI | Use Chat |
-|----------|---------|----------|
-| Writing commit messages | ✅ | - |
-| Creating PRs from terminal | ✅ | - |
-| Git history analysis | ✅ | - |
-| CI/CD automation | ✅ | - |
-| DevOps/infrastructure tasks | ✅ | - |
-| Multi-step feature planning | ✅ | ✅ |
-| Learning a new codebase | - | ✅ |
-| Code refactoring with visual diff | - | ✅ |
-| Inline code completion | - | ✅ |
-
-#### Best Practice: Use Both!
-
-Many developers use CLI 30-40% of the time for terminal-centric work and Chat 60-70% for editor-centric work. They complement each other!
-
-**In the following exercises, you'll learn CLI through real-world scenarios where it shines over Chat.**
+**What's Missing:**
+- Complete CRUD operations
+- Weight and dimension calculations for different steel shapes
+- Comprehensive test suite
+- Git workflow automation
 
 ---
 
-### Exercise 3.1: Terminal-Native Git Workflow (15 min)
+### Exercise 3.1: Install and Authenticate GitHub Copilot CLI (10 min)
 
-**Scenario:** You're working in the terminal, making code changes, and want to commit and create a PR without leaving the terminal or switching to VS Code.
+#### Step 1: Install GitHub Copilot CLI
 
-#### Step 1: Installation and Authentication
+**Windows (WinGet - Recommended):**
+```powershell
+winget install GitHub.Copilot
+```
 
-1. Open a terminal (PowerShell or WSL)
-
-2. Install GitHub Copilot CLI (if not already installed):
-
-   **Windows (WinGet - Recommended):**
-   ```powershell
-   winget install GitHub.Copilot
-   ```
-   
-   **Alternative: npm (All Platforms):**
-   ```bash
-   npm install -g @github/copilot
-   ```
-   
-   **macOS/Linux (Homebrew):**
-   ```bash
-   brew install copilot-cli
-   ```
-   
-   **macOS/Linux (Install Script):**
-   ```bash
-   curl -fsSL https://gh.io/copilot-install | bash
-   ```
-   
-   For more installation options, see: [Official Installation Guide](https://docs.github.com/en/copilot/how-tos/copilot-cli/set-up-copilot-cli/install-copilot-cli)
-
-3. Verify Copilot CLI installation:
-   ```bash
-   copilot --version
-   ```
-   
-   You should see output like: `copilot version 1.x.x`
-
-4. Navigate to your project:
-   ```bash
-   cd steel-inventory-api
-   ```
-
-5. Start Copilot CLI:
-   ```bash
-   copilot
-   ```
-
-6. If not logged in, use `/login` and follow the authentication flow:
-   - Authorize with your GitHub account
-   - Verify you have Copilot Pro or Business subscription
-
-7. When prompted about trusted directories, choose:
-   **"Yes, and remember this folder for future sessions"**
-   
-   **Security Note:** Only trust directories you control. Copilot CLI can read/modify files.
-
-#### Step 2: Make a Small Code Change
-
-1. Exit CLI (type `exit` or press Ctrl+C)
-
-2. Open inventory.py and improve the docstring for all functions.:
-   ```bash
-   Improve the docstrings in this file
-   ```
-   Save the file after making changes.
-
-3. Stage the change:
-   ```bash
-   git add app/routers/inventory.py
-   ```
-
-#### Step 3: Use CLI for Semantic Commit Message
-
-Use CLI's programmatic interface (non-interactive with `-p` flag):
-
+**Alternative: npm (All Platforms):**
 ```bash
-copilot -p "Generate a semantic commit message for my staged changes"
+npm install -g @github/copilot
 ```
 
-This generates a commit message like:
-```
-docs(api): expand inventory router endpoint docstrings
-```
-
-Copy the message and commit:
+**macOS/Linux (Homebrew):**
 ```bash
-git commit -m "docs(api): expand inventory router endpoint docstrings"
+brew install copilot-cli
 ```
 
-**Why CLI here?** You stayed in the terminal. With Chat, you'd need to switch to VS Code.
+**macOS/Linux (Install Script):**
+```bash
+curl -fsSL https://gh.io/copilot-install | bash
+```
 
-#### Step 4: Create Feature Branch and Push
+For more installation options, see: [Official Installation Guide](https://docs.github.com/en/copilot/how-tos/copilot-cli/set-up-copilot-cli/install-copilot-cli)
 
-Start interactive CLI session:
+**Verify installation:**
+```bash
+copilot --version
+```
+
+You should see output like: `copilot version 1.x.x`
+
+#### Step 2: Authenticate with GitHub
+
 ```bash
 copilot
 ```
 
-In CLI, ask:
-```
-Help me create a feature branch for documentation improvements and push it to GitHub
-```
-
-CLI will suggest commands like:
-```bash
-git checkout -b docs/improve-docstrings
-git push -u origin docs/improve-docstrings
-```
-
-Approve and execute the commands.
-
-#### Step 5: Create PR from Terminal
-
-In CLI, ask:
-```
-Create a pull request for this branch with a good description
-```
-
-Copilot will use GitHub integration to create a PR directly from the terminal!
-
-#### Step 6: Review Git History
-
-```
-Summarize the last 5 commits in this repository with their purpose
-```
-
-CLI analyzes git history and provides a summary without opening any GUI.
-
-**Core Shortcuts to Remember:**
-
-| Shortcut | Action |
-|----------|--------|
-| `Esc` | Cancel current operation |
-| `Ctrl+C` | Cancel/clear/exit |
-| `Ctrl+L` | Clear screen |
-| `@` | Mention files for context |
-| `/` | Show slash commands |
-| `?` | Show help |
-| `↑` `↓` | Command history |
-| `Shift+Tab` | Switch modes (ask/execute ↔ plan) |
+If not logged in, use `/login` and follow the authentication flow:
+- Authorize with your GitHub account
+- Verify you have Copilot Pro or Business subscription
 
 **Expected Outcome:**
-- CLI authenticated and comfortable with interface
-- Generated commit message without leaving terminal
-- Created PR from command line
-- **Why this matters:** Terminal-native workflow is faster for git operations
+- GitHub Copilot CLI installed and authenticated
+- Ready to use CLI for terminal-native development
 
 ---
 
-### Exercise 3.2: DevOps/System Administration Scenario (15 min)
+### Exercise 3.2: Setup Project and Understand CLI Advantage (5 min)
 
-**Scenario:** You need to analyze logs, check system resources, write automation scripts, and set up monitoring - all terminal-based work.
+#### Step 1: Navigate to Project Directory
 
-#### Step 1: File System and Log Analysis
-
-1. Start interactive CLI:
-   ```bash
-   copilot
-   ```
-
-2. Analyze recent changes:
-   ```
-   Find all Python files modified in the last 7 days and show their sizes
-   ```
-
-3. Check for potential issues:
-   ```
-   Search for any TODO or FIXME comments in the Python code and list them with file locations
-   ```
-
-#### Step 2: Write Automation Script
-
-Ask CLI to generate a cleanup script:
-```
-Help me write a bash script that:
-- Finds all .pyc files older than 30 days
-- Finds all __pycache__ directories
-- Safely deletes them with user confirmation
-- Logs what was deleted to cleanup.log
-```
-
-Review the generated script, save it, and test it.
-
-#### Step 3: Multi-Step Infrastructure Task with Plan Mode
-
-1. Press `Shift+Tab` to switch to **plan mode** (watch status bar change)
-
-2. Enter this complex request:
-   ```
-   Create a comprehensive monitoring solution for our steel inventory API:
-   
-   1. Health check script that:
-      - Checks if API is running on port 8000
-      - Tests the /health endpoint (create it if it doesn't exist)
-      - Tests database connectivity
-      - Checks disk space
-      - Logs results to monitoring.log with timestamp
-      
-   2. Alert script that:
-      - Sends email if service is down
-      - Uses environment variables for email config
-      
-   3. Cron job configuration to run health check every 5 minutes
-   
-   4. Instructions for setting up the monitoring
-   ```
-
-3. CLI will:
-   - Ask clarifying questions: "What email service should I use?"
-   - Build a structured plan with phases
-   - Show you the plan before executing
-
-4. Review the plan structure - notice how it breaks down the complex task
-
-5. Approve the plan and watch CLI execute:
-   - Creates health check script
-   - Creates alert script
-   - Generates cron configuration
-   - Provides setup instructions
-
-**Why CLI here?** DevOps work is terminal-native. Plan mode structures complex infrastructure tasks. Chat doesn't have direct shell integration.
-
-**Context Management Commands:**
-
-```
-/context
-```
-Shows current token usage, files in context, available space
-
-```
-/compact
-```
-Manually compress conversation history (happens auto at 95% capacity)
-
-```
-/usage
-```
-Shows premium requests used, session duration, token usage
-
----
-
-### Exercise 3.3: Automation & CI/CD Scenario (15 min)
-
-**Scenario:** You need to automate code quality checks, batch operations, and integrate AI into CI/CD pipelines.
-
-#### Step 1: Programmatic Usage for Automation
-
-The `-p` flag enables non-interactive mode for scripts and pipelines:
-
-**Generate documentation:**
 ```bash
-copilot -p "Generate a brief API documentation summary from the OpenAPI schema at http://localhost:8000/openapi.json"
+cd steel-inventory-api
 ```
 
-**Silent mode for scripts** (only output, no usage info):
+#### Step 2: Start Copilot CLI
+
+```bash
+copilot
+```
+
+When prompted about trusted directories, choose:
+**"Yes, and remember this folder for future sessions"**
+
+**Security Note:** Only trust directories you control. Copilot CLI can read and modify files in trusted directories.
+
+#### Step 3: Understand the CLI Advantage
+
+**Key Concept:** CLI gives Copilot direct access to:
+- All your files (no copy-paste needed)
+- Your git history and branches
+- Your terminal (can run commands and read output)
+- Your file system (can search, modify, create files)
+
+**Chat doesn't have any of this context** — it only sees what you manually provide.
+
+---
+
+### Exercise 3.3: Onboard with the Codebase (10 min)
+
+**Goal:** Use CLI to understand the project structure and identify what's implemented vs. what's TODO.
+
+#### Prompt 1: Project Overview
+
+In the Copilot CLI session, ask:
+
+```
+Explain this project's structure and what's already built vs. TODO in the README
+```
+
+CLI will:
+- Read the README.md
+- Scan the directory structure
+- Identify implemented features
+- List TODO items
+
+**Expected Response:**
+- Project structure overview
+- What endpoints are implemented
+- What features need to be completed (CRUD operations, weight calculations, tests)
+
+#### Prompt 2: Deep Dive into Main Entry Point
+
+```
+Walk me through main.py and explain how the application is structured
+```
+
+CLI will:
+- Read `app/main.py`
+- Explain the FastAPI application setup
+- Describe the router configuration
+- Identify dependencies and middleware
+
+#### Prompt 3: Review Data Models
+
+```
+Show me the data models in models.py and explain what fields are defined for steel products
+```
+
+**What You're Learning:**
+- CLI reads files directly without you opening them
+- No context switching to VS Code
+- Immediate understanding of codebase structure
+- CLI can synthesize information from multiple files
+
+---
+
+### Exercise 3.4: Plan Mode → Implement Weight Calculations (15 min)
+
+**Goal:** Use CLI's exclusive **plan mode** to structure a complex feature implementation before writing any code.
+
+#### Step 1: Enter Plan Mode
+
+Press `Shift+Tab` to switch to **plan mode**
+
+Notice the status bar changes to indicate you're in plan mode.
+
+#### Step 2: Describe the Feature
+
+Enter this prompt:
+
+```
+Implement weight and dimension calculations for each steel shape (sheet, coil, plate, bar, tube) based on grade density. 
+
+Requirements:
+- Add density property to each steel grade (e.g., 304 stainless = 8000 kg/m³)
+- Create calculate_weight() method for each shape type
+- Use proper formulas:
+  - Sheet: length × width × thickness × density
+  - Coil: π × (outer_radius² - inner_radius²) × width × density
+  - Plate: length × width × thickness × density
+  - Bar: π × radius² × length × density (for round bars)
+  - Tube: π × (outer_radius² - inner_radius²) × length × density
+- Add these calculations to the SteelProduct model
+- Update the API responses to include calculated weight
+```
+
+#### Step 3: Review the Plan
+
+CLI will:
+1. Ask clarifying questions (e.g., "Should I store density in the database or as constants?")
+2. Generate a structured multi-step plan:
+   - Phase 1: Add density constants for steel grades
+   - Phase 2: Create weight calculation methods
+   - Phase 3: Update SteelProduct model
+   - Phase 4: Update API responses
+   - Phase 5: Add input validation
+
+3. Show you the plan before executing anything
+
+#### Step 4: Approve and Execute
+
+Review the plan carefully. If it looks good, approve it.
+
+CLI will then:
+- Create or modify files as needed
+- Show you what it's doing at each step
+- Apply changes incrementally
+
+**Why Plan Mode?**
+- Forces alignment before code generation
+- Breaks complex tasks into manageable steps
+- Allows you to catch issues early
+- **Plan mode is CLI-exclusive** — Chat doesn't have this structured approach
+
+---
+
+### Exercise 3.5: Test → Fail → Fix Loop (15 min)
+
+**Goal:** Experience CLI's ability to run tests, read failures, and fix issues — all without leaving the terminal.
+
+#### Prompt 1: Generate Tests
+
+```
+Write pytest tests for the weight calculations in test_weight_calculations.py. Include tests for:
+- Each steel shape type (sheet, coil, plate, bar, tube)
+- Edge cases (zero dimensions, negative values)
+- Density calculations for different steel grades
+Then run the tests using pytest
+```
+
+CLI will:
+1. Create `tests/test_weight_calculations.py`
+2. Write comprehensive test cases
+3. Run `pytest tests/test_weight_calculations.py -v`
+4. Show you the test output
+
+**Expected:** Some tests may fail initially — this is intentional!
+
+#### Prompt 2: Fix Test Failures
+
+If tests fail, ask:
+
+```
+Read the test failure output and fix the issues in the weight calculation code
+```
+
+CLI will:
+1. Analyze the pytest output
+2. Identify the root cause
+3. Suggest and apply fixes
+4. Re-run the tests
+5. Verify all tests pass
+
+#### Prompt 3: Add More Tests
+
+```
+Add tests for the complete CRUD operations (Create, Read, Update, Delete) for steel products and run them
+```
+
+**Why CLI Here?**
+- Copilot runs pytest directly
+- Reads failure output automatically
+- Edits files based on test results
+- Re-runs tests to verify fixes
+- **Full test-driven development loop without leaving terminal**
+
+Chat requires you to:
+1. Manually copy test output
+2. Paste it into chat
+3. Get suggestions
+4. Manually apply fixes
+5. Switch back to terminal to re-run
+
+---
+
+### Exercise 3.6: Git Workflow + Programmatic Mode (10 min)
+
+**Goal:** Use CLI for complete git workflow automation, then demonstrate headless/scriptable mode.
+
+#### Part A: Interactive Git Workflow
+
+**Still in the CLI session**, ask:
+
+```
+Stage these changes and write a conventional commit message
+```
+
+CLI will:
+1. Run `git add .` (or suggest specific files)
+2. Generate a semantic commit message like:
+   ```
+   feat(calculations): implement weight calculations for all steel shapes
+   
+   - Add density constants for steel grades
+   - Implement shape-specific weight formulas
+   - Add comprehensive test suite for calculations
+   ```
+3. Show you the commit command
+4. Ask for approval
+
+**Approve and execute.**
+
+#### Next Prompt: Create Branch and PR
+
+```
+Push to a new branch called weight-calc and open a PR
+```
+
+CLI will:
+1. Create branch: `git checkout -b weight-calc`
+2. Push: `git push -u origin weight-calc`
+3. Create PR using GitHub integration: `gh pr create`
+4. Generate PR title and description
+
+**Approve and execute.**
+
+#### Part B: Programmatic Mode (Headless)
+
+Exit the interactive CLI session (type `exit` or press Ctrl+C).
+
+**Now demonstrate headless mode with the `-p` flag:**
+
+```bash
+copilot -p "Summarize today's commits" --allow-tool='shell(git)'
+```
+
+This runs Copilot in **non-interactive programmatic mode**:
+- No approval prompts
+- Direct output
+- Perfect for automation scripts
+- Can be used in CI/CD pipelines
+
+**Try another example:**
+
 ```bash
 copilot -sp "List all API endpoints defined in this project" > endpoints.txt
 ```
 
-**Pipe input to Copilot:**
+The `-s` flag (silent) suppresses usage information — only outputs the result.
+
+**Why This Matters:**
+- Git/GitHub integration without leaving terminal
+- **Scriptable** for automation (pre-commit hooks, CI/CD)
+- **Headless operations** — no GUI required
+- Chat can't do any of this
+
+---
+
+### Exercise 3.7: Wrap & Discussion (5 min)
+
+#### Step 1: Review Session Chronicle
+
+Start CLI again:
 ```bash
-pytest --tb=short 2>&1 | copilot -p "Analyze these test results and create a summary table"
+copilot
 ```
 
-#### Step 2: Security Controls for CI/CD
-
-**Allow specific safe commands:**
-```bash
-copilot --allow-tool='shell(git log)' --allow-tool='shell(git diff)' -p "Check if any commits in the last week added hardcoded secrets or API keys"
-```
-
-**Deny destructive operations:**
-```bash
-copilot --allow-all-tools --deny-tool='shell(rm)' --deny-tool='shell(git push)' -p "Clean up old log files"
-```
-
-This is critical for CI/CD: Allow automation but prevent dangerous operations.
-
-**Create a pre-commit hook:**
-```bash
-copilot --allow-tool='write' -p "Create a pre-commit hook that checks for hardcoded passwords or API keys in staged files"
-```
-
-#### Step 3: Batch Operations
-
-Update multiple files safely:
-```bash
-copilot --allow-tool='write' -p "Update the copyright year to 2026 in all Python files under app/, but show me the changes first"
-```
-
-CLI will show a plan, you approve, then it executes.
-
-#### Step 4: Session Management for Long Tasks
-
-Start a complex refactoring:
-```bash
-copilot -p "Add type hints to all functions in app/routers/ directory"
-```
-
-If you need to stop and resume later:
-```bash
-# Later...
-copilot --continue
-```
-
-This resumes your last session with full context preserved!
-
-#### Step 5: Model Selection for Cost Optimization
-
-Start CLI and use model command:
-```
-/model
-```
-
-You'll see models with their request multipliers:
-- Claude Sonnet 4.5 (1x) - Default, best for complex tasks
-- GPT-4 Turbo (0.8x) - Faster, good for simple tasks
-- Claude Haiku (0.3x) - Cheapest, quick operations
-
-**Strategy:**
-- Use cheaper models for simple tasks (commit messages, summaries)
-- Use powerful models for complex reasoning (architecture decisions, debugging)
-
-#### Step 6: Session Insights with Chronicle
-
+Run the chronicle command:
 ```
 /chronicle
 ```
 
-Shows timeline of your session:
+This shows:
+- Timeline of your session
 - Commands executed
 - Files modified
 - Key decisions made
-- Useful for standup reports!
+- **Perfect for standup reports!**
 
-**Why CLI here?**
-- **Scriptable** - Integrates into CI/CD pipelines
-- **Headless** - Works without GUI (servers, containers)
-- **Security controls** - Fine-grained tool permissions
-- **Automatable** - Programmatic interface for batch operations
+#### Step 2: Security & Governance Discussion
 
-Chat simply cannot do these things.
+**Approval Prompts:**
+- CLI asks for approval before executing destructive operations
+- You can configure auto-approval for specific tools
+
+**Security Tradeoffs:**
+
+| Mode | Security | Convenience | Use Case |
+|------|----------|-------------|----------|
+| `--allow-tool='shell(git log)'` | 🟢 High | Medium | CI/CD with specific commands only |
+| `--allow-all-tools` | 🟡 Medium | High | Interactive development |
+| `--allow-all-tools --deny-tool='shell(rm)'` | 🟢 High | High | Safe automation (block destructive ops) |
+
+**Example safe CI/CD usage:**
+```bash
+copilot --allow-tool='shell(git)' --deny-tool='shell(rm)' -p "Generate release notes"
+```
+
+#### Step 3: Quick Q&A
+
+**Discussion Questions:**
+1. Where would you use CLI in your day-to-day work?
+   - Terminal-heavy workflows (git, DevOps, system admin)
+   - Automation scripts and CI/CD pipelines
+   - When you want AI without context switching
+
+2. When would you prefer Chat over CLI?
+   - Visual code review and refactoring
+   - Learning new codebases with side-by-side diffs
+   - When you need inline code completion
+
+3. What surprised you about plan mode?
+   - Structured approach forces better planning
+   - Catch issues before code is written
+   - Breaks complex tasks into manageable steps
 
 **Expected Outcome:**
-- Understand CLI's programmatic interface for automation
-- Know security flags (`--allow-tool`, `--deny-tool`) for safe automation
-- Can use CLI in CI/CD pipelines
-- Understand session management and model selection
-- **Appreciate when CLI is the right tool vs Chat**
+- Complete understanding of CLI's capabilities and advantages
+- Practical experience with terminal-native development
+- Clear understanding of when to use CLI vs Chat
+
+---
+
+### Key Takeaways
+
+✅ **Terminal-Native Development**
+- CLI has direct access to files, git, and terminal
+- No context switching or copy-paste needed
+- Perfect for terminal-centric workflows
+
+✅ **Plan Mode (CLI-Exclusive)**
+- Structures complex tasks before execution
+- Forces alignment and catches issues early
+- Breaks work into manageable phases
+
+✅ **Test-Driven Development Loop**
+- Run tests, read failures, fix issues, re-run
+- Complete loop without leaving terminal
+- Faster iteration than Chat approach
+
+✅ **Git Workflow Automation**
+- Generate commit messages, create branches, open PRs
+- All from the terminal without switching to browser/VS Code
+- GitHub integration built-in
+
+✅ **Programmatic Interface**
+- `-p` flag for headless automation
+- `--allow-tool` / `--deny-tool` for security
+- Perfect for CI/CD pipelines and scripts
+
+✅ **When to Use CLI vs Chat**
+- **CLI:** Terminal workflows, automation, git operations, DevOps
+- **Chat:** Visual refactoring, learning, inline completion, code review
+- **Both:** Feature implementation, code generation
+
+**Core Workflow Completed:**
+1. ✅ Understood codebase structure with CLI
+2. ✅ Used plan mode to implement complex feature
+3. ✅ Ran test-driven development loop
+4. ✅ Automated git workflow from terminal
+5. ✅ Demonstrated programmatic/scriptable mode
 
 ---
 
@@ -1260,17 +1302,20 @@ Review your accomplishments:
 - [ ] Tested Low Inventory Check feature locally
 - [ ] All tests passing for new feature
 
-### Part 3: GitHub Copilot CLI
-- [ ] Understand when to use CLI vs Chat
-- [ ] Authenticated Copilot CLI and understand trust model
-- [ ] Used CLI for terminal-native git workflow (commits, PRs)
-- [ ] Switched between ask/execute and plan modes with Shift+Tab
-- [ ] Completed DevOps/system administration scenarios
-- [ ] Generated automation scripts with CLI
-- [ ] Used programmatic interface with `-p` flag
-- [ ] Applied security controls (`--allow-tool`, `--deny-tool`)
-- [ ] Understand session management (`--continue`)
-- [ ] Explored model selection (`/model`)
+### Part 3: GitHub Copilot CLI - BlueScope Steel Inventory API
+- [ ] Installed GitHub Copilot CLI
+- [ ] Authenticated with GitHub via CLI
+- [ ] Set up trusted directory in CLI
+- [ ] Understood CLI's direct access to files, git, and terminal
+- [ ] Used CLI to onboard with codebase structure
+- [ ] Used plan mode (Shift+Tab) to implement weight calculations
+- [ ] Reviewed and approved structured implementation plan
+- [ ] Completed test-driven development loop (write, run, fix, re-run)
+- [ ] Generated and ran pytest tests from CLI
+- [ ] Automated git workflow (commit, branch, PR) from terminal
+- [ ] Used programmatic mode with `-p` flag for headless operations
+- [ ] Reviewed session with `/chronicle` command
+- [ ] Understand security tradeoffs (`--allow-tool`, `--deny-tool`)
 
 ### Part 4: Enterprise Governance
 - [ ] Created `.github/copilot-policy.yml` with tools allow-list
@@ -1293,16 +1338,18 @@ Review your accomplishments:
 
 1. **MCP extends Copilot's reach** - GitHub MCP enables repository search and issue creation; Playwright MCP enables UI testing - integrate any external tool or service
 2. **Cloud agents enable async autonomous work** - Assign issues to Copilot and get complete implementations with PRs while you do other work
-3. **CLI vs Chat: Choose based on context** - CLI for terminal-native workflows (git, DevOps, automation); Chat for editor-centric work (coding, refactoring)
-4. **Terminal-native workflows are powerful** - CLI eliminates context switching for git operations, system administration, and CI/CD integration
-5. **Governance ensures safe enterprise adoption** - Control tool access, audit usage, enforce compliance policies at scale
-6. **The right tool for the right job** - Chat, CLI, and cloud agents each have strengths - master all three surfaces
+3. **CLI is terminal-native and powerful** - Direct access to files, git, and terminal eliminates context switching for terminal-centric workflows
+4. **Plan mode forces structured thinking** - CLI-exclusive plan mode breaks complex tasks into phases and aligns before executing
+5. **Test-driven development loop in terminal** - Run tests, read failures, fix code, re-run — complete TDD cycle without leaving CLI
+6. **Programmatic interface enables automation** - Use `-p` flag for headless operations in CI/CD pipelines and scripts
+7. **Governance ensures safe enterprise adoption** - Control tool access, audit usage, enforce compliance policies at scale
 
 **Core Workflow Learned:**
 1. Use MCP to research and create feature requirements (GitHub issue)
 2. Assign issue to Copilot cloud agent for autonomous implementation
-3. Use CLI for terminal operations and automation
-4. Apply governance policies to ensure security and compliance
+3. Use CLI for terminal-native development and complete features with plan mode
+4. Automate git workflows and testing from the command line
+5. Apply governance policies to ensure security and compliance
 
 ---
 
