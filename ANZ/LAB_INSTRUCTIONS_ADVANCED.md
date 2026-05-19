@@ -597,15 +597,15 @@ Many developers use CLI 30-40% of the time for terminal-centric work and Chat 60
 
 1. Exit CLI (type `exit` or press Ctrl+C)
 
-2. Add a helpful docstring to a function:
+2. Open inventory.py and improve the docstring for all functions.:
    ```bash
-   # Edit app/main.py and add/improve a docstring
-   # Or add a comment explaining a complex section
+   Improve the docstrings in this file
    ```
+   Save the file after making changes.
 
 3. Stage the change:
    ```bash
-   git add app/main.py
+   git add app/routers/inventory.py
    ```
 
 #### Step 3: Use CLI for Semantic Commit Message
@@ -618,12 +618,12 @@ copilot -p "Generate a semantic commit message for my staged changes"
 
 This generates a commit message like:
 ```
-docs: add comprehensive docstring to main API entry point
+docs(api): expand inventory router endpoint docstrings
 ```
 
 Copy the message and commit:
 ```bash
-git commit -m "docs: add comprehensive docstring to main API entry point"
+git commit -m "docs(api): expand inventory router endpoint docstrings"
 ```
 
 **Why CLI here?** You stayed in the terminal. With Chat, you'd need to switch to VS Code.
