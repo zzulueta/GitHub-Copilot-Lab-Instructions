@@ -678,7 +678,7 @@ CLI will:
 
 #### Step 4: Approve and Execute
 
-Review the plan carefully. If it looks good, approve it.
+Review the plan carefully. If it looks good, select "Accept plan and build on autopilot (recommended)" .
 
 CLI will then:
 - Create or modify files as needed
@@ -689,7 +689,6 @@ CLI will then:
 - Forces alignment before code generation
 - Breaks complex tasks into manageable steps
 - Allows you to catch issues early
-- **Plan mode is CLI-exclusive** — Chat doesn't have this structured approach
 
 ---
 
