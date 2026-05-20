@@ -725,13 +725,15 @@ Add tests for the complete CRUD operations (Create, Read, Update, Delete) for st
 
 #### Part A: Interactive Git Workflow
 
-1. **Still in the CLI session**, ask:
+1. Create a conventional commit message and commit changes.
+
+**Still in the CLI session**, ask:
 
 ```
 Stage these changes and write a conventional commit message
 ```
 
-CLI will:
+   CLI will:
    1. Run `git add .` (or suggest specific files)
    2. Generate a semantic commit message like:
       ```
@@ -744,11 +746,9 @@ CLI will:
    3. Show you the commit command
    4. Perform the commit for you since we are in Autopilot mode
 
-**Approve and execute.**
+2. Create a new branch and open a PR.
 
-#### Next Prompt: Create Branch and PR
-
-1. **Still in the CLI session**, ask:
+**Still in the CLI session**, ask:
 
 ```
 Push to a new branch called weight-calc and open a PR
