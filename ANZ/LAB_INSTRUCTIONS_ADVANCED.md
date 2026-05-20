@@ -799,7 +799,7 @@ copilot -sp "Run pytest and output results" --allow-all-tools > test_results.txt
 
 6. Determine if you have Pull Requests that need review:
 ```bash
-copilot -p "Do I have any open Pull Requests that need my review?" --allow-tool=github
+copilot -sp "Do I have any open Pull Requests?"
 ```   
 
 **Why This Matters:**
