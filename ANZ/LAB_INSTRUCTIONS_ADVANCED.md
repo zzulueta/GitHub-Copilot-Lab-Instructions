@@ -765,13 +765,14 @@ Push to a new branch called weight-calc and open a PR
 
 #### Step 2: Programmatic Mode (Headless)
 
-Exit the interactive CLI session (type `exit` or press Ctrl+C).
+1. Exit the interactive CLI session (type `exit` or press Ctrl+C).
 
-**Now demonstrate headless mode with the `-p` flag:**
+2. Now demonstrate headless mode with the `-p` flag for programmatic commands. Try asking Copilot to summarize today's commits:
 
 ```bash
-copilot -p "Summarize today's commits" --allow-tool='shell(git)'
+copilot -p "Summarize today's commits" --allow-all-tools
 ```
+> --allow-all-tools is a permission flag that tells Copilot CLI it can use any available tool without asking for approval.
 
 This runs Copilot in **non-interactive programmatic mode**:
 - No approval prompts
@@ -779,19 +780,34 @@ This runs Copilot in **non-interactive programmatic mode**:
 - Perfect for automation scripts
 - Can be used in CI/CD pipelines
 
-**Try another example:**
+3. Get the list of all database models and their fields:
+```bash
+copilot -sp "List all database models and their fields"
+```
+> The `-s` flag (silent) suppresses usage information — only outputs the result.
+> Try the same command without `-s` to see the difference in output.
 
+4. Try another example - list all API endpoints defined in the project and save to a file:
 ```bash
 copilot -sp "List all API endpoints defined in this project" > endpoints.txt
 ```
 
-The `-s` flag (silent) suppresses usage information — only outputs the result.
+5. Run the pytest suite in headless mode and save results to a file:
+```bash
+copilot -sp "Run pytest and output results" --allow-all-tools > test_results.txt
+```   
+
+6. Determine if you have Pull Requests that need review:
+```bash
+copilot -p "Do I have any open Pull Requests that need my review?" --allow-tool=github
+```   
 
 **Why This Matters:**
 - Git/GitHub integration without leaving terminal
 - **Scriptable** for automation (pre-commit hooks, CI/CD)
 - **Headless operations** — no GUI required
 - Chat can't do any of this
+
 
 ---
 
@@ -806,7 +822,7 @@ copilot
 
 Run the chronicle command:
 ```
-/chronicle
+/chronicle standup
 ```
 
 This shows:
@@ -815,89 +831,6 @@ This shows:
 - Files modified
 - Key decisions made
 - **Perfect for standup reports!**
-
-#### Step 2: Security & Governance Discussion
-
-**Approval Prompts:**
-- CLI asks for approval before executing destructive operations
-- You can configure auto-approval for specific tools
-
-**Security Tradeoffs:**
-
-| Mode | Security | Convenience | Use Case |
-|------|----------|-------------|----------|
-| `--allow-tool='shell(git log)'` | 🟢 High | Medium | CI/CD with specific commands only |
-| `--allow-all-tools` | 🟡 Medium | High | Interactive development |
-| `--allow-all-tools --deny-tool='shell(rm)'` | 🟢 High | High | Safe automation (block destructive ops) |
-
-**Example safe CI/CD usage:**
-```bash
-copilot --allow-tool='shell(git)' --deny-tool='shell(rm)' -p "Generate release notes"
-```
-
-#### Step 3: Quick Q&A
-
-**Discussion Questions:**
-1. Where would you use CLI in your day-to-day work?
-   - Terminal-heavy workflows (git, DevOps, system admin)
-   - Automation scripts and CI/CD pipelines
-   - When you want AI without context switching
-
-2. When would you prefer Chat over CLI?
-   - Visual code review and refactoring
-   - Learning new codebases with side-by-side diffs
-   - When you need inline code completion
-
-3. What surprised you about plan mode?
-   - Structured approach forces better planning
-   - Catch issues before code is written
-   - Breaks complex tasks into manageable steps
-
-**Expected Outcome:**
-- Complete understanding of CLI's capabilities and advantages
-- Practical experience with terminal-native development
-- Clear understanding of when to use CLI vs Chat
-
----
-
-### Key Takeaways
-
-✅ **Terminal-Native Development**
-- CLI has direct access to files, git, and terminal
-- No context switching or copy-paste needed
-- Perfect for terminal-centric workflows
-
-✅ **Plan Mode (CLI-Exclusive)**
-- Structures complex tasks before execution
-- Forces alignment and catches issues early
-- Breaks work into manageable phases
-
-✅ **Test-Driven Development Loop**
-- Run tests, read failures, fix issues, re-run
-- Complete loop without leaving terminal
-- Faster iteration than Chat approach
-
-✅ **Git Workflow Automation**
-- Generate commit messages, create branches, open PRs
-- All from the terminal without switching to browser/VS Code
-- GitHub integration built-in
-
-✅ **Programmatic Interface**
-- `-p` flag for headless automation
-- `--allow-tool` / `--deny-tool` for security
-- Perfect for CI/CD pipelines and scripts
-
-✅ **When to Use CLI vs Chat**
-- **CLI:** Terminal workflows, automation, git operations, DevOps
-- **Chat:** Visual refactoring, learning, inline completion, code review
-- **Both:** Feature implementation, code generation
-
-**Core Workflow Completed:**
-1. ✅ Understood codebase structure with CLI
-2. ✅ Used plan mode to implement complex feature
-3. ✅ Ran test-driven development loop
-4. ✅ Automated git workflow from terminal
-5. ✅ Demonstrated programmatic/scriptable mode
 
 ---
 
