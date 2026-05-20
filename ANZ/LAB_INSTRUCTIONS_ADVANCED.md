@@ -667,7 +667,8 @@ Requirements:
 
 #### Step 4: Approve and Execute
 
-1. Review the plan carefully. If it looks good, select "Accept plan and build on autopilot (recommended)" .
+1. Review the plan carefully. If it looks good, select "Accept plan and build on autopilot (recommended)".
+> Note: You may be prompted to Enable autopilot mode. Select "Enable all permissions (recommended)".
 
 2. CLI will then:
    - Create or modify files as needed
@@ -701,27 +702,12 @@ CLI will:
 3. Run `pytest tests/test_weight_calculations.py -v`
 4. Show you the test output
 
-**Expected:** Some tests may fail initially — this is intentional!
+**Expected:** Some tests may fail initially — this is intentional! Copilot will iteratively fix the implementation based on test results.
 
-#### Prompt 2: Fix Test Failures
-
-If tests fail, ask:
+#### Prompt 2: Add More Tests
 
 ```
-Read the test failure output and fix the issues in the weight calculation code
-```
-
-CLI will:
-1. Analyze the pytest output
-2. Identify the root cause
-3. Suggest and apply fixes
-4. Re-run the tests
-5. Verify all tests pass
-
-#### Prompt 3: Add More Tests
-
-```
-Add tests for the complete CRUD operations (Create, Read, Update, Delete) for steel products and run them
+Add tests for the complete CRUD operations (Create, Read, Update, Delete) for steel products and run them. Handle edge cases like invalid input and missing fields. 
 ```
 
 **Why CLI Here?**
@@ -730,13 +716,6 @@ Add tests for the complete CRUD operations (Create, Read, Update, Delete) for st
 - Edits files based on test results
 - Re-runs tests to verify fixes
 - **Full test-driven development loop without leaving terminal**
-
-Chat requires you to:
-1. Manually copy test output
-2. Paste it into chat
-3. Get suggestions
-4. Manually apply fixes
-5. Switch back to terminal to re-run
 
 ---
 
