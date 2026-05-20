@@ -4,7 +4,7 @@
 
 ---
 
-## Pre-Lab Setup (15 minutes before lab)
+## Pre-Lab Setup (15 minutes)
 
 ### 1. Prerequisites
 - **Git configured** and repository pushed to GitHub
@@ -89,11 +89,11 @@ The GitHub MCP server provides tools for interacting with GitHub.com directly fr
 
 7. You will be prompted to authenticate with GitHub. 
    - Select Allow to grant permissions to the MCP server
-   - You will be redirected to GitHub.com to authorize Visual Studio Code. Select **Continue** and complete the authentication flow.
+   - You will be redirected to GitHub.com to authorize VS Code. Select **Continue** and complete the authentication flow.
 
 8. After successful authentication in the browser, return to VS Code and you should see the GitHub MCP server status as "Running" in the MCP Servers tab.
 
-9. You can optionally see the MCP json configuration:
+9. You can optionally see the MCP JSON configuration:
    - Click Extensions → MCP Servers - INSTALLED → GitHub
    - Select Manage → Show Configuration (JSON)
 
@@ -429,7 +429,7 @@ Part B: Provide general feedback (comment on PR conversation tab):
    - ✓ Configurable thresholds
    - ✓ Tests included
 
-3. If everything looks good, scroll down to the bottom of the PR and click **"Ready for review"** to convert from draft
+3. If everything looks good, scroll down to the bottom of the PR and click **"Ready for review"**.
 
 4. Click **Approve** → **Merge Pull Request** → **Confirm merge**
 
@@ -465,7 +465,7 @@ Part B: Provide general feedback (comment on PR conversation tab):
 
 6. Verify all tests pass
 
-7. If there are any front or backend issues, have GitHub Copilot fix them. Use Playwright MCP to automate testing of the UI issues.
+7. If there are any frontend or backend issues, have GitHub Copilot fix them. Use Playwright MCP to automate testing of the UI issues.
 
 **Expected Outcome:**
 - PR successfully merged
@@ -791,7 +791,7 @@ copilot -sp "List all database models and their fields"
 copilot -sp "List all API endpoints defined in this project" > endpoints.txt
 ```
 
-5. Run the pytest suite in headless mode and save results to a file:
+5. Use Copilot CLI to run the pytest suite and save results to a file:
 ```bash
 copilot -sp "Run pytest and output results" --allow-all-tools > test_results.txt
 ```   
@@ -939,7 +939,7 @@ Review your accomplishments:
 
 ### Part 1: MCP Integration
 - [ ] Installed GitHub MCP server from registry
-- [ ] Configured authentication with `${input:}` secrets
+- [ ] Authenticated GitHub MCP server via browser OAuth
 - [ ] Searched GitHub for similar steel inventory repositories
 - [ ] Created issues for missing capabilities found in other repos
 - [ ] Created comprehensive "Low Inventory Check" issue
