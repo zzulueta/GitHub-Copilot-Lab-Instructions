@@ -376,15 +376,15 @@ Copilot cloud agent runs on GitHub.com and can autonomously implement features, 
 
 Part A: Provide feedback by commenting on the PR. Try:
 
-1. Go to the **Files changed** tab. Got to models.py where the default inventory threshold field was added.
+1. Go to the **Files changed** tab. Go to models.py where the default inventory threshold field was added.
 
 2. Click a line number in the diff → Click "+" icon
 
 3. Add a comment: "Can we make the default threshold configurable by placing it in the environment file?"
 
-4. Click "Start a review".
+4. Click Start a review.
 
-5. Scroll to the top and click "Submit Review" → Select "Request changes" → then Submit review.
+5. Scroll to the top and click Submit Review → Select Request changes → then Submit review.
 
 Part B: Provide general feedback (comment on PR conversation tab):
 
@@ -397,7 +397,7 @@ Part B: Provide general feedback (comment on PR conversation tab):
 2. Dashboard widget showing total count of low-stock items
 3. Update the README with information about this feature
 ```
-3. Click "Comment" to submit 
+3. Click Comment to submit 
 
 #### Step 3: Wait for Agent Response
 
@@ -432,7 +432,7 @@ Part B: Provide general feedback (comment on PR conversation tab):
 
 3. If everything looks good, scroll down to the bottom of the PR and click **"Ready for review"** to convert from draft
 
-4. Click **"Approve"** → **Merge Pull Request** → **Confirm merge**
+4. Click **Approve** → **Merge Pull Request** → **Confirm merge**
 
 5. Delete the branch after merging (GitHub will offer this option)
 
@@ -457,15 +457,8 @@ Part B: Provide general feedback (comment on PR conversation tab):
    - Test the low-stock filter button
    - Check dashboard widget shows count
 
-4. Test the API endpoint:
-   ```bash
-   # Windows PowerShell
-   Invoke-WebRequest http://localhost:8000/api/inventory/low-stock | Select-Object -Expand Content
+4. Test the API endpoint by visiting http://127.0.0.1:8000/docs and trying out the GET /api/inventory/low-stock endpoint. Verify it returns the correct products based on the threshold.
    
-   # Or use curl
-   curl http://localhost:8000/api/inventory/low-stock
-   ```
-
 5. Run the tests:
    ```bash
    pytest tests/test_inventory.py -v -k "low"
@@ -493,8 +486,6 @@ This is the power of cloud agents - you created an issue with requirements, and 
 ### Overview
 
 In this hands-on lab, you'll use GitHub Copilot CLI to complete a partially implemented steel inventory API. The API has the basic structure in place, but critical features like CRUD operations, weight calculations, and comprehensive tests are missing. You'll learn how CLI's terminal-native interface, plan mode, and programmatic capabilities make it ideal for structured development workflows.
-
-**Repository:** `copilot-bluescope/steel-inventory-api` (FastAPI, partially implemented)
 
 **What's Missing:**
 - Complete CRUD operations
@@ -580,8 +571,6 @@ When prompted about trusted directories, choose:
 - Your terminal (can run commands and read output)
 - Your file system (can search, modify, create files)
 
-**Chat doesn't have any of this context** — it only sees what you manually provide.
-
 ---
 
 ### Exercise 3.3: Onboard with the Codebase (10 min)
@@ -593,8 +582,9 @@ When prompted about trusted directories, choose:
 In the Copilot CLI session, ask:
 
 ```
-Explain this project's structure and what's already built vs. TODO in the README
+Explain this project's structure and what's already built vs. any TODO
 ```
+> Note: When prompted to allow file access, select "Yes, and add these directories to the allowed list."
 
 CLI will:
 - Read the README.md
@@ -665,25 +655,24 @@ Requirements:
 
 #### Step 3: Review the Plan
 
-CLI will:
-1. Ask clarifying questions (e.g., "Should I store density in the database or as constants?")
-2. Generate a structured multi-step plan:
-   - Phase 1: Add density constants for steel grades
-   - Phase 2: Create weight calculation methods
-   - Phase 3: Update SteelProduct model
-   - Phase 4: Update API responses
-   - Phase 5: Add input validation
 
-3. Show you the plan before executing anything
+1. CLI will ask clarifying questions (e.g., "Should I store density in the database or as constants?"). When prompted for clarifications, select any option of your preference. You can even ask for additional clarifications if needed or their suggestions on how to approach the implementation.
+
+2. CLI will generate a structured multi-step plan:
+   - Approach
+   - Key Decisions
+   - Sequential Phases in Implementation
+
+3. CLI will show you the plan before executing anything
 
 #### Step 4: Approve and Execute
 
-Review the plan carefully. If it looks good, select "Accept plan and build on autopilot (recommended)" .
+1. Review the plan carefully. If it looks good, select "Accept plan and build on autopilot (recommended)" .
 
-CLI will then:
-- Create or modify files as needed
-- Show you what it's doing at each step
-- Apply changes incrementally
+2. CLI will then:
+   - Create or modify files as needed
+   - Show you what it's doing at each step
+   - Apply changes incrementally
 
 **Why Plan Mode?**
 - Forces alignment before code generation
