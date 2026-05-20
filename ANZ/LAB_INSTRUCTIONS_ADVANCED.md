@@ -577,7 +577,7 @@ When prompted about trusted directories, choose:
 
 **Goal:** Use CLI to understand the project structure and identify what's implemented vs. what's TODO.
 
-#### Prompt 1: Project Overview
+#### Step 1: Project Overview
 
 In the Copilot CLI session, ask:
 
@@ -597,7 +597,7 @@ CLI will:
 - What endpoints are implemented
 - What features need to be completed (CRUD operations, weight calculations, tests)
 
-#### Prompt 2: Deep Dive into Main Entry Point
+#### Step 2: Deep Dive into Main Entry Point
 
 ```
 Walk me through main.py and explain how the application is structured
@@ -609,7 +609,7 @@ CLI will:
 - Describe the router configuration
 - Identify dependencies and middleware
 
-#### Prompt 3: Review Data Models
+#### Step 3: Review Data Models
 
 ```
 Show me the data models in models.py and explain what fields are defined for steel products
@@ -686,7 +686,7 @@ Requirements:
 
 **Goal:** Experience CLI's ability to run tests, read failures, and fix issues — all without leaving the terminal.
 
-#### Prompt 1: Generate Tests
+#### Step 1: Generate Tests
 
 ```
 Write pytest tests for the weight calculations in test_weight_calculations.py. Include tests for:
@@ -704,7 +704,7 @@ CLI will:
 
 **Expected:** Some tests may fail initially — this is intentional! Copilot will iteratively fix the implementation based on test results.
 
-#### Prompt 2: Add More Tests
+#### Step 2: Add More Tests
 
 ```
 Add tests for the complete CRUD operations (Create, Read, Update, Delete) for steel products and run them. Handle edge cases like invalid input and missing fields. 
@@ -723,7 +723,7 @@ Add tests for the complete CRUD operations (Create, Read, Update, Delete) for st
 
 **Goal:** Use CLI for complete git workflow automation, then demonstrate headless/scriptable mode.
 
-#### Part A: Interactive Git Workflow
+#### Step 1: Interactive Git Workflow
 
 1. Create a conventional commit message and commit changes.
 
@@ -763,7 +763,7 @@ Push to a new branch called weight-calc and open a PR
 3. Go to GitHub.com and review the PR created by CLI.
 
 
-#### Part B: Programmatic Mode (Headless)
+#### Step 2: Programmatic Mode (Headless)
 
 Exit the interactive CLI session (type `exit` or press Ctrl+C).
 
