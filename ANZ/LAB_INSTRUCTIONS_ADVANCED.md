@@ -760,7 +760,8 @@ CLI will:
    3. Create PR using GitHub integration: `gh pr create`
    4. Generate PR title and description
 
-**Approve and execute.**
+2. Go to GitHub.com and review the PR created by CLI.
+
 
 #### Part B: Programmatic Mode (Headless)
 
