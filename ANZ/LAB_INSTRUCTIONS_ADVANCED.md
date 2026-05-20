@@ -725,38 +725,40 @@ Add tests for the complete CRUD operations (Create, Read, Update, Delete) for st
 
 #### Part A: Interactive Git Workflow
 
-**Still in the CLI session**, ask:
+1. **Still in the CLI session**, ask:
 
 ```
 Stage these changes and write a conventional commit message
 ```
 
 CLI will:
-1. Run `git add .` (or suggest specific files)
-2. Generate a semantic commit message like:
-   ```
-   feat(calculations): implement weight calculations for all steel shapes
-   
-   - Add density constants for steel grades
-   - Implement shape-specific weight formulas
-   - Add comprehensive test suite for calculations
-   ```
-3. Show you the commit command
-4. Ask for approval
+   1. Run `git add .` (or suggest specific files)
+   2. Generate a semantic commit message like:
+      ```
+      feat(calculations): implement weight calculations for all steel shapes
+      
+      - Add density constants for steel grades
+      - Implement shape-specific weight formulas
+      - Add comprehensive test suite for calculations
+      ```
+   3. Show you the commit command
+   4. Perform the commit for you since we are in Autopilot mode
 
 **Approve and execute.**
 
 #### Next Prompt: Create Branch and PR
+
+1. **Still in the CLI session**, ask:
 
 ```
 Push to a new branch called weight-calc and open a PR
 ```
 
 CLI will:
-1. Create branch: `git checkout -b weight-calc`
-2. Push: `git push -u origin weight-calc`
-3. Create PR using GitHub integration: `gh pr create`
-4. Generate PR title and description
+   1. Create branch: `git checkout -b weight-calc`
+   2. Push: `git push -u origin weight-calc`
+   3. Create PR using GitHub integration: `gh pr create`
+   4. Generate PR title and description
 
 **Approve and execute.**
 
