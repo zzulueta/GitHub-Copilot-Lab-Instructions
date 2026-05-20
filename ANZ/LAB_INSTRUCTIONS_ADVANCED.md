@@ -46,7 +46,7 @@ You should see output like: `copilot version 1.x.x`
 
 ## Lab Overview
 
-In this advanced lab, you'll extend GitHub Copilot's capabilities by integrating external tools via MCP, delegate work to Copilot cloud agent for automated feature implementation, and use Copilot CLI to complete a real-world FastAPI project with terminal-native workflows. You'll also implement enterprise governance controls for safe adoption at scale.
+In this advanced lab, you'll extend GitHub Copilot's capabilities by integrating external tools via MCP, delegate work to Copilot cloud agent for automated feature implementation, and use Copilot CLI to complete a real-world FastAPI project with terminal-native workflows.
 
 **Lab Flow:** You'll use GitHub MCP to research similar projects and create a "Low Inventory Check" feature issue, immediately assign it to Copilot cloud agent for implementation, then use CLI to complete the BlueScope Steel Inventory API by implementing weight calculations, running tests, and automating git workflows — all from the terminal.
 
@@ -62,7 +62,6 @@ In this advanced lab, you'll extend GitHub Copilot's capabilities by integrating
 - [ ] Run test-driven development loops from terminal
 - [ ] Automate git workflows (commit, branch, PR) with CLI
 - [ ] Use programmatic mode for CI/CD automation
-- [ ] Configure enterprise governance policies
 
 ---
 
@@ -88,9 +87,9 @@ The GitHub MCP server provides tools for interacting with GitHub.com directly fr
 
 6. Right-click the GitHub MCP server and select **Start Server**
 
-7. You will be prompted to authenticate with Github. 
+7. You will be prompted to authenticate with GitHub. 
    - Select Allow to grant permissions to the MCP server
-   - You will be redirected to GitHub.com to authorize Visual Studio code. Select **Continue** and complete the authentication flow.
+   - You will be redirected to GitHub.com to authorize Visual Studio Code. Select **Continue** and complete the authentication flow.
 
 8. After successful authentication in the browser, return to VS Code and you should see the GitHub MCP server status as "Running" in the MCP Servers tab.
 
@@ -140,7 +139,7 @@ The GitHub MCP server provides tools for interacting with GitHub.com directly fr
    - Reference to the repository where you found it
    - Basic acceptance criteria
    ```
-   > Note: You would be requested to Allow the creation of the issues on GitHub.com. Select Allow in this Session for each issue.
+   > Note: You would be requested to Allow the creation of the issues on GitHub.com. Select Allow in this session for each issue.
 
 2. Verify the issues were created on GitHub.com
 
@@ -834,253 +833,6 @@ This shows:
 
 ---
 
-## Part 4: Enterprise Governance (20 minutes)
-
-Enterprise governance controls help organizations manage how Copilot is used across teams, ensuring security, compliance, and consistency.
-
-### Exercise 4.1: Configure Enterprise Policies (10 min)
-
-**Note:** Some of these settings require organization or enterprise admin access. For learning purposes, we'll demonstrate the configuration even if you can't fully apply them.
-
-#### Policy 1: Tools Allow-List
-
-Control which tools Copilot CLI can use without manual approval.
-
-1. Create a file `.github/copilot-policy.yml` in your repository:
-
-```yaml
-# Copilot Enterprise Governance Policy
-version: 1
-
-# Tools that Copilot CLI can use automatically
-tools:
-  allow:
-    - read  # Allow reading files
-    - github  # Allow GitHub MCP server tools
-    - playwright  # Allow Playwright MCP server tools
-  
-  deny:
-    - shell(rm)  # Prevent deletion commands
-    - shell(git push)  # Require manual git push approval
-  
-  require_approval:
-    - write  # Require approval for file modifications
-    - shell  # Require approval for other shell commands
-```
-
-2. Test this policy in Copilot CLI:
-   ```bash
-   copilot --deny-tool='shell(rm)' --allow-tool='read'
-   ```
-
-3. Try to have Copilot delete a file - it should be blocked:
-   ```
-   Delete all temporary files in this directory
-   ```
-
-#### Policy 2: MCP Servers Allow-List
-
-1. Update `.github/copilot-policy.yml` to control MCP server usage:
-
-```yaml
-# MCP Server Policy
-mcp:
-  enabled: true
-  registry_url: "https://github.com/mcp"  # Official MCP registry
-  
-  allowed_servers:
-    - github  # Allow GitHub MCP server
-    - playwright  # Allow Playwright MCP server
-  
-  denied_servers:
-    - "*"  # Deny all other servers by default
-```
-
-#### Policy 3: Data Residency Configuration
-
-For enterprises with data residency requirements:
-
-```yaml
-# Data Residency Policy
-data_residency:
-  region: "EU"  # or "US"
-  
-  # Prevent data from leaving specified regions
-  enforce_regional_processing: true
-```
-
-#### Policy 4: File/Content Exclusions
-
-Prevent Copilot from accessing sensitive files:
-
-```yaml
-# Content Exclusions
-exclusions:
-  files:
-    - "**/*.key"
-    - "**/*.pem"
-    - "**/secrets.yml"
-    - "**/.env"
-  
-  directories:
-    - ".git"
-    - "node_modules"
-    - "venv"
-    - "__pycache__"
-  
-  patterns:
-    - "password"
-    - "secret_key"
-    - "api_key"
-    - "private_key"
-```
-
-#### Policy 5: Audit Logging
-
-Enable comprehensive audit logs:
-
-```yaml
-# Audit Configuration
-audit:
-  enabled: true
-  
-  log_events:
-    - copilot_requests
-    - mcp_tool_usage
-    - file_modifications
-    - pr_creations
-    - agent_delegations
-  
-  retention_days: 90
-  
-  export_to:
-    - cloudwatch  # AWS CloudWatch
-    - splunk      # Splunk
-    - datadog     # Datadog
-```
-
-**Expected Outcome:**
-- Policy file created with governance rules
-- You understand how to control tool access
-- File exclusions protect sensitive data
-
----
-
-### Exercise 4.2: Signed Commits and PR Metrics (10 min)
-
-#### Step 1: Enable Signed Commit Requirement
-
-**Note:** This requires repository or organization settings access.
-
-1. Go to your repository **Settings** → **Branches**
-
-2. Add a branch protection rule for `main`:
-   - Check **"Require signed commits"**
-   - Check **"Require pull request reviews before merging"**
-
-3. Update your `.github/copilot-policy.yml`:
-
-```yaml
-# Signed Commit Policy
-commits:
-  require_signed: true
-  require_gpg: true
-  
-  allowed_signers:
-    - "copilot[bot]@github.com"  # Allow Copilot cloud agent
-  
-  reject_unsigned: true
-```
-
-4. Configure GPG signing locally:
-   ```bash
-   git config --global commit.gpgsign true
-   git config --global user.signingkey YOUR_GPG_KEY_ID
-   ```
-
-#### Step 2: Configure PR Outcomes Metrics
-
-Track the success rate of Copilot-generated PRs:
-
-1. Update `.github/copilot-policy.yml`:
-
-```yaml
-# PR Metrics Configuration
-metrics:
-  track_pr_outcomes: true
-  
-  tracked_metrics:
-    - pr_acceptance_rate
-    - time_to_merge
-    - review_cycles
-    - test_pass_rate
-    - code_quality_score
-  
-  reporting:
-    frequency: weekly
-    recipients:
-      - team-leads@example.com
-      - engineering-managers@example.com
-    
-    dashboards:
-      - github_insights
-      - datadog
-```
-
-#### Step 3: Review FedRAMP Compliance Settings
-
-For government/enterprise compliance:
-
-```yaml
-# FedRAMP Compliance
-compliance:
-  fedramp_mode: true
-  
-  requirements:
-    - signed_commits
-    - audit_logging
-    - data_residency_us
-    - encrypted_storage
-    - access_control
-  
-  certifications:
-    - fedramp_moderate
-    - soc2_type2
-    - iso27001
-```
-
-#### Step 4: Test Policy Enforcement
-
-1. Try to create a commit without signing:
-   ```bash
-   git config --global commit.gpgsign false
-   git commit -m "Test unsigned commit"
-   git push
-   ```
-
-2. The push should be rejected if signed commit policy is enforced
-
-3. Re-enable signing and try again:
-   ```bash
-   git config --global commit.gpgsign true
-   git commit --amend --no-edit -S
-   git push
-   ```
-
-**Expected Outcome:**
-- Signed commit requirement configured
-- PR metrics tracking enabled
-- FedRAMP compliance settings understood
-
-**Commit:**
-Commit your policy file:
-```bash
-git add .github/copilot-policy.yml
-git commit -m "feat: Add enterprise governance policies"
-git push
-```
-
----
 
 ## Capstone Challenge (Optional): CLI vs Chat Comparison (20 minutes)
 
@@ -1164,7 +916,7 @@ Implement a batch tracking system with the following specifications:
 **Time this approach and note:**
 - Plan structure quality
 - Terminal-native workflow benefits
-- Any advantages over Chat approach
+- Any advantages over VS Code approach
 
 ---
 
@@ -1175,8 +927,8 @@ Implement a batch tracking system with the following specifications:
 **When would you use each?**
 
 Key Insights:
-- **Chat** is better for: Visual code review, learning, complex refactoring
-- **CLI** is better for: Terminal workflows, automation, git operations
+- **VS Code Copilot Chat** is better for: Visual code review, learning, complex refactoring
+- **Copilot CLI** is better for: Terminal workflows, automation, git operations
 - **Both** work well for: Feature implementation, code generation
 
 ---
@@ -1220,18 +972,9 @@ Review your accomplishments:
 - [ ] Reviewed session with `/chronicle` command
 - [ ] Understand security tradeoffs (`--allow-tool`, `--deny-tool`)
 
-### Part 4: Enterprise Governance
-- [ ] Created `.github/copilot-policy.yml` with tools allow-list
-- [ ] Configured MCP servers policy
-- [ ] Set up file/content exclusions
-- [ ] Enabled audit logging configuration
-- [ ] Configured signed commit requirements
-- [ ] Set up PR outcomes metrics tracking
-- [ ] Reviewed compliance settings (FedRAMP)
-
 ### Optional Capstone Challenge
-- [ ] Implemented batch traceability with Chat
-- [ ] Implemented batch traceability with CLI plan mode
+- [ ] Implemented batch traceability with VS Code Copilot Chat
+- [ ] Implemented batch traceability with Copilot CLI plan mode
 - [ ] Compared both approaches
 - [ ] Documented findings and insights
 
@@ -1245,40 +988,16 @@ Review your accomplishments:
 4. **Plan mode forces structured thinking** - CLI-exclusive plan mode breaks complex tasks into phases and aligns before executing
 5. **Test-driven development loop in terminal** - Run tests, read failures, fix code, re-run — complete TDD cycle without leaving CLI
 6. **Programmatic interface enables automation** - Use `-p` flag for headless operations in CI/CD pipelines and scripts
-7. **Governance ensures safe enterprise adoption** - Control tool access, audit usage, enforce compliance policies at scale
 
 **Core Workflow Learned:**
 1. Use MCP to research and create feature requirements (GitHub issue)
 2. Assign issue to Copilot cloud agent for autonomous implementation
 3. Use CLI for terminal-native development and complete features with plan mode
 4. Automate git workflows and testing from the command line
-5. Apply governance policies to ensure security and compliance
 
 ---
 
-## Next Steps
-
-- Explore more MCP servers in the [GitHub MCP Registry](https://github.com/mcp)
-- Create custom MCP servers for your organization's internal tools
-- Define organization-level custom agents in `.github-private/agents/`
-- Implement comprehensive governance policies for your team
-- Integrate Copilot workflows into your CI/CD pipelines
-
----
-
-## Resources
-
-- [GitHub Copilot Documentation](https://docs.github.com/en/copilot)
-- [About GitHub Copilot CLI](https://docs.github.com/en/copilot/concepts/agents/copilot-cli/about-copilot-cli)
-- [Copilot CLI Getting Started](https://docs.github.com/en/copilot/how-tos/copilot-cli/cli-getting-started)
-- [Model Context Protocol Docs](https://modelcontextprotocol.io/)
-- [GitHub MCP Server Repository](https://github.com/github/github-mcp-server)
-- [Copilot CLI Reference](https://docs.github.com/en/copilot/reference/copilot-cli-reference)
-- [Enterprise Governance Guide](https://docs.github.com/en/copilot/managing-copilot)
-- [Agent Customization Cheat Sheet](https://docs.github.com/en/copilot/reference/customization-cheat-sheet)
-
----
 
 **Congratulations on completing the Advanced GitHub Copilot Lab!** 🎉
 
-You now have the skills to leverage Copilot's most advanced capabilities across multiple surfaces (IDE, CLI, Cloud), extend it with external tools via MCP, and implement enterprise-grade governance controls.
+You now have the skills to leverage Copilot's most advanced capabilities across multiple surfaces (IDE, CLI, Cloud) and extend it with external tools via MCP.
