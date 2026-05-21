@@ -392,13 +392,14 @@ Copilot cloud agent runs on GitHub.com and can autonomously implement features, 
 
 1. Go to repository **Pull requests** tab
 
-2. Open the Pull Request created by Copilot (should mention "Low Inventory Check")
+2. Open the Pull Request created by Copilot
 
-3. Note the following changes:
-   - The [WIP] tag in the title has been removed, indicating the agent has completed its initial implementation
-   - At the top you see a message "Copilot requested your review on this pull request." Then a button "Add your review" is available for you to click and provide feedback
+3. Note the following:
+   - Copilot would create a checklist in the PR description based on the issue requirements. This helps you track what has been implemented and what is still pending.
+   - Once the list is completed, the [WIP] tag in the PR title will be removed, indicating the agent has completed its implementation
+   - At the top you see a message "Copilot requested your review on this pull request." Then a button "Add your review" will be available for you to click and provide feedback
 
-4. Review Copilot's description on the PR:
+4. The description of the PR would be modified by Copilot to include:
    - **Approach explanation** - How the feature was implemented
    - **Code changes** - Key changes made to the codebase
    - **Testing strategy** - What tests were added and why
@@ -407,20 +408,6 @@ Copilot cloud agent runs on GitHub.com and can autonomously implement features, 
 5. Review the **Files changed** tab. You should see changes across multiple files.
 
 #### Step 2: Request Improvements
-
-Part A: Provide feedback by commenting on the PR. Try:
-
-1. Go to the **Files changed** tab. Go to models.py where the default inventory threshold field was added.
-
-2. Click a line number in the diff → Click "+" icon
-
-3. Add a comment: "Can we make the default threshold configurable by placing it in the environment file?"
-
-4. Click Start a review.
-
-5. Scroll to the top and click Submit Review → Select Request changes → then Submit review.
-
-Part B: Provide general feedback (comment on PR conversation tab):
 
 1. Go to the **Conversation** tab of the PR
 
@@ -435,9 +422,9 @@ Part B: Provide general feedback (comment on PR conversation tab):
 
 #### Step 3: Wait for Agent Response
 
-1. Copilot will read your review and comment
+1. An eyes emoji will appear at the bottom of your comment, indicating that Copilot will read it
 
-2. A session will open showing Copilot processing your feedback and making additional commits to address the requested changes
+2. At the bottom of your comment, a message will indicate that Copilot will start working on your request. Select View session to see the agent working on your feedback in real-time!
 
 3. Go to the **Commits** tab to review the new commits
 
@@ -448,59 +435,58 @@ Part B: Provide general feedback (comment on PR conversation tab):
 
 ---
 
-### Exercise 2.3: Merge and Test Cloud Agent Implementation (10 min)
+### Exercise 2.3: Test Cloud Agent Implementation (10 min)
 
-**Task:** Approve the PR, merge it, and test the Low Inventory Check feature locally.
+#### Step 1: Review the Pull Request in VS Code
 
-#### Step 1: Final Review, Approval and Merge the PR
+1. Open a new terminal and fetch the PR locally:
+```bash
+git fetch origin pull/{PR_NUMBER}/head:low-inventory-check
+git checkout low-inventory-check
+```
+> Note: Replace `{PR_NUMBER}` with the actual PR number from GitHub.
 
-1. Review all files in the **Files changed** tab one more time
-
-2. Verify acceptance criteria from original issue:
+2. Test in browser and verify acceptance criteria from original issue:
    - ✓ Visual indicators for low-stock items
    - ✓ Filter to show only low-stock products
    - ✓ Dashboard widget with count
    - ✓ Backend endpoint for low-stock items
    - ✓ Configurable thresholds
-   - ✓ Tests included
+   - ✓ Changes in the threshold in the backend should reflect in the frontend without redeploying
 
-3. If everything looks good, scroll down to the bottom of the PR and click **"Ready for review"**.
-
-4. Click **Approve** → **Merge Pull Request** → **Confirm merge**
-
-5. Delete the branch after merging (GitHub will offer this option)
-
-6. Check that the issue is automatically closed
-
-#### Step 2: Pull Changes Locally and Test
-
-1. Pull the merged changes:
-   ```bash
-   git pull origin main
-   ```
-
-2. Start the API:
-   ```bash
-   cd steel-inventory-api
-   uvicorn app.main:app --reload
-   ```
-
-3. Test in browser:
-   - Visit http://localhost:8000
-   - Look for products with low inventory indicators (red badge/icon)
-   - Test the low-stock filter button
-   - Check dashboard widget shows count
-
-4. Test the API endpoint by visiting http://127.0.0.1:8000/docs and trying out the GET /api/inventory/low-stock endpoint. Verify it returns the correct products based on the threshold.
-   
-5. Run the tests:
+3. Run and verify tests:
    ```bash
    pytest tests/test_inventory.py -v -k "low"
    ```
 
-6. Verify all tests pass
+4. If there are any frontend or backend issues, have GitHub Copilot fix them. Use Playwright MCP to automate testing of the UI issues.
 
-7. If there are any frontend or backend issues, have GitHub Copilot fix them. Use Playwright MCP to automate testing of the UI issues.
+5. Once all issues are resolved and tests are passing, ask GitHub MCP to generate a semantic commit message for any fixes and push the changes.
+```
+Use the GitHub MCP server to generate a semantic commit message for the fixes I just made to the low inventory check feature. Then commit and push the changes.
+```
+> Note: Do this only when you have made some fixes to the code. 
+
+6. Checkout back to main branch:
+```bash
+git checkout main
+```
+7. Go back to the PR on GitHub.com and verify that your commits are reflected in the PR.
+
+#### Step 2: Merge the Pull Request
+
+1. Scroll down to the bottom of the PR and click **"Ready for review"**.
+
+2. Click **Approve** → **Merge Pull Request** → **Confirm merge**
+
+3. Delete the branch after merging (GitHub will offer this option)
+
+4. Check that the issue is automatically closed
+
+5. Go back to your VS Code terminal and pull the latest changes:
+```bash
+git pull origin main
+```
 
 **Expected Outcome:**
 - PR successfully merged
