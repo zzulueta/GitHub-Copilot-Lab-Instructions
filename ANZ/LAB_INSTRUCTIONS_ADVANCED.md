@@ -461,9 +461,11 @@ git checkout low-inventory-check
 
 4. If there are any frontend or backend issues, have GitHub Copilot fix them. Use Playwright MCP to automate testing of the UI issues.
 
-5. Once all issues are resolved and tests are passing, ask GitHub MCP to generate a semantic commit message for any fixes and push the changes.
-```
-Use the GitHub MCP server to generate a semantic commit message for the fixes I just made to the low inventory check feature. Then commit and push the changes.
+5. Once all issues are resolved and tests are passing, move your changes to the PR branch:
+```bash
+git add .
+git commit -m "fix: address review feedback and test failures"
+git push origin low-inventory-check
 ```
 > Note: Do this only when you have made some fixes to the code. 
 
