@@ -1,10 +1,10 @@
 # GitHub Copilot Advanced Lab Instructions
-**Duration:** 2.5 hours  
+**Duration: 3 hours**
 **Level:** Advanced
 
 ---
 
-## Pre-Lab Setup (15 minutes)
+## Pre-Lab Setup
 
 ### 1. Prerequisites
 - GitHub Copilot license activated
@@ -46,11 +46,11 @@ In this advanced lab, you'll extend GitHub Copilot's capabilities by integrating
 
 ---
 
-## Part 1: Model Context Protocol (MCP) Integration (40 minutes)
+## Part 1: Model Context Protocol (MCP) Integration
 
 MCP (Model Context Protocol) allows GitHub Copilot to integrate with external tools and services. In this section, you'll install and use MCP servers to extend Copilot's capabilities, search for similar projects, and create a comprehensive feature issue.
 
-### Exercise 1.1: GitHub MCP Server - Repository Search and Issue Creation (20 min)
+### Exercise 1.1: GitHub MCP Server - Repository Search and Issue Creation
 
 The GitHub MCP server provides tools for interacting with GitHub.com directly from Copilot. You'll use it to research similar projects and create a comprehensive feature issue.
 
@@ -221,7 +221,7 @@ The GitHub MCP server provides tools for interacting with GitHub.com directly fr
 
 ---
 
-### Exercise 1.2: Playwright MCP Server for UI Testing (20 min)
+### Exercise 1.2: Playwright MCP Server for UI Testing
 
 **Task:** Install Playwright MCP server and create automated UI tests for the steel inventory web application.
 
@@ -340,11 +340,11 @@ Visit http://localhost:8000 to confirm the web UI loads.
 
 ---
 
-## Part 2: Copilot Cloud Agent Delegation (35 minutes)
+## Part 2: Copilot Cloud Agent Delegation
 
 Copilot cloud agent runs on GitHub.com and can autonomously implement features, create PRs, and work in the background even when your local machine is off. In this section, you'll assign the "Low Inventory Check" issue from Part 1 to Copilot and watch it work!
 
-### Exercise 2.1: Enable and Assign Issue to Cloud Agent (10 min)
+### Exercise 2.1: Enable and Assign Issue to Cloud Agent
 
 #### Step 1: Assign Low Inventory Check Issue to Copilot
 
@@ -384,7 +384,7 @@ Copilot cloud agent runs on GitHub.com and can autonomously implement features, 
 
 ---
 
-### Exercise 2.2: Review and Interact with Cloud Agent PR (15 min)
+### Exercise 2.2: Review and Interact with Cloud Agent PR
 
 **Task:** Review the cloud agent's implementation and provide feedback.
 
@@ -435,7 +435,7 @@ Copilot cloud agent runs on GitHub.com and can autonomously implement features, 
 
 ---
 
-### Exercise 2.3: Test Cloud Agent Implementation (10 min)
+### Exercise 2.3: Test Cloud Agent Implementation
 
 #### Step 1: Review the Pull Request in VS Code
 
@@ -459,7 +459,7 @@ git checkout low-inventory-check
    pytest tests/test_inventory.py -v -k "low"
    ```
 
-4. If there are any frontend or backend issues, have GitHub Copilot fix them. Use Playwright MCP to automate testing of the UI issues.s
+4. If there are any frontend or backend issues, have GitHub Copilot fix them. Use Playwright MCP to automate testing of the UI issues.
 
 5. Once all issues are resolved and tests are passing, move your changes to the PR branch:
 ```bash
@@ -503,7 +503,7 @@ This is the power of cloud agents - you created an issue with requirements, and 
 
 ---
 
-## Part 3: GitHub Copilot CLI - Complete the BlueScope Steel Inventory API (70 minutes)
+## Part 3: GitHub Copilot CLI - Complete the BlueScope Steel Inventory API
 
 ### Overview
 
@@ -517,7 +517,7 @@ In this hands-on lab, you'll use GitHub Copilot CLI to complete a partially impl
 
 ---
 
-### Exercise 3.1: Install and Authenticate GitHub Copilot CLI (10 min)
+### Exercise 3.1: Install and Authenticate GitHub Copilot CLI
 
 #### Step 1: Install GitHub Copilot CLI
 
@@ -574,7 +574,7 @@ exit
 
 ---
 
-### Exercise 3.2: Setup Copilot CLI (5 min)
+### Exercise 3.2: Setup Copilot CLI
 
 #### Step 1: Navigate to Project Directory
 
@@ -602,7 +602,7 @@ When prompted about trusted directories, choose:
 
 ---
 
-### Exercise 3.3: Explore Copilot CLI Options (10 min)
+### Exercise 3.3: Explore Copilot CLI Options
 
 **Goal:** Get familiar with how to interact with Copilot CLI.
 
@@ -622,7 +622,7 @@ Try the following prompts in the CLI session:
 
 ---
 
-### Exercise 3.4: Plan Mode → Implement Weight Calculations (15 min)
+### Exercise 3.4: Plan Mode → Implement Weight Calculations
 
 **Goal:** Use CLI's exclusive **plan mode** to structure a complex feature implementation before writing any code.
 
@@ -681,7 +681,7 @@ Requirements:
 
 ---
 
-### Exercise 3.5: Test → Fail → Fix Loop (15 min)
+### Exercise 3.5: Test → Fail → Fix Loop
 
 **Goal:** Experience CLI's ability to run tests, read failures, and fix issues — all without leaving the terminal.
 
@@ -703,12 +703,6 @@ CLI will:
 
 **Expected:** Some tests may fail initially — this is intentional! Copilot will iteratively fix the implementation based on test results.
 
-#### Step 2: Add More Tests
-
-```
-Add tests for the complete CRUD operations (Create, Read, Update, Delete) for steel products and run them. Handle edge cases like invalid input and missing fields. 
-```
-
 **Why CLI Here?**
 - Copilot runs pytest directly
 - Reads failure output automatically
@@ -718,7 +712,7 @@ Add tests for the complete CRUD operations (Create, Read, Update, Delete) for st
 
 ---
 
-### Exercise 3.6: Git Workflow + Programmatic Mode (10 min)
+### Exercise 3.6: Git Workflow + Programmatic Mode
 
 **Goal:** Use CLI for complete git workflow automation, then demonstrate headless/scriptable mode.
 
@@ -805,12 +799,10 @@ copilot -sp "Do I have any open Pull Requests?"
 - Git/GitHub integration without leaving terminal
 - **Scriptable** for automation (pre-commit hooks, CI/CD)
 - **Headless operations** — no GUI required
-- Chat can't do any of this
-
 
 ---
 
-### Exercise 3.7: Wrap & Discussion (5 min)
+### Exercise 3.7: Wrap & Discussion
 
 #### Step 1: Review Session Chronicle
 
@@ -834,7 +826,7 @@ This shows:
 ---
 
 
-## Capstone Challenge (Optional): CLI vs Chat Comparison (20 minutes)
+## Capstone Challenge (Optional): CLI vs Chat Comparison
 
 **Goal:** Implement a "Steel Batch Traceability" feature using both Chat and CLI, then compare the approaches.
 
@@ -866,7 +858,7 @@ Implement a batch tracking system with the following specifications:
 
 ---
 
-### Approach A: VS Code Copilot Chat (10 minutes)
+### Approach A: VS Code Copilot Chat
 
 1. Open VS Code Copilot Chat
 
@@ -889,7 +881,7 @@ Implement a batch tracking system with the following specifications:
 
 ---
 
-### Approach B: Copilot CLI Plan Mode (10 minutes)
+### Approach B: Copilot CLI Plan Mode
 
 1. Open Copilot CLI:
    ```bash
