@@ -459,7 +459,7 @@ git checkout low-inventory-check
    pytest tests/test_inventory.py -v -k "low"
    ```
 
-4. If there are any frontend or backend issues, have GitHub Copilot fix them. Use Playwright MCP to automate testing of the UI issues.
+4. If there are any frontend or backend issues, have GitHub Copilot fix them. Use Playwright MCP to automate testing of the UI issues.s
 
 5. Once all issues are resolved and tests are passing, move your changes to the PR branch:
 ```bash
@@ -479,7 +479,7 @@ git checkout main
 
 1. Scroll down to the bottom of the PR and click **"Ready for review"**.
 
-2. Click **Approve** → **Merge Pull Request** → **Confirm merge**
+2. Click **Merge Pull Request** → **Confirm merge**
 
 3. Delete the branch after merging (GitHub will offer this option)
 
@@ -521,6 +521,7 @@ In this hands-on lab, you'll use GitHub Copilot CLI to complete a partially impl
 
 #### Step 1: Install GitHub Copilot CLI
 
+1. Run the appropriate installation command for your platform:
 **Windows (WinGet - Recommended):**
 ```powershell
 winget install GitHub.Copilot
@@ -543,15 +544,17 @@ curl -fsSL https://gh.io/copilot-install | bash
 
 For more installation options, see: [Official Installation Guide](https://docs.github.com/en/copilot/how-tos/copilot-cli/set-up-copilot-cli/install-copilot-cli)
 
-**Verify installation:**
+#### Step 2: Verify Installation
+
+1. Check the version to confirm installation:
 ```bash
 copilot --version
 ```
-
 You should see output like: `copilot version 1.x.x`
 
-#### Step 2: Authenticate with GitHub
+#### Step 3: Authenticate with GitHub
 
+1. Run the copilot command to start authentication:
 ```bash
 copilot
 ```
@@ -559,6 +562,11 @@ copilot
 If not logged in, use `/login` and follow the authentication flow:
 - Authorize with your GitHub account
 - Verify you have Copilot Pro or Business subscription
+
+2. Exit the CLI session after successful authentication:
+```bash
+exit
+```
 
 **Expected Outcome:**
 - GitHub Copilot CLI installed and authenticated
