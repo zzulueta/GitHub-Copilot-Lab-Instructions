@@ -7,13 +7,13 @@
 ## Pre-Lab Setup (15 minutes)
 
 ### 1. Prerequisites
-- **Git configured** and repository pushed to GitHub
-- **PowerShell v6 or higher** (for Windows users)
-- **Node.js 22 or later** (if installing via npm)
+- GitHub Copilot license activated
+- VS Code with GitHub Copilot extensions installed
+- Python 3.9+ installed
+- Git configured
 
 ### 2. Verify Setup
-
-Check that the steel inventory API is working:
+Check that the steel inventory API is working. In your terminal, navigate to the project directory and start the API:
 ```bash
 cd steel-inventory-api
 python -m venv venv
@@ -22,25 +22,6 @@ pip install -r requirements.txt
 uvicorn app.main:app --reload
 ```
 Visit http://localhost:8000/docs - you should see the API documentation.
-
-Install and verify Copilot CLI:
-
-**Windows (WinGet - Recommended):**
-```powershell
-winget install GitHub.Copilot
-```
-
-**Alternative: npm (All Platforms):**
-```bash
-npm install -g @github/copilot
-```
-
-**Verify installation:**
-```bash
-copilot --version
-```
-
-You should see output like: `copilot version 1.x.x`
 
 ---
 
@@ -85,27 +66,81 @@ The GitHub MCP server provides tools for interacting with GitHub.com directly fr
 
 5. Select **GitHub** and click **Install**. Select Back to overview
 
-6. Right-click the GitHub MCP server and select **Start Server**
+6. In the MCP Servers tab you will see the GitHub MCP server listed but is not yet running. Right-click the GitHub MCP server and select **Start Server**
 
-7. You will be prompted to authenticate with GitHub. 
+7. You may be prompted to authenticate with GitHub. 
    - Select Allow to grant permissions to the MCP server
    - You will be redirected to GitHub.com to authorize VS Code. Select **Continue** and complete the authentication flow.
 
 8. After successful authentication in the browser, return to VS Code and you should see the GitHub MCP server status as "Running" in the MCP Servers tab.
 
-9. You can optionally see the MCP JSON configuration:
-   - Click Extensions → MCP Servers - INSTALLED → GitHub
-   - Select Manage → Show Configuration (JSON)
+9. Now let us see the MCP JSON configuration:
+   - Click Extensions (Ctrl+Shift+X) in the sidebar → MCP Servers - INSTALLED → GitHub
+   - Select Manage (cog icon) → Show Configuration (JSON)
 
 10. You should see a configuration like this with a Running status:
 ```json
-"io.github.github/github-mcp-server": {
+{
+	"servers": {
+		"io.github.github/github-mcp-server": {
 			"type": "http",
 			"url": "https://api.githubcopilot.com/mcp/",
 			"gallery": "https://api.mcp.github.com",
 			"version": "1.0.4"
 		}
+	},
+	"inputs": []
+}
 ```
+
+#### Step 2: Setup GitHub MCP Server with Personal Access Token (PAT)
+
+1. Go to GitHub.com → Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token
+
+2. Set token settings:
+   - Name: "github-mcp-server-token"
+   - Description: "Token for GitHub MCP server"
+   - Expiration: 30 days
+   - Repository access: Select the repository you are working on
+   - Permissions: 
+      - Contents: Read and write
+      - Issues: Read and write
+      - Pull requests: Read and write
+      - Metadata: Read-only
+
+3. Select Generate token twice and copy the generated token to your clipboard
+
+4. In VS Code, open the GitHub MCP server configuration JSON (as in Step 1.9) and modify the configuration:
+```json
+{
+	"inputs": [
+		{
+			"id": "github-mcp-server-token",
+			"type": "promptString",
+			"description": "GitHub MCP Personal Access Token",
+			"password": true
+		}
+	],
+	"servers": {
+		"io.github.github/github-mcp-server": {
+			"type": "http",
+			"url": "https://api.githubcopilot.com/mcp/",
+			"gallery": "https://api.mcp.github.com",
+			"version": "1.0.4",
+			"headers": {
+				"Authorization": "Bearer ${input:github-mcp-server-token}"
+			}
+		}
+	}
+}
+```
+
+5. Close VS Code and reopen it.
+
+6. Head back to the MCP Servers tab and start the GitHub MCP server again. 
+
+7. You will be prompted to enter the Personal Access Token. Paste the token you copied from GitHub and select Enter.
+
 
 #### Step 2: Search Similar Repositories
 
