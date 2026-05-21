@@ -574,7 +574,7 @@ exit
 
 ---
 
-### Exercise 3.2: Setup Project and Understand CLI Advantage (5 min)
+### Exercise 3.2: Setup Copilot CLI (5 min)
 
 #### Step 1: Navigate to Project Directory
 
@@ -587,7 +587,6 @@ cd steel-inventory-api
 ```bash
 copilot
 ```
-
 When prompted about trusted directories, choose:
 **"Yes, and remember this folder for future sessions"**
 
@@ -603,53 +602,23 @@ When prompted about trusted directories, choose:
 
 ---
 
-### Exercise 3.3: Onboard with the Codebase (10 min)
+### Exercise 3.3: Explore Copilot CLI Options (10 min)
 
-**Goal:** Use CLI to understand the project structure and identify what's implemented vs. what's TODO.
+**Goal:** Get familiar with how to interact with Copilot CLI.
 
-#### Step 1: Project Overview
-
-In the Copilot CLI session, ask:
+Try the following prompts in the CLI session:
 
 ```
-Explain this project's structure and what's already built vs. any TODO
+/context          # Show context window token usage and visualization
+/compact          # Compact the session context for performance
+/usage            # Display session usage metrics and statistics
+/agent            # List or switch Copilot agents
+/env              # Show loaded environment details 
+/mcp add          # Add a new MCP server integration
+/model            # View or change the underlying language model
+/allow-all        # Enable all permissions
+/autopilot        # Toggle autopilot mode for automatic execution of commands
 ```
-> Note: When prompted to allow file access, select "Yes, and add these directories to the allowed list."
-
-CLI will:
-- Read the README.md
-- Scan the directory structure
-- Identify implemented features
-- List TODO items
-
-**Expected Response:**
-- Project structure overview
-- What endpoints are implemented
-- What features need to be completed (CRUD operations, weight calculations, tests)
-
-#### Step 2: Deep Dive into Main Entry Point
-
-```
-Walk me through main.py and explain how the application is structured
-```
-
-CLI will:
-- Read `app/main.py`
-- Explain the FastAPI application setup
-- Describe the router configuration
-- Identify dependencies and middleware
-
-#### Step 3: Review Data Models
-
-```
-Show me the data models in models.py and explain what fields are defined for steel products
-```
-
-**What You're Learning:**
-- CLI reads files directly without you opening them
-- No context switching to VS Code
-- Immediate understanding of codebase structure
-- CLI can synthesize information from multiple files
 
 ---
 
