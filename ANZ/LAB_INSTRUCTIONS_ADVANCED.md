@@ -360,7 +360,7 @@ Copilot cloud agent runs on GitHub.com and can autonomously implement features, 
 
 6. An Assign agent to issue dialog will appear. Select **Assign** to confirm
 
-7. Watch the issue - Copilot will link a Pull Request that will close the issue once the implementation is complete. The Pull Request will have a title like "[WIP] Implement Low Inventory Check System - Work in Progress by Copilot"
+7. Refresh the issue page. Scroll down to the bottom. Copilot will link a Pull Request that will close the issue once the implementation is complete. The Pull Request will have a title like "[WIP] Implement Low Inventory Check System"
 
 #### Step 2: Monitor Initial Progress
 
