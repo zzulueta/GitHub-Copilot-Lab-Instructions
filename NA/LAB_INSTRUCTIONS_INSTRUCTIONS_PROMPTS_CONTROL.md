@@ -1,0 +1,1089 @@
+# GitHub Copilot: Custom Instructions, Prompts, and Agent Control
+**Duration:** 1 hour  
+**Level:** Intermediate
+
+---
+
+## Prerequisites
+
+**Before starting this lab, you should have:**
+- ✅ Basic experience with GitHub Copilot Chat and inline suggestions
+- ✅ Understanding of how to use #file, #codebase, and context selection
+- ✅ Familiarity with Copilot's Ask and Agent modes
+- ✅ The steel-inventory-api application set up and running
+
+**If you're new to GitHub Copilot**, complete the Basic Lab first to learn fundamental concepts like:
+- How to use Copilot Chat modes
+- Providing context with #file and #codebase
+- Model selection
+- Basic code generation
+
+---
+
+## Lab Overview
+
+This lab teaches you how to **customize and steer GitHub Copilot** to match your workflow and preferences. You'll learn to create persistent instructions, build reusable command templates, and control how Copilot interacts with your code through context and permissions.
+
+### What You'll Learn
+- [ ] Create Custom Instructions to persist coding preferences across all work
+- [ ] Build file-based instructions that apply to specific patterns
+- [ ] Build reusable Custom Prompts for repetitive tasks
+- [ ] Invoke prompts with slash commands for instant productivity
+- [ ] Steer Copilot with precise context using #file, #codebase, and #selection
+- [ ] Configure which tools Copilot can use in Agent mode
+- [ ] Understand approval modes: default, session-based, and autopilot concepts
+
+### Why This Matters
+
+**Custom Instructions** = "Always follow these patterns"
+- Reduces repetitive context in every prompt
+- Ensures consistency across all generated code
+- Shares team standards automatically
+
+**Custom Prompts** = "Execute this workflow when I ask"
+- Eliminates retyping complex prompts
+- Standardizes common development tasks
+- Creates sharable command libraries
+
+**Steering with Context & Permissions** = "Work with exactly what I need"
+- Precise control over what Copilot sees
+- Manage which tools Copilot can use
+- Choose between manual control and automation
+
+---
+
+## Part 1: Custom Instructions (18 minutes)
+
+### Introduction: Making Your Preferences Persistent
+
+Custom Instructions are markdown files that provide **persistent context** to Copilot. They apply automatically without you mentioning them in every prompt—like having a team member who always remembers your coding standards.
+
+**Two types of instruction files:**
+
+1. **Always-on instructions** - Apply to ALL chat requests in the workspace
+   - `.github/copilot-instructions.md` - Workspace-wide coding standards
+
+2. **File-based instructions** - Apply conditionally based on file patterns
+   - `*.instructions.md` files stored in `.github/instructions/` folder
+   - Use YAML frontmatter with `applyTo` glob patterns to specify when they apply
+
+**Key Concepts:**
+- Instructions are combined from multiple sources (workspace, user profile, organization)
+- Higher priority: User > Workspace > Organization
+- You can also create user-level instructions that apply across all workspaces
+
+---
+
+### Exercise 1.1: Create Always-On Workspace Instructions (6 min)
+
+**Task:** Define project-wide coding standards that apply to ALL Copilot interactions
+
+1. **Create the instructions file:**
+   
+   Create a new file: `.github/copilot-instructions.md` in your workspace root
+   
+   **Tip:** You can use the slash command `/instructions` in Copilot Chat to quickly access the instructions editor.
+
+2. **Add comprehensive project instructions:**
+   
+   Copy this content then **SAVE** the file:
+   ```markdown
+   # Steel Inventory API - Copilot Instructions
+
+   ## Python Code Style
+   - Always include type hints for function parameters and return values
+   - Write comprehensive docstrings using Google style format
+   - Use descriptive variable names (e.g., `steel_grade` not `sg`)
+   - Prefer explicit over implicit (PEP 20)
+
+   ## FastAPI Patterns
+   - Use dependency injection for database connections
+   - Include comprehensive OpenAPI documentation in docstrings
+   - Return appropriate HTTP status codes (201 for create, 204 for delete)
+   - Use Pydantic models for all request/response bodies
+   - Add response_model to all endpoints
+
+   ## Error Handling
+   - Raise HTTPException with descriptive messages
+   - Include relevant context in error details
+   - Use appropriate status codes (400 for validation, 404 for not found, 422 for invalid data)
+   - Always validate input data
+
+   ## Testing Conventions
+   - Use pytest for all tests
+   - Name test functions descriptively: test_<action>_<condition>_<expected_result>
+   - Use parametrize for multiple test cases
+   - Include docstrings explaining what each test verifies
+   - Aim for comprehensive edge case coverage
+
+   ## Steel Industry Domain
+   - Valid steel shapes: sheet, plate, coil, bar, tube
+   - Common grades: A36, A572, 304, 316, 316L, 4140, 4340
+   - Measurements: thickness in mm, width/length in mm, weight in kg
+   - Standard density for steel: 7850 kg/m³
+   ```
+
+3. **Test the instructions:**
+   
+   Open Copilot Chat in Ask mode and try:
+   ```
+   Create a new function to validate steel thickness. It should accept thickness in mm 
+   and ensure it's between 0.1 and 500mm.
+   ```
+   
+   - Observe: Copilot should automatically include type hints, docstrings, and raise appropriate errors
+   - You didn't mention "add type hints" or "include docstrings" - Copilot applied these patterns automatically!
+
+**Expected Outcome:**
+- `.github/copilot-instructions.md` file created
+- Understanding that always-on instructions apply to ALL Copilot interactions
+- See automatic application of coding standards without explicit prompting
+
+---
+
+### Exercise 1.2: Create File-Based Instructions with Patterns (8 min)
+
+**Task:** Create specialized instructions that apply only to specific file types or locations
+
+**Important:** File-based instructions use **YAML frontmatter** with an `applyTo` property to define glob patterns.
+
+1. **Create the instructions folder:**
+   
+   Create directory: `.github/instructions/` in your workspace root
+
+2. **Create router-specific instructions:**
+   
+   Create file: `.github/instructions/router-conventions.instructions.md`
+   
+   Copy this content then SAVE the file:
+   ```markdown
+   ---
+   name: 'API Router Conventions'
+   description: 'Coding conventions for FastAPI router files'
+   applyTo: '**/routers/**/*.py'
+   ---
+   # API Router Instructions
+
+   ## Endpoint Structure
+   - Use router prefix for organization (e.g., router = APIRouter(prefix="/inventory"))
+   - Group related endpoints together
+   - Use consistent path parameters: {id} for single resources
+
+   ## Response Patterns
+   - GET collection: Return List[Model], 200 status
+   - GET single: Return Model, 200 status, 404 if not found
+   - POST create: Return created Model, 201 status
+   - PUT/PATCH update: Return updated Model, 200 status
+   - DELETE: Return 204 No Content
+
+   ## Documentation
+   - Every endpoint must have summary and description
+   - Include example responses in docstrings
+   - Document all possible HTTP status codes
+   - Add tags for API grouping
+
+   ## Validation
+   - Validate all path and query parameters
+   - Use Pydantic models for request bodies
+   - Check resource existence before operations
+   - Return meaningful error messages
+   ```
+
+3. **Create test-specific instructions:**
+   
+   Create file: `.github/instructions/test-conventions.instructions.md`
+   
+   Copy this content then SAVE the file:
+   ```markdown
+   ---
+   name: 'Test Conventions'
+   description: 'Standards for pytest test files'
+   applyTo: '**/tests/**/*.py'
+   ---
+   # Test Instructions
+
+   ## Test Organization
+   - Group related tests in classes when appropriate
+   - Use descriptive test names that explain the scenario
+   - One assertion per test when possible
+
+   ## Test Coverage Requirements
+   - Test happy path (valid inputs, expected success)
+   - Test edge cases (boundary values, empty inputs)
+   - Test error conditions (invalid inputs, not found)
+   - Test business logic validation
+
+   ## Test Structure (Arrange-Act-Assert)
+   - Arrange: Set up test data and dependencies
+   - Act: Call the function/endpoint being tested
+   - Assert: Verify expected outcomes
+
+   ## FastAPI Testing
+   - Use TestClient for endpoint testing
+   - Verify both status codes AND response body content
+   - Test request validation (missing fields, invalid types)
+   - Ensure test isolation (each test independent)
+
+   ## Parametrized Tests
+   - Use pytest.mark.parametrize for multiple similar cases
+   - Include test IDs for clarity: @pytest.mark.parametrize(..., ids=["case1", "case2"])
+   - Cover all code paths with parameters
+   ```
+
+4. **Understanding the frontmatter:**
+   - `name`: Display name shown in VS Code UI
+   - `description`: Short description (shown on hover)
+   - `applyTo`: Glob pattern defining when instructions apply
+     - `**/routers/**/*.py` = All Python files in any `routers` folder
+     - `**/tests/**/*.py` = All Python files in any `tests` folder
+     - `**/*.py` = All Python files in workspace
+
+5. **Test pattern-based instructions:**
+   
+   Open `steel-inventory-api/app/routers/inventory.py`.
+   Select **Agent mode** and try:
+   ```
+   Create a new endpoint to get products by location.
+   ```
+   Review the generated code - it should follow the router conventions from your instructions!
+   Undo the changes to keep the file clean.
+
+   Open `steel-inventory-api/tests/test_inventory.py`.
+   Select **Agent mode** and try:
+   ```
+   Create a test for the delete product endpoint.
+   ```
+   Review the generated test - it should follow the test conventions!
+   Undo the changes after reviewing.
+
+   - Notice how Copilot applies different patterns based on which file matches the `applyTo` pattern!
+
+**Expected Outcome:**
+- Two `.instructions.md` files created in `.github/instructions/` folder
+- Understanding of YAML frontmatter and `applyTo` patterns
+- See pattern-based application of instructions based on file context
+
+---
+
+### Exercise 1.3: Use the Agent Customizations Editor (2 min)
+
+**Task:** Discover and manage instructions through the VS Code UI
+
+1. **Open the Agent Customizations editor:**
+   
+   - Click the **gear icon** in the Chat window toolbar
+   - Select **Instructions** tab
+
+2. **Explore the instructions list:**
+   
+   You should see:
+   - ✅ Copilot Instructions (always-on, from `.github/copilot-instructions.md`)
+   - ✅ API Router Conventions (applies to `**/routers/**/*.py`)
+   - ✅ Test Conventions (applies to `**/tests/**/*.py`)
+   
+   - Hover over each to see the description
+   - Note the source location (workspace)
+
+3. **Generate instructions with AI (Optional):**
+   
+   In Copilot Chat **Agent** mode, try the slash command:
+   ```
+   /create-instruction Always use pathlib.Path instead of os.path for file operations in Python
+   ```
+   
+   - Copilot will ask clarifying questions
+   - It will generate an `.instructions.md` file with appropriate `applyTo` pattern
+   - Review and save the generated file
+
+**Expected Outcome:**
+- Familiarity with the Agent Customizations editor
+- Know how to view and manage instructions
+- Understanding of `/create-instruction` command
+
+---
+
+### Exercise 1.4: Instructions in Practice (2 min)
+
+**Task:** Experience the power of "set it and forget it" context
+
+1. **Generate code with minimal prompting:**
+   
+   In Ask mode, give a brief high-level request:
+   ```
+   #file:inventory.py Add an endpoint to get low stock products below a threshold.
+   ```
+   
+   - No mention of type hints, docstrings, error handling, or response patterns
+   - Copilot should include ALL best practices from your instructions
+
+2. **Compare the difference:**
+   
+   Notice what you **didn't** have to specify:
+   - ✅ Type hints added automatically
+   - ✅ Comprehensive docstring included
+   - ✅ Proper HTTP status codes used
+   - ✅ Response model defined
+   - ✅ Error handling included
+   - ✅ Router patterns followed
+
+3. **Key Insight:**
+   
+   Custom Instructions dramatically reduce prompt length while improving output quality. They're especially valuable for:
+   - Team consistency
+   - Onboarding new developers
+   - Maintaining coding standards
+   - Domain-specific patterns
+
+**Expected Outcome:**
+- Confidence using minimal prompts with instructions
+- Understanding the productivity boost from persistent context
+- Recognition of when to create instructions for your team
+
+---
+
+## Part 2: Custom Prompts (18 minutes)
+
+### Introduction: Reusable Command Templates
+
+Custom Prompts (also called slash commands) are **reusable templates** for common tasks stored as individual `.prompt.md` files. Unlike instructions (passive), prompts are **actively invoked** when you need them.
+
+**Use Custom Prompts for:**
+- Repetitive tasks with specific requirements
+- Multi-step workflows you execute frequently
+- Team-standard procedures
+- Complex prompts you don't want to retype
+
+**Prompt File Format:**
+- Each prompt is a **separate `.prompt.md` file**
+- Stored in `.github/prompts/` folder (or configured location)
+- Uses YAML frontmatter for configuration
+- Invoked with `/` slash commands in chat (e.g., `/generate-tests`)
+
+**Key Concepts:**
+- Prompt files can specify which agent mode to use (`ask`, `agent`, `plan`)
+- Can include tool restrictions and model selection
+- Support variables and user input with `${input:variableName}` syntax
+- Can reference instructions and other workspace files
+
+---
+
+### Exercise 2.1: Create Prompt Files for Common Tasks (9 min)
+
+**Task:** Build a library of prompt files for development tasks
+
+**Important:** Each prompt is a **separate file** with `.prompt.md` extension.
+
+1. **Create the prompts folder:**
+   
+   Create directory: `.github/prompts/` in your workspace root
+   
+   **Tip:** You can use the slash command `/prompts` in Copilot Chat to quickly access the prompts editor.
+
+2. **Create "Generate Tests" prompt:**
+   
+   Create file: `.github/prompts/generate-tests.prompt.md`
+   
+   Copy this content then SAVE the file:
+   ```markdown
+   ---
+   name: generate-tests
+   description: Generate comprehensive pytest tests for selected code
+   argument-hint: Select a function or endpoint first
+   agent: agent
+   model: Claude Sonnet 4.5 (copilot)
+   tools: [read, edit, search]
+   ---
+   Analyze the selected code and generate comprehensive pytest tests.
+
+   Requirements:
+   - Test happy path with valid inputs
+   - Test edge cases (boundary values, empty inputs, None values)
+   - Test error conditions (invalid inputs, exceptions)
+   - Use pytest.mark.parametrize for multiple similar test cases
+   - Include descriptive test names and docstrings
+   - Verify both functionality AND error messages
+   - Add fixtures if needed for test data setup
+
+   Return the complete test code ready to add to the test file.
+   ```
+
+3. **Create "Add Error Handling" prompt:**
+   
+   Create file: `.github/prompts/add-error-handling.prompt.md`
+   
+   Copy this content then SAVE the file:
+   ```markdown
+   ---
+   name: add-error-handling
+   description: Add comprehensive error handling to selected code
+   argument-hint: Select the code to enhance
+   agent: agent
+   model: Claude Sonnet 4.5 (copilot)
+   tools: [read, edit, search]
+   ---
+   Enhance the selected code with comprehensive error handling.
+
+   Requirements:
+   - Identify all possible error conditions
+   - Add try-except blocks where appropriate
+   - Raise HTTPException with descriptive messages
+   - Include relevant context in error details
+   - Use appropriate HTTP status codes (400, 404, 422, 500)
+   - Add logging for errors
+   - Handle edge cases (None, empty, invalid types)
+   - Maintain existing functionality
+
+   Return the enhanced code with all error handling added.
+   ```
+
+4. **Create "Document API Endpoint" prompt:**
+   
+   Create file: `.github/prompts/document-endpoint.prompt.md`
+   
+   Copy this content then SAVE the file:
+   ```markdown
+   ---
+   name: document-endpoint
+   description: Add comprehensive OpenAPI docs to an endpoint
+   argument-hint: Select an API endpoint function
+   agent: agent
+   model: Claude Sonnet 4.5 (copilot)
+   tools: [read, edit, search]
+   ---
+   Add comprehensive OpenAPI documentation to the selected FastAPI endpoint.
+
+   Requirements:
+   - Add summary (one line description)
+   - Add detailed description explaining purpose and behavior
+   - Document all parameters (path, query, body)
+   - Document all possible response status codes
+   - Include example request/response bodies in docstring
+   - Add response_model if not present
+   - Include notes about validation or business rules
+   - Add tags for API organization
+
+   Return the endpoint with complete documentation.
+   ```
+
+5. **Understanding the frontmatter:**
+   - `name`: Command name after `/` (e.g., `/generate-tests`)
+   - `description`: Short description shown in prompt picker
+   - `argument-hint`: Hint text shown in chat input
+   - `agent`: Which mode to use (`ask`, `agent`, or `plan`)
+   - `model`: (Optional) Specific model to use
+   - `tools`: (Optional) Restrict which tools are available
+
+**Expected Outcome:**
+- Three `.prompt.md` files created in `.github/prompts/` folder
+- Understanding of proper prompt file format with YAML frontmatter
+- Recognition of when to create custom prompts
+
+---
+
+### Exercise 2.2: Use Prompt Files with Slash Commands (5 min)
+
+**Task:** Invoke and use your custom prompt files
+
+1. **Use the "Generate Tests" prompt:**
+   
+   - Open `steel-inventory-api/app/utils/steel_utils.py`
+   - Select the `calculate_weight_kg` function
+   - Open Copilot Chat
+   - Type `/generate-tests` and press Enter
+   - Copilot will generate comprehensive tests following your prompt template
+   - Review the generated tests - should be comprehensive and follow test instructions
+
+2. **Use the "Add Error Handling" prompt:**
+   
+   - Open `steel-inventory-api/app/routers/inventory.py`
+   - Select a function that needs better error handling (e.g., `get_product`)
+   - In Copilot Chat, type `/add-error-handling` and press Enter
+   - Observe how it adds validation, error messages, and proper status codes
+
+3. **Use the "Document Endpoint" prompt:**
+   
+   - Still in `steel-inventory-api/app/routers/inventory.py`
+   - Select an endpoint function
+   - Type `/document-endpoint` in chat
+   - See comprehensive OpenAPI documentation added
+
+4. **Alternative invocation methods:**
+   
+   - **Type `/` in chat:** See all available prompts listed with autocomplete
+   - **Command Palette:** Press `Ctrl+Shift+P` → "Chat: Run Prompt" → Select prompt
+   - **Prompt file editor:** Open any `.prompt.md` file → Click play button in title bar to test it
+
+5. **Observe the synergy:**
+   
+   Notice how **Custom Prompts + Custom Instructions work together**:
+   - Prompt defines WHAT to do (generate tests, add error handling)
+   - Instructions define HOW to do it (code style, patterns from `.instructions.md`)
+   - Result: Consistent, high-quality output every time
+
+**Expected Outcome:**
+- Comfortable using `/` slash commands to invoke prompts
+- See how prompts + instructions complement each other
+- Experience faster execution of common tasks
+- Understanding of multiple invocation methods
+
+---
+
+### Exercise 2.3: Use the Agent Customizations Editor for Prompts (2 min)
+
+**Task:** Manage prompt files through the VS Code UI
+
+1. **Open the Agent Customizations editor:**
+   
+   - Click the **gear icon** in the Chat window toolbar
+   - Select **Prompts** tab
+
+2. **Explore the prompts list:**
+   
+   You should see:
+   - ✅ generate-tests
+   - ✅ add-error-handling
+   - ✅ document-endpoint
+   
+   - Hover over each to see the description
+   - Note the source location (workspace)
+   - Click to open and edit
+
+3. **Test a prompt directly from the editor:**
+   
+   - Open `.github/prompts/generate-tests.prompt.md`
+   - Click the **play button** (▶) in the editor title bar
+   - Choose "Run in current chat" or "Run in new chat"
+   - This is useful for testing prompts as you develop them
+
+4. **Generate a new prompt with AI (Optional):**
+   
+   In Copilot Chat **Agent** mode, try the slash command:
+   ```
+   /create-prompt A prompt that adds pagination to FastAPI endpoints with limit and offset parameters
+   ```
+   
+   - Copilot will ask clarifying questions
+   - It will generate a `.prompt.md` file with appropriate frontmatter
+   - Review and save the generated file
+
+**Expected Outcome:**
+- Familiarity with the Agent Customizations editor for prompts
+- Know how to test prompts with the play button
+- Understanding of `/create-prompt` command
+
+---
+
+### Exercise 2.4: Instructions vs Prompts Decision Framework (2 min)
+
+**Task:** Understand when to use each customization type
+
+**Decision Framework:**
+
+Use **Instructions** when:
+- ✅ Should apply to ALL code (coding style, patterns)
+- ✅ Background context that's always relevant
+- ✅ "Always do it this way"
+- ✅ Team-wide standards
+- ✅ Example: "Always use type hints" or "Follow FastAPI patterns"
+
+Use **Prompts** when:
+- ✅ Specific task you invoke intentionally
+- ✅ Multi-step workflow with clear steps
+- ✅ "Do this when I ask"
+- ✅ Repetitive but not universal
+- ✅ Example: "Generate tests" or "Add error handling"
+
+Use **Both** when:
+- ✅ Prompt defines the task, instructions define the style
+- ✅ Common tasks that should follow team standards
+- ✅ Example: `/generate-tests` (prompt) uses test conventions (instructions)
+
+**Quick Examples:**
+
+| Scenario | Instructions | Prompts | Both |
+|----------|-------------|---------|------|
+| Code style (type hints, docstrings) | ✅ | | |
+| API patterns (status codes, validation) | ✅ | | |
+| Generate tests for function | | | ✅ |
+| Add error handling to code | | ✅ | |
+| Document API endpoint | | ✅ | |
+| Steel industry domain knowledge | ✅ | | |
+
+**Expected Outcome:**
+- Strategic thinking about when to create instructions vs prompts
+- Understanding the complementary nature of both features
+- Confidence in building your customization library
+
+---
+
+## Part 3: Steering Copilot with Context and Permissions (24 minutes)
+
+### Introduction: Precise Control Over Copilot
+
+Steering Copilot means giving it exactly the right context and controlling what actions it can take. This part teaches you three ways to steer:
+
+1. **Context Steering** - Control what Copilot sees
+2. **Tool Configuration** - Control what Copilot can do
+3. **Approval Modes** - Control when Copilot needs permission
+
+---
+
+### Exercise 3.1: Context Steering Methods (6 min)
+
+**Task:** Master the different ways to provide context to Copilot
+
+Context is how you tell Copilot what to focus on. The more precise your context, the better the results.
+
+#### Method 1: Using #file
+
+1. Open Copilot Chat and type `#file` - you'll see a list of files
+2. Select specific files to include:
+   ```
+   #file:models.py Explain the SteelProduct class
+   ```
+
+3. Try with multiple files:
+   ```
+   #file:models.py #file:database.py How are products stored and retrieved?
+   ```
+
+**When to use:** Questions about specific files (up to 5-10 files)
+
+#### Method 2: Using #codebase
+
+1. For questions about the entire project:
+   ```
+   #codebase What endpoints are available in this API?
+   ```
+
+2. Search within codebase:
+   ```
+   #codebase Where is the database connection configured?
+   ```
+
+**When to use:** Searching across the entire project, understanding architecture
+
+#### Method 3: Using #selection
+
+1. Open `app/utils/steel_utils.py`
+2. Select the entire `calculate_weight_kg` function
+3. In chat, type:
+   ```
+   #selection Explain this function step by step
+   ```
+
+**When to use:** Focused questions about specific code blocks
+
+#### Method 4: Drag and Drop
+
+1. From the file explorer, drag `app/routers/inventory.py` into Copilot Chat
+2. Ask: 
+   ```
+   What does this file do?
+   ```
+
+3. Drag the entire `routers` folder:
+   ```
+   What routes are defined in this folder?
+   ```
+
+**When to use:** Quick way to add context visually
+
+#### Context Best Practices
+
+**Be Specific:**
+- ❌ "Fix the bug" (no context)
+- ✅ `#file:inventory.py` "Fix the validation bug in create_product endpoint"
+
+**Use Multiple Context Methods:**
+```
+#file:models.py #selection Refactor this class to match the patterns in models.py
+```
+
+**Minimize Context for Focus:**
+- Close unnecessary files
+- Use `#file` instead of `#codebase` when possible
+- Select specific code blocks rather than whole files
+
+**Expected Outcome:**
+- Comfortable using #file, #codebase, #selection, drag-drop
+- Know when to use each method
+- Understand how context affects response quality
+
+---
+
+### Exercise 3.2: Tool Configuration in Agent Mode (6 min)
+
+**Task:** Learn to control which tools Copilot can use in Agent mode
+
+Agent mode can use various tools to complete tasks (reading files, editing code, searching, running terminal commands, etc.). You can configure which tools are available.
+
+#### Understanding Copilot Tools
+
+**Common tools available:**
+- **read** - Read files and folders
+- **edit** - Modify existing files
+- **search** - Search across the codebase
+- **create** - Create new files
+- **terminal** - Run terminal commands
+- **web** - Fetch information from the web (via MCP servers)
+- **agent** - Invoke other custom agents
+
+#### Step 1: View Available Tools
+
+1. Open Copilot Chat and switch to **Agent** mode
+2. Click the **gear icon** (Open Customizations) in the chat toolbar
+3. Select **Configure Tools** (or similar option)
+4. You'll see which tools are currently available to Agent mode
+
+#### Step 2: Restricting Tools in Prompts
+
+When you create custom prompts, you can restrict which tools they can use:
+
+```markdown
+---
+name: read-only-analysis
+description: Analyze code without making changes
+agent: agent
+tools: [read, search]  # Only allows reading and searching, no editing
+---
+Analyze the codebase for potential improvements.
+Do not make any changes, only provide recommendations.
+```
+
+**Why restrict tools?**
+- Safety: Prevent unintended file modifications
+- Focus: Force analysis-only mode
+- Control: Ensure specific workflows
+
+#### Step 3: Try Restricted vs Unrestricted
+
+1. **Unrestricted Agent (all tools):**
+   ```
+   #file:inventory.py Add logging to all CRUD operations
+   ```
+   - Agent can read AND edit the file
+   - Changes applied automatically
+
+2. **Restricted Agent (read-only):**
+   
+   Create a quick test prompt in chat:
+   ```
+   @agent[tools:read,search] #file:inventory.py 
+   Analyze what logging should be added to CRUD operations, but don't make changes
+   ```
+   - Agent can only read and analyze
+   - Provides recommendations without editing
+
+#### Step 4: Tool Configuration in Custom Agents
+
+Custom agents (`.agent.md` files) can also specify tools:
+
+```markdown
+---
+name: code-reviewer
+description: Reviews code without making changes
+tools: [read, search]  # No edit tool
+model: Claude Sonnet 4.5
+---
+Review code for issues and provide recommendations.
+Do not modify any files.
+```
+
+**Expected Outcome:**
+- Understanding of available Copilot tools
+- Know how to restrict tools in prompts
+- Recognize when to limit tools for safety or focus
+- Ability to configure tools in custom prompts and agents
+
+---
+
+### Exercise 3.3: Understanding Approval Modes (6 min)
+
+**Task:** Learn the three ways Copilot asks for permission to take actions
+
+When Copilot wants to take actions (edit files, run commands, access external services), it can operate in different approval modes.
+
+#### Three Approval Modes
+
+**1. Default Approval Mode** (Ask per action)
+- Copilot asks "Allow this action?" for each operation
+- You click "Allow" or "Deny" for each request
+- **Use when:** You want full control over every action
+- **Example:** First time using Agent mode, working with critical files
+
+**2. "Allow in This Session" Mode** (Batch approval)
+- After first approval, click "Allow in this session" 
+- Similar actions in the current chat don't require additional approval
+- Resets when you close VS Code or start a new chat
+- **Use when:** Performing repetitive similar actions (multiple edits, test generation)
+- **Example:** Generating tests for multiple functions
+
+**3. Autopilot Concept** (Automatic execution)
+- Copilot executes actions without stopping for approval
+- Typically enabled at workspace or user settings level
+- Most common in CLI workflows or when using specific tools
+- **Use when:** Fully automated workflows, trusted operations, CI/CD
+- **Example:** Automated test runs, documentation generation
+
+#### Step 1: Experience Default Approval
+
+1. Switch to **Agent** mode in Copilot Chat
+2. Give a task that requires editing:
+   ```
+   #file:steel_utils.py Add a docstring to the calculate_area_m2 function
+   ```
+3. Copilot will show what it plans to do
+4. You'll see buttons: **"Allow"** and **"Deny"**
+5. Click "Allow" to proceed with the single action
+
+#### Step 2: Experience Session Approval
+
+1. Still in Agent mode, give another editing task:
+   ```
+   #file:steel_utils.py Add a docstring to the calculate_weight_kg function
+   ```
+2. When the approval dialog appears, look for "Allow in this session" option
+3. Click **"Allow in this session"**
+4. Give another similar task:
+   ```
+   #file:steel_utils.py Add type hints to all function parameters
+   ```
+5. Notice: Fewer or no approval prompts for similar actions!
+
+#### Step 3: Understanding Autopilot (Conceptual)
+
+Autopilot mode is typically configured at a higher level and isn't a button you click in every chat. It's useful to understand for:
+
+**Where you might see autopilot:**
+- GitHub Copilot CLI (with `--allow-all-tools` flag)
+- Cloud agent workflows (GitHub issues assigned to Copilot)
+- Enterprise settings where certain tools are pre-approved
+
+**Key consideration:**
+- Trade-off between convenience and control
+- Use default approval when learning or with critical code
+- Use session approval for repetitive trusted tasks
+- Autopilot is for fully automated, well-tested workflows
+
+#### Step 4: Choosing the Right Approval Mode
+
+| Situation | Recommended Mode | Why |
+|-----------|-----------------|-----|
+| First time using Agent mode | Default | Learn what actions Copilot takes |
+| Refactoring critical code | Default | Review each change carefully |
+| Generating tests for multiple functions | Session | Avoid repetitive clicks |
+| Adding docstrings to all functions | Session | Similar safe operations |
+| Automated CI/CD workflows | Autopilot concept | No human in the loop |
+| Working in unfamiliar codebase | Default | Understand before approving |
+
+**Expected Outcome:**
+- Understanding of three approval modes
+- Experience with default and session approval
+- Know when to use each mode
+- Awareness of autopilot for advanced scenarios
+
+---
+
+### Exercise 3.4: Putting It All Together (6 min)
+
+**Task:** Combine context steering, tool configuration, and approval modes in a real workflow
+
+Let's implement a complete workflow using everything you've learned.
+
+#### Scenario: Add Input Validation to Multiple Endpoints
+
+You need to add validation to several API endpoints with full control over the process.
+
+#### Step 1: Set Up Context
+
+1. Close all open files to minimize context
+2. Open Copilot Chat in **Agent** mode
+3. Provide precise context:
+   ```
+   #file:inventory.py I need to add input validation to create_product and update_product endpoints.
+   
+   Validation requirements:
+   - Product code must match pattern STL-XXX (where X is digit)
+   - Quantity must be positive
+   - Thickness must be between 0.1 and 500mm
+   - Shape must be one of: sheet, plate, coil, bar, tube
+   ```
+
+#### Step 2: Review Plan First
+
+4. Before allowing changes, ask for a plan:
+   ```
+   First, show me what changes you'll make and which files you'll modify. Don't make changes yet.
+   ```
+5. Review Copilot's plan
+6. Verify it matches your intentions
+
+#### Step 3: Execute with Session Approval
+
+7. Once satisfied with the plan:
+   ```
+   Now implement these changes
+   ```
+8. When the first approval appears, click **"Allow in this session"**
+9. Watch as Copilot applies changes to multiple locations
+10. Review the changes in each file
+
+#### Step 4: Verify with Read-Only Analysis
+
+11. After changes are applied, verify with a restricted tool query:
+   ```
+   @agent[tools:read,search] #file:inventory.py 
+   
+   Review the validation I just added. Are there any edge cases I missed?
+   ```
+12. Copilot will analyze without making more changes
+13. Review recommendations
+
+#### Step 5: Test Your Workflow
+
+14. Start the development server:
+   ```bash
+   uvicorn app.main:app --reload
+   ```
+15. Open Swagger UI: http://localhost:8000/docs
+16. Try creating a product with invalid data:
+    - Invalid product code: "ABC-123"
+    - Negative quantity: -5
+    - Invalid shape: "circle"
+17. Verify validation errors appear
+
+#### Reflection Questions
+
+- **Context**: Did using `#file:inventory.py` keep Copilot focused on the right location?
+- **Tools**: Would read-only verification have been better before making changes?
+- **Approval**: Did "Allow in this session" save time while maintaining awareness?
+
+**Expected Outcome:**
+- Successfully combined context, tools, and approval modes
+- Implemented a real feature with controlled AI assistance
+- Understanding of how to orchestrate multiple customization concepts
+- Confidence in steering Copilot for production work
+
+---
+
+## Lab Summary
+
+Congratulations! You've learned to customize and steer GitHub Copilot for maximum productivity.
+
+### What You Accomplished
+
+**Part 1: Custom Instructions**
+- ✅ Created workspace-wide `.github/copilot-instructions.md` for persistent standards
+- ✅ Built file-based instructions with `applyTo` patterns for targeted guidance
+- ✅ Used Agent Customizations editor to manage instructions
+- ✅ Experienced automatic application of coding standards
+
+**Part 2: Custom Prompts**
+- ✅ Created reusable `.prompt.md` files for common tasks
+- ✅ Invoked prompts with `/` slash commands
+- ✅ Configured prompts with agent modes and tool restrictions
+- ✅ Understood when to use instructions vs prompts
+
+**Part 3: Steering Copilot**
+- ✅ Mastered context methods: #file, #codebase, #selection, drag-drop
+- ✅ Configured which tools Copilot can use
+- ✅ Experienced three approval modes: default, session, autopilot
+- ✅ Combined all concepts in a complete workflow
+
+### Key Takeaways
+
+**Custom Instructions = Passive "Always Do This"**
+- Automatically applied based on file patterns
+- Reduces repetitive context in prompts
+- Ensures consistency across all work
+
+**Custom Prompts = Active "Execute This Workflow"**
+- Explicitly invoked with slash commands
+- Standardizes common development tasks
+- Combines with instructions for best results
+
+**Steering = Precise Control**
+- Context determines what Copilot sees
+- Tools determine what Copilot can do
+- Approvals determine when Copilot needs permission
+
+### The Synergy
+
+These three concepts work together powerfully:
+
+1. **Instructions** provide the "how" (coding standards)
+2. **Prompts** provide the "what" (task templates)
+3. **Steering** provides the "where" and "when" (control)
+
+Example workflow:
+```
+/generate-tests [Prompt: what task]
+  ↓
+Uses test-conventions.instructions.md [Instructions: how to do it]
+  ↓
+With #file:utils.py [Context: where to look]
+  ↓
+tools: [read, edit] [Tools: what actions allowed]
+  ↓
+"Allow in this session" [Approval: when to proceed]
+  ↓
+= Consistent, efficient, controlled test generation!
+```
+
+---
+
+## Next Steps
+
+**Continue Building Your Customization Library:**
+1. Add more instructions for your specific domain
+2. Create prompts for your most common tasks
+3. Share your `.github/` folder with your team
+4. Refine based on what works in practice
+
+**Explore Advanced Topics:**
+- **MCP Servers** - Extend Copilot with external tools (GitHub, Playwright, databases)
+- **Custom Agents** - Build specialized agents with handoffs
+- **Agent Skills** - Create portable skill libraries following agentskills.io standard
+- **Copilot CLI** - Terminal-native workflows with plan mode and programmatic execution
+
+**Share With Your Team:**
+- Instructions, prompts, and agents can be committed to your repository
+- Team members automatically get the same standards
+- Evolve your customizations together over time
+
+---
+
+## Completion Checklist
+
+### Skills Mastered
+- [ ] Create workspace-wide instructions with `.github/copilot-instructions.md`
+- [ ] Create file-based instructions with `applyTo` patterns
+- [ ] Use Agent Customizations editor to manage instructions
+- [ ] Create custom prompts with YAML frontmatter
+- [ ] Invoke prompts with `/` slash commands
+- [ ] Configure agent modes and tools in prompts
+- [ ] Use #file, #codebase, #selection for context steering
+- [ ] Configure which tools Copilot can use
+- [ ] Understand default, session, and autopilot approval modes
+- [ ] Combine context, tools, and approvals in real workflows
+
+### Deliverables Created
+1. ✅ `.github/copilot-instructions.md` - Workspace standards
+2. ✅ `.github/instructions/router-conventions.instructions.md` - API patterns
+3. ✅ `.github/instructions/test-conventions.instructions.md` - Testing standards
+4. ✅ `.github/prompts/generate-tests.prompt.md` - Test generation workflow
+5. ✅ `.github/prompts/add-error-handling.prompt.md` - Error handling workflow
+6. ✅ `.github/prompts/document-endpoint.prompt.md` - Documentation workflow
+
+### Key Metrics
+- **Instructions Created:** 3 (1 always-on, 2 file-based)
+- **Prompts Created:** 3 reusable workflows
+- **Context Methods Mastered:** 4 (#file, #codebase, #selection, drag-drop)
+- **Approval Modes Understood:** 3 (default, session, autopilot)
+- **Time Investment:** 60 minutes
+- **Productivity Gain:** Permanent (instructions and prompts remain useful forever!)
+
+---
+
+**Well done!** You now have a customized GitHub Copilot setup tailored to your workflow and team standards. Keep building your library and sharing with others!
