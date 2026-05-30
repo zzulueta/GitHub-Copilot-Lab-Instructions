@@ -956,6 +956,7 @@ This prompt involves multiple tool calls: file editing (endpoint creation), file
    ```
    Execute the plan.
    ```
+   > Note: The agent may directly start implementing once the plan is complete.
    - You get the same experience as Bypass Approvals, but now the agent will also auto-respond to any clarifying questions without pausing for your input
 
 **What you learned:**
