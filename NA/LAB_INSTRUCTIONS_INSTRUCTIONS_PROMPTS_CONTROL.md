@@ -57,7 +57,7 @@ This lab teaches you how to **customize and steer GitHub Copilot** to match your
 
 ---
 
-## Part 1: Custom Instructions (18 minutes)
+## Part 1: Custom Instructions
 
 ### Introduction: Making Your Preferences Persistent
 
@@ -79,7 +79,7 @@ Custom Instructions are markdown files that provide **persistent context** to Co
 
 ---
 
-### Exercise 1.1: Create Always-On Workspace Instructions (6 min)
+### Exercise 1.1: Create Always-On Workspace Instructions
 
 **Task:** Define project-wide coding standards that apply to ALL Copilot interactions
 
@@ -144,7 +144,7 @@ Custom Instructions are markdown files that provide **persistent context** to Co
 
 ---
 
-### Exercise 1.2: Create File-Based Instructions with Patterns (8 min)
+### Exercise 1.2: Create File-Based Instructions with Patterns
 
 **Task:** Create specialized instructions that apply only to specific file types or locations
 
@@ -268,7 +268,7 @@ Custom Instructions are markdown files that provide **persistent context** to Co
 
 ---
 
-### Exercise 1.3: Use the Agent Customizations Editor (2 min)
+### Exercise 1.3: Use the Agent Customizations Editor 
 
 **Task:** Discover and manage instructions through the VS Code UI
 
@@ -344,7 +344,7 @@ Custom Instructions are markdown files that provide **persistent context** to Co
 
 ---
 
-## Part 2: Custom Prompts (18 minutes)
+## Part 2: Custom Prompts
 
 ### Introduction: Reusable Command Templates
 
@@ -370,7 +370,7 @@ Custom Prompts (also called slash commands) are **reusable templates** for commo
 
 ---
 
-### Exercise 2.1: Create Prompt Files for Common Tasks (9 min)
+### Exercise 2.1: Create Prompt Files for Common Tasks
 
 **Task:** Build a library of prompt files for development tasks
 
@@ -481,7 +481,7 @@ Custom Prompts (also called slash commands) are **reusable templates** for commo
 
 ---
 
-### Exercise 2.2: Use Prompt Files with Slash Commands (5 min)
+### Exercise 2.2: Use Prompt Files with Slash Commands
 
 **Task:** Invoke and use your custom prompt files
 
@@ -529,7 +529,7 @@ Custom Prompts (also called slash commands) are **reusable templates** for commo
 
 ---
 
-### Exercise 2.3: Use the Agent Customizations Editor for Prompts (2 min)
+### Exercise 2.3: Use the Agent Customizations Editor for Prompts
 
 **Task:** Manage prompt files through the VS Code UI
 
@@ -574,7 +574,7 @@ Custom Prompts (also called slash commands) are **reusable templates** for commo
 
 ---
 
-### Exercise 2.4: Instructions vs Prompts Decision Framework (2 min)
+### Exercise 2.4: Instructions vs Prompts Decision Framework
 
 **Task:** Understand when to use each customization type
 
@@ -617,7 +617,7 @@ Use **Both** when:
 
 ---
 
-## Part 3: Steering Copilot with Context and Permissions (24 minutes)
+## Part 3: Steering Copilot with Context and Permissions
 
 ### Introduction: Precise Control Over Copilot
 
@@ -629,7 +629,7 @@ Steering Copilot means giving it exactly the right context and controlling what 
 
 ---
 
-### Exercise 3.1: Context Steering Methods (6 min)
+### Exercise 3.1: Context Steering Methods
 
 **Task:** Master the different ways to provide context to Copilot
 
@@ -713,7 +713,7 @@ Context is how you tell Copilot what to focus on. The more precise your context,
 
 ---
 
-### Exercise 3.2: Tool Configuration in Agent Mode (6 min)
+### Exercise 3.2: Tool Configuration in Agent Mode
 
 **Task:** Learn to control which tools Copilot can use in Agent mode
 
@@ -759,7 +759,7 @@ Agent mode can use various tools to complete tasks (reading files, editing code,
 
 #### Step 3: Restricting Tools in Prompts
 
-When you create custom prompts, you can restrict which tools they can use. We demonstratded this in Exercise 2.1 when we created the prompt files. Here's a reminder of how to specify tools in the prompt frontmatter:
+When you create custom prompts, you can restrict which tools they can use. We demonstrated this in Exercise 2.1 when we created the prompt files. Here's a reminder of how to specify tools in the prompt frontmatter:
 
 ```markdown
 ---
@@ -808,7 +808,7 @@ Review the create_product endpoint for potential improvements.
 
 ---
 
-### Exercise 3.3: Understanding Permission Levels (10 min)
+### Exercise 3.3: Understanding Permission Levels
 
 **Task:** Learn how to control agent autonomy using the three permission levels in VS Code
 
@@ -852,7 +852,21 @@ You'll find the **permissions dropdown** in the Chat view, next to the chat inpu
 For the following steps, you'll use the **same prompt** with each permission level to directly compare their behavior:
 
 ```
-Create a new endpoint at GET /inventory/low-stock that returns products with quantity below 10. Add comprehensive tests for this endpoint. Then run the tests.
+Implement weight and dimension calculations for each steel shape (sheet, coil, plate, bar, tube) based on grade density. 
+
+Requirements:
+- Add density property to each steel grade (e.g., 304 stainless = 8000 kg/m³)
+- Create calculate_weight() method for each shape type
+- Use proper formulas:
+  - Sheet: length × width × thickness × density
+  - Coil: π × (outer_radius² - inner_radius²) × width × density
+  - Plate: length × width × thickness × density
+  - Bar: π × radius² × length × density (for round bars)
+  - Tube: π × (outer_radius² - inner_radius²) × length × density
+- Add these calculations to the SteelProduct model
+- Update the API responses to include calculated weight
+- Write comprehensive tests to verify calculation accuracy for each shape and grade
+- Run the tests and ensure they pass
 ```
 
 This prompt involves multiple tool calls: file editing (endpoint creation), file editing (test creation), and terminal command (running tests). You'll observe how each permission level handles these actions differently.
@@ -861,25 +875,35 @@ This prompt involves multiple tool calls: file editing (endpoint creation), file
 
 #### Step 1: Experience Default Approvals
 
-1. Open Copilot Chat and switch to **Agent** mode
-2. Locate the **permissions dropdown** in the chat input area (next to the input field)
+1. Open Copilot Chat and switch to **Agent** mode. Ensure all Built-In tools are enabled for the agent. Start a New Chat session.
+2. Locate the **permissions dropdown** in the chat input area
 3. Ensure **"Default Approvals"** is selected (this is the default)
 4. Enter the test prompt:
    ```
-   Create a new endpoint at GET /inventory/low-stock that returns products with quantity below 10. Add comprehensive tests for this endpoint. Then run the tests.
-   ```
-5. **Observe the approval dialogs:**
-   - First approval: Copilot asks to edit the inventory.py file to add the endpoint
-   - Click **"Allow"** to approve
-   - Second approval: Copilot asks to edit or create the test file
-   - Click **"Allow"** to approve
-   - Third approval: Copilot asks to run the test command in the terminal
-   - Click **"Allow"** to approve
-6. **After completion, UNDO the changes:**
-   - Use Ctrl+Z (or Cmd+Z on Mac) to undo the file edits
-   - Or reject the changes if using inline diff view
-   - Close any test terminals that were created
+   Implement weight and dimension calculations for each steel shape (sheet, coil, plate, bar, tube) based on grade density. 
 
+   Requirements:
+   - Add density property to each steel grade (e.g., 304 stainless = 8000 kg/m³)
+   - Create calculate_weight() method for each shape type
+   - Use proper formulas:
+   - Sheet: length × width × thickness × density
+   - Coil: π × (outer_radius² - inner_radius²) × width × density
+   - Plate: length × width × thickness × density
+   - Bar: π × radius² × length × density (for round bars)
+   - Tube: π × (outer_radius² - inner_radius²) × length × density
+   - Add these calculations to the SteelProduct model
+   - Update the API responses to include calculated weight
+   - Write comprehensive tests to verify calculation accuracy for each shape and grade
+   - Run the tests and ensure they pass
+   ```
+5. **Observe the approval required:**
+   - A pytest approval dialog appears before running tests
+   - Select "Allow" to approve the action
+   - The agent runs the tests and shows results in the terminal
+   
+6. **After completion, UNDO the changes:**
+   - Select **Undo** to undo the file edits
+   
 **What you learned:**
 - You reviewed and approved each individual action
 - Full visibility into what the agent is doing
@@ -889,23 +913,42 @@ This prompt involves multiple tool calls: file editing (endpoint creation), file
 
 #### Step 2: Experience Bypass Approvals
 
-1. Ensure you've undone all changes from Step 1 (check that the files are back to original state)
-2. In Copilot Chat (still in **Agent** mode), click the **permissions dropdown**
+1. Ensure you've undone all changes from Step 1 (check that the files are back to original state). Create a New Chat session.
+2. In Copilot Chat (select in **Plan** mode), click the **permissions dropdown**
 3. Select **"Bypass Approvals"** from the dropdown
-4. You'll see a confirmation warning about bypassing approvals - click to confirm
+4. You'll see a confirmation warning about bypassing approvals - click to Enable
 5. Enter the **same test prompt**:
    ```
-   Create a new endpoint at GET /inventory/low-stock that returns products with quantity below 10. Add comprehensive tests for this endpoint. Then run the tests.
+   Implement weight and dimension calculations for each steel shape (sheet, coil, plate, bar, tube) based on grade density. 
+
+   Requirements:
+   - Add density property to each steel grade (e.g., 304 stainless = 8000 kg/m³)
+   - Create calculate_weight() method for each shape type
+   - Use proper formulas:
+   - Sheet: length × width × thickness × density
+   - Coil: π × (outer_radius² - inner_radius²) × width × density
+   - Plate: length × width × thickness × density
+   - Bar: π × radius² × length × density (for round bars)
+   - Tube: π × (outer_radius² - inner_radius²) × length × density
+   - Add these calculations to the SteelProduct model
+   - Update the API responses to include calculated weight
+   - Write comprehensive tests to verify calculation accuracy for each shape and grade
+   - Run the tests and ensure they pass
    ```
-6. **Observe the automatic approvals:**
+6. **Observe that it asks for clarifying questions**. Select any of the choices to proceed with the Plan mode flow. 
+
+7. Once Plan mode completes, go to Agent mode and prompt:
+   ```
+   Execute the plan.
+   ```
    - No approval dialogs appear!
    - Copilot automatically edits files and runs terminal commands
    - Actions happen in rapid succession without stopping
    - The agent may still ask you clarifying questions if needed
    - You can click the **stop button** at any time to halt execution
-7. **After completion, UNDO the changes:**
-   - Use Ctrl+Z (or Cmd+Z on Mac) to undo the file edits
-   - Close any test terminals
+
+8. **After completion, UNDO the changes:**
+   - Select **Undo** to undo the file edits
 
 **What you learned:**
 - Actions proceed automatically without individual approvals
@@ -917,32 +960,40 @@ This prompt involves multiple tool calls: file editing (endpoint creation), file
 
 #### Step 3: Experience Autopilot (Preview)
 
-1. Ensure you've undone all changes from Step 2 (check that files are back to original state)
-2. In Copilot Chat (still in **Agent** mode), click the **permissions dropdown**
+1. Ensure you've undone all changes from Step 2 (check that files are back to original state). Start a New Chat session.
+2. In Copilot Chat (select in **Plan** mode), click the **permissions dropdown**
 3. Select **"Autopilot (Preview)"** from the dropdown
 4. You'll see a confirmation warning about fully autonomous operation - click to confirm
 5. Enter the **same test prompt**:
    ```
-   Create a new endpoint at GET /inventory/low-stock that returns products with quantity below 10. Add comprehensive tests for this endpoint. Then run the tests.
+   Implement weight and dimension calculations for each steel shape (sheet, coil, plate, bar, tube) based on grade density. 
+
+   Requirements:
+   - Add density property to each steel grade (e.g., 304 stainless = 8000 kg/m³)
+   - Create calculate_weight() method for each shape type
+   - Use proper formulas:
+   - Sheet: length × width × thickness × density
+   - Coil: π × (outer_radius² - inner_radius²) × width × density
+   - Plate: length × width × thickness × density
+   - Bar: π × radius² × length × density (for round bars)
+   - Tube: π × (outer_radius² - inner_radius²) × length × density
+   - Add these calculations to the SteelProduct model
+   - Update the API responses to include calculated weight
+   - Write comprehensive tests to verify calculation accuracy for each shape and grade
+   - Run the tests and ensure they pass
    ```
-6. **Observe the autonomous operation:**
-   - No approval dialogs appear
-   - **Copilot auto-responds to its own clarifying questions** (key difference!)
-   - The agent continues working in a loop until it determines the task is complete
-   - May make multiple iterations: create endpoint → create tests → run tests → fix issues → re-run
-   - Watch the chat for the agent's reasoning and decisions
-   - Notice the **continuous iteration** behavior
-   - You can click the **stop button** at any time to halt the autonomous loop
-7. **After completion, review the changes and then UNDO:**
-   - Review what the agent accomplished autonomously
-   - Use Ctrl+Z (or Cmd+Z on Mac) to undo the file edits
-   - Close any test terminals
+6. **Observe that it creates a plan without asking for clarifying questions**. 
+
+7. Once Plan mode completes, go to Agent mode and prompt:
+   ```
+   Execute the plan.
+   ```
+   - You get the same experience as Bypass Approvals, but now the agent will also auto-respond to any clarifying questions without pausing for your input
 
 **What you learned:**
 - Completely autonomous agent operation
 - Agent handles its own questions and continues until task completion
 - Multiple iterations and self-correction possible
-- Consumes multiple premium requests during autonomous work
 - Most powerful but least supervised mode
 
 ---
@@ -1002,88 +1053,6 @@ Based on your hands-on experience, here's when to use each permission level:
 - Knowledge of when to use each permission level
 - Awareness of tool approval management for granular control
 - Confidence choosing the appropriate permission level for different scenarios
-
----
-
-### Exercise 3.4: Putting It All Together (6 min)
-
-**Task:** Combine context steering, tool configuration, and approval modes in a real workflow
-
-Let's implement a complete workflow using everything you've learned.
-
-#### Scenario: Add Input Validation to Multiple Endpoints
-
-You need to add validation to several API endpoints with full control over the process.
-
-#### Step 1: Set Up Context
-
-1. Close all open files to minimize context
-2. Open Copilot Chat in **Agent** mode
-3. Provide precise context:
-   ```
-   #file:inventory.py I need to add input validation to create_product and update_product endpoints.
-   
-   Validation requirements:
-   - Product code must match pattern STL-XXX (where X is digit)
-   - Quantity must be positive
-   - Thickness must be between 0.1 and 500mm
-   - Shape must be one of: sheet, plate, coil, bar, tube
-   ```
-
-#### Step 2: Review Plan First
-
-4. Before allowing changes, ask for a plan:
-   ```
-   First, show me what changes you'll make and which files you'll modify. Don't make changes yet.
-   ```
-5. Review Copilot's plan
-6. Verify it matches your intentions
-
-#### Step 3: Execute with Session Approval
-
-7. Once satisfied with the plan:
-   ```
-   Now implement these changes
-   ```
-8. When the first approval appears, click **"Allow in this session"**
-9. Watch as Copilot applies changes to multiple locations
-10. Review the changes in each file
-
-#### Step 4: Verify with Read-Only Analysis
-
-11. After changes are applied, verify with a restricted tool query:
-   ```
-   @agent[tools:read,search] #file:inventory.py 
-   
-   Review the validation I just added. Are there any edge cases I missed?
-   ```
-12. Copilot will analyze without making more changes
-13. Review recommendations
-
-#### Step 5: Test Your Workflow
-
-14. Start the development server:
-   ```bash
-   uvicorn app.main:app --reload
-   ```
-15. Open Swagger UI: http://localhost:8000/docs
-16. Try creating a product with invalid data:
-    - Invalid product code: "ABC-123"
-    - Negative quantity: -5
-    - Invalid shape: "circle"
-17. Verify validation errors appear
-
-#### Reflection Questions
-
-- **Context**: Did using `#file:inventory.py` keep Copilot focused on the right location?
-- **Tools**: Would read-only verification have been better before making changes?
-- **Approval**: Did "Allow in this session" save time while maintaining awareness?
-
-**Expected Outcome:**
-- Successfully combined context, tools, and approval modes
-- Implemented a real feature with controlled AI assistance
-- Understanding of how to orchestrate multiple customization concepts
-- Confidence in steering Copilot for production work
 
 ---
 
