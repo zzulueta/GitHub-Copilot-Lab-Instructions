@@ -36,7 +36,7 @@ This lab teaches you how to **customize and steer GitHub Copilot** to match your
 - [ ] Invoke prompts with slash commands for instant productivity
 - [ ] Steer Copilot with precise context using #file, #codebase, and #selection
 - [ ] Configure which tools Copilot can use in Agent mode
-- [ ] Understand approval modes: default, session-based, and autopilot concepts
+- [ ] Understand approval modes: default, bypass, and autopilot concepts
 
 ### Why This Matters
 
@@ -314,7 +314,7 @@ Custom Instructions are markdown files that provide **persistent context** to Co
    
    In Ask mode, give a brief high-level request:
    ```
-   #file:inventory.py Add an endpoint to get low stock products below a threshold.
+   #file:inventory.py Add an endpoint to search products by steel grade.
    ```
    
    - No mention of type hints, docstrings, error handling, or response patterns
@@ -737,7 +737,7 @@ Agent mode can use various tools to complete tasks (reading files, editing code,
 2. Select **Configure Tools** beside the model selector
 3. You'll see which tools are currently available to Agent mode
 
-#### Step 3: Try Restricted vs Unrestricted
+#### Step 2: Try Restricted vs Unrestricted
 
 1. **Unrestricted Agent (all tools):**
 
@@ -799,6 +799,7 @@ Do not modify any files.
 ```
 Review the create_product endpoint for potential improvements.
 ```   
+- The agent will analyze the code and provide feedback without making changes
 
 **Expected Outcome:**
 - Understanding of available Copilot tools
@@ -808,90 +809,200 @@ Review the create_product endpoint for potential improvements.
 
 ---
 
-### Exercise 3.3: Understanding Approval Modes (6 min)
+### Exercise 3.3: Understanding Permission Levels (10 min)
 
-**Task:** Learn the three ways Copilot asks for permission to take actions
+**Task:** Learn how to control agent autonomy using the three permission levels in VS Code
 
-When Copilot wants to take actions (edit files, run commands, access external services), it can operate in different approval modes.
+When Copilot Agent wants to take actions (edit files, run commands, access external services), you control how much autonomy it has through the **permissions dropdown** in the chat input area. VS Code provides three permission levels that determine how tool calls and approvals are handled.
 
-#### Three Approval Modes
+#### Three Permission Levels
 
-**1. Default Approval Mode** (Ask per action)
-- Copilot asks "Allow this action?" for each operation
-- You click "Allow" or "Deny" for each request
-- **Use when:** You want full control over every action
-- **Example:** First time using Agent mode, working with critical files
+You'll find the **permissions dropdown** in the Chat view, next to the chat input field (look for the shield icon or dropdown selector). The permission level applies to the current chat session and can be changed at any time.
 
-**2. "Allow in This Session" Mode** (Batch approval)
-- After first approval, click "Allow in this session" 
-- Similar actions in the current chat don't require additional approval
-- Resets when you close VS Code or start a new chat
-- **Use when:** Performing repetitive similar actions (multiple edits, test generation)
-- **Example:** Generating tests for multiple functions
+**1. Default Approvals** (Manual control per action)
+- Uses your configured approval settings
+- Tools that require approval show a confirmation dialog before they run
+- You review and approve each action: "Allow", "Deny", or "Allow in this session"
+- The agent might ask clarifying questions if needed
+- **Use when:** First time using Agent mode, working with critical files, learning what actions Copilot takes
+- **Default setting:** New chat sessions start with this level by default
 
-**3. Autopilot Concept** (Automatic execution)
-- Copilot executes actions without stopping for approval
-- Typically enabled at workspace or user settings level
-- Most common in CLI workflows or when using specific tools
-- **Use when:** Fully automated workflows, trusted operations, CI/CD
-- **Example:** Automated test runs, documentation generation
+**2. Bypass Approvals** (Auto-approve with manual intervention option)
+- Auto-approves all tool calls without showing confirmation dialogs
+- Automatically retries on errors
+- The agent might still ask clarifying questions if needed
+- You can stop the agent at any time by clicking the stop button
+- **Use when:** Performing repetitive trusted tasks, working in a safe environment with version control
+- ⚠️ **Security Warning:** Bypasses manual approval prompts, including for potentially destructive actions like file edits and terminal commands. Only use if you understand the security implications.
 
-#### Step 1: Experience Default Approval
+**3. Autopilot (Preview)** (Fully autonomous operation)
+- Auto-approves all tool calls without confirmation dialogs
+- **Auto-responds to clarifying questions** (key difference from Bypass Approvals)
+- Continues working autonomously until it determines the task is complete (continuous iteration)
+- Automatically retries when it encounters errors
+- Consumes multiple premium requests as the agent continues working
+- **Use when:** Fully automated workflows, well-scoped tasks, trusted operations
+- ⚠️ **Security Warning:** Removes all manual intervention points. The agent works completely autonomously. Only use in controlled environments.
 
-1. Switch to **Agent** mode in Copilot Chat
-2. Give a task that requires editing:
+> **Tip:** To persist your preferred permission level across sessions, configure the `chat.permissions.default` setting in VS Code.
+
+---
+
+#### The Test Prompt
+
+For the following steps, you'll use the **same prompt** with each permission level to directly compare their behavior:
+
+```
+Create a new endpoint at GET /inventory/low-stock that returns products with quantity below 10. Add comprehensive tests for this endpoint. Then run the tests.
+```
+
+This prompt involves multiple tool calls: file editing (endpoint creation), file editing (test creation), and terminal command (running tests). You'll observe how each permission level handles these actions differently.
+
+---
+
+#### Step 1: Experience Default Approvals
+
+1. Open Copilot Chat and switch to **Agent** mode
+2. Locate the **permissions dropdown** in the chat input area (next to the input field)
+3. Ensure **"Default Approvals"** is selected (this is the default)
+4. Enter the test prompt:
    ```
-   #file:steel_utils.py Add a docstring to the calculate_area_m2 function
+   Create a new endpoint at GET /inventory/low-stock that returns products with quantity below 10. Add comprehensive tests for this endpoint. Then run the tests.
    ```
-3. Copilot will show what it plans to do
-4. You'll see buttons: **"Allow"** and **"Deny"**
-5. Click "Allow" to proceed with the single action
+5. **Observe the approval dialogs:**
+   - First approval: Copilot asks to edit the inventory.py file to add the endpoint
+   - Click **"Allow"** to approve
+   - Second approval: Copilot asks to edit or create the test file
+   - Click **"Allow"** to approve
+   - Third approval: Copilot asks to run the test command in the terminal
+   - Click **"Allow"** to approve
+6. **After completion, UNDO the changes:**
+   - Use Ctrl+Z (or Cmd+Z on Mac) to undo the file edits
+   - Or reject the changes if using inline diff view
+   - Close any test terminals that were created
 
-#### Step 2: Experience Session Approval
+**What you learned:**
+- You reviewed and approved each individual action
+- Full visibility into what the agent is doing
+- Complete control over which actions proceed
 
-1. Still in Agent mode, give another editing task:
+---
+
+#### Step 2: Experience Bypass Approvals
+
+1. Ensure you've undone all changes from Step 1 (check that the files are back to original state)
+2. In Copilot Chat (still in **Agent** mode), click the **permissions dropdown**
+3. Select **"Bypass Approvals"** from the dropdown
+4. You'll see a confirmation warning about bypassing approvals - click to confirm
+5. Enter the **same test prompt**:
    ```
-   #file:steel_utils.py Add a docstring to the calculate_weight_kg function
+   Create a new endpoint at GET /inventory/low-stock that returns products with quantity below 10. Add comprehensive tests for this endpoint. Then run the tests.
    ```
-2. When the approval dialog appears, look for "Allow in this session" option
-3. Click **"Allow in this session"**
-4. Give another similar task:
+6. **Observe the automatic approvals:**
+   - No approval dialogs appear!
+   - Copilot automatically edits files and runs terminal commands
+   - Actions happen in rapid succession without stopping
+   - The agent may still ask you clarifying questions if needed
+   - You can click the **stop button** at any time to halt execution
+7. **After completion, UNDO the changes:**
+   - Use Ctrl+Z (or Cmd+Z on Mac) to undo the file edits
+   - Close any test terminals
+
+**What you learned:**
+- Actions proceed automatically without individual approvals
+- Faster workflow for trusted operations
+- You can still stop execution at any time
+- The agent may pause for clarifying questions
+
+---
+
+#### Step 3: Experience Autopilot (Preview)
+
+1. Ensure you've undone all changes from Step 2 (check that files are back to original state)
+2. In Copilot Chat (still in **Agent** mode), click the **permissions dropdown**
+3. Select **"Autopilot (Preview)"** from the dropdown
+4. You'll see a confirmation warning about fully autonomous operation - click to confirm
+5. Enter the **same test prompt**:
    ```
-   #file:steel_utils.py Add type hints to all function parameters
+   Create a new endpoint at GET /inventory/low-stock that returns products with quantity below 10. Add comprehensive tests for this endpoint. Then run the tests.
    ```
-5. Notice: Fewer or no approval prompts for similar actions!
+6. **Observe the autonomous operation:**
+   - No approval dialogs appear
+   - **Copilot auto-responds to its own clarifying questions** (key difference!)
+   - The agent continues working in a loop until it determines the task is complete
+   - May make multiple iterations: create endpoint → create tests → run tests → fix issues → re-run
+   - Watch the chat for the agent's reasoning and decisions
+   - Notice the **continuous iteration** behavior
+   - You can click the **stop button** at any time to halt the autonomous loop
+7. **After completion, review the changes and then UNDO:**
+   - Review what the agent accomplished autonomously
+   - Use Ctrl+Z (or Cmd+Z on Mac) to undo the file edits
+   - Close any test terminals
 
-#### Step 3: Understanding Autopilot (Conceptual)
+**What you learned:**
+- Completely autonomous agent operation
+- Agent handles its own questions and continues until task completion
+- Multiple iterations and self-correction possible
+- Consumes multiple premium requests during autonomous work
+- Most powerful but least supervised mode
 
-Autopilot mode is typically configured at a higher level and isn't a button you click in every chat. It's useful to understand for:
+---
 
-**Where you might see autopilot:**
-- GitHub Copilot CLI (with `--allow-all-tools` flag)
-- Cloud agent workflows (GitHub issues assigned to Copilot)
-- Enterprise settings where certain tools are pre-approved
+#### Step 4: Tool Approval Management (Optional Advanced)
 
-**Key consideration:**
-- Trade-off between convenience and control
-- Use default approval when learning or with critical code
-- Use session approval for repetitive trusted tasks
-- Autopilot is for fully automated, well-tested workflows
+Beyond permission levels, you can configure **which specific tools** are pre-approved or always require confirmation.
 
-#### Step 4: Choosing the Right Approval Mode
+1. Open the Command Palette (Ctrl+Shift+P or Cmd+Shift+P)
+2. Run: **"Chat: Manage Tool Approval"**
+3. **Explore the tool approval interface:**
+   - See all available tools grouped by source (MCP servers, extensions, built-in)
+   - Notice two types of approvals for each tool:
+     - **Pre-approval** ("without approval"): Skip confirmation dialog before tool runs
+     - **Post-approval** ("without reviewing result"): Skip reviewing tool output before adding to context
+   - You can trust all tools from a specific source, or configure individual tools
+4. **Example configurations:**
+   - Trust all file read operations without approval
+   - Always require approval for terminal commands
+   - Auto-approve web fetch tools but always review their results
+5. **Close the tool approval interface** (don't make changes unless you want to experiment)
 
-| Situation | Recommended Mode | Why |
-|-----------|-----------------|-----|
-| First time using Agent mode | Default | Learn what actions Copilot takes |
-| Refactoring critical code | Default | Review each change carefully |
-| Generating tests for multiple functions | Session | Avoid repetitive clicks |
-| Adding docstrings to all functions | Session | Similar safe operations |
-| Automated CI/CD workflows | Autopilot concept | No human in the loop |
-| Working in unfamiliar codebase | Default | Understand before approving |
+**What you learned:**
+- Granular control over individual tool permissions
+- Pre-approval vs. post-approval distinction
+- How to trust tools from specific sources
+- Additional layer of control beyond permission levels
+
+---
+
+#### Step 5: Choosing the Right Permission Level
+
+Based on your hands-on experience, here's when to use each permission level:
+
+| Situation | Recommended Level | Why |
+|-----------|------------------|-----|
+| First time using Agent mode | Default Approvals | Learn what actions Copilot takes, build trust |
+| Refactoring critical code | Default Approvals | Review each change carefully before applying |
+| Working with unfamiliar codebase | Default Approvals | Understand the agent's decisions before approving |
+| Generating tests for multiple functions | Bypass Approvals | Avoid repetitive clicks for similar safe operations |
+| Adding documentation to many files | Bypass Approvals | Streamline repetitive tasks with version control safety net |
+| Complex multi-step task in safe environment | Autopilot (Preview) | Let agent work through iterations autonomously |
+| Automated CI/CD workflows | Autopilot (Preview) | No human in the loop, fully automated |
+| Experimenting with new features | Default Approvals | Stay in control while exploring capabilities |
+
+**Key Decision Factors:**
+- **Risk level:** Higher risk = Default Approvals
+- **Repetitiveness:** Many similar actions = Bypass Approvals or Autopilot
+- **Complexity:** Multi-step tasks requiring iteration = Autopilot
+- **Trust level:** Building trust = Default Approvals; Established trust = Bypass/Autopilot
+- **Environment:** Production or critical = Default; Development with version control = Bypass/Autopilot
 
 **Expected Outcome:**
-- Understanding of three approval modes
-- Experience with default and session approval
-- Know when to use each mode
-- Awareness of autopilot for advanced scenarios
+- Hands-on experience with all three permission levels using the same task
+- Understanding of the permissions dropdown UI in VS Code
+- Direct comparison of approval behaviors (manual, auto-approve, fully autonomous)
+- Knowledge of when to use each permission level
+- Awareness of tool approval management for granular control
+- Confidence choosing the appropriate permission level for different scenarios
 
 ---
 
