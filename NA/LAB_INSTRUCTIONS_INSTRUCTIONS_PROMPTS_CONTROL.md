@@ -917,7 +917,7 @@ This prompt involves multiple tool calls: file editing (endpoint creation), file
    ```
    Enter the test prompt from above
    ```
-6. **Observe that it asks for clarifying questions** similar to Default Approval. Select any of the choices to proceed with the Plan mode flow. 
+6. **Observe that it asks for clarifying questions** similar to Default Approvals. Select any of the choices to proceed with the Plan mode flow. 
 
 7. Once Plan mode completes, go to Agent mode and prompt:
    ```
@@ -945,7 +945,7 @@ This prompt involves multiple tool calls: file editing (endpoint creation), file
 1. Ensure you've undone all changes from Step 2 (check that files are back to original state). Start a New Chat session.
 2. In Copilot Chat (select in **Plan** mode), click the **permissions dropdown**
 3. Select **"Autopilot (Preview)"** from the dropdown
-4. You'll see a confirmation warning about fully autonomous operation - click to confirm
+4. You may see a confirmation warning about fully autonomous operation - click to confirm
 5. Enter the **same test prompt**:
    ```
    Enter the test prompt from above
@@ -994,19 +994,6 @@ Beyond permission levels, you can configure **which specific tools** are pre-app
 
 #### Step 5: Choosing the Right Permission Level
 
-Based on your hands-on experience, here's when to use each permission level:
-
-| Situation | Recommended Level | Why |
-|-----------|------------------|-----|
-| First time using Agent mode | Default Approvals | Learn what actions Copilot takes, build trust |
-| Refactoring critical code | Default Approvals | Review each change carefully before applying |
-| Working with unfamiliar codebase | Default Approvals | Understand the agent's decisions before approving |
-| Generating tests for multiple functions | Bypass Approvals | Avoid repetitive clicks for similar safe operations |
-| Adding documentation to many files | Bypass Approvals | Streamline repetitive tasks with version control safety net |
-| Complex multi-step task in safe environment | Autopilot (Preview) | Let agent work through iterations autonomously |
-| Automated CI/CD workflows | Autopilot (Preview) | No human in the loop, fully automated |
-| Experimenting with new features | Default Approvals | Stay in control while exploring capabilities |
-
 **Key Decision Factors:**
 - **Risk level:** Higher risk = Default Approvals
 - **Repetitiveness:** Many similar actions = Bypass Approvals or Autopilot
@@ -1017,7 +1004,7 @@ Based on your hands-on experience, here's when to use each permission level:
 **Expected Outcome:**
 - Hands-on experience with all three permission levels using the same task
 - Understanding of the permissions dropdown UI in VS Code
-- Direct comparison of approval behaviors (manual, auto-approve, fully autonomous)
+- Direct comparison of approval behaviors (default, bypass, autopilot)
 - Knowledge of when to use each permission level
 - Awareness of tool approval management for granular control
 - Confidence choosing the appropriate permission level for different scenarios
@@ -1083,31 +1070,10 @@ With #file:utils.py [Context: where to look]
   ↓
 tools: [read, edit] [Tools: what actions allowed]
   ↓
-"Allow in this session" [Approval: when to proceed]
+"Default Approvals" [Approval: when to proceed]
   ↓
 = Consistent, efficient, controlled test generation!
 ```
-
----
-
-## Next Steps
-
-**Continue Building Your Customization Library:**
-1. Add more instructions for your specific domain
-2. Create prompts for your most common tasks
-3. Share your `.github/` folder with your team
-4. Refine based on what works in practice
-
-**Explore Advanced Topics:**
-- **MCP Servers** - Extend Copilot with external tools (GitHub, Playwright, databases)
-- **Custom Agents** - Build specialized agents with handoffs
-- **Agent Skills** - Create portable skill libraries following agentskills.io standard
-- **Copilot CLI** - Terminal-native workflows with plan mode and programmatic execution
-
-**Share With Your Team:**
-- Instructions, prompts, and agents can be committed to your repository
-- Team members automatically get the same standards
-- Evolve your customizations together over time
 
 ---
 
@@ -1132,14 +1098,6 @@ tools: [read, edit] [Tools: what actions allowed]
 4. ✅ `.github/prompts/generate-tests.prompt.md` - Test generation workflow
 5. ✅ `.github/prompts/add-error-handling.prompt.md` - Error handling workflow
 6. ✅ `.github/prompts/document-endpoint.prompt.md` - Documentation workflow
-
-### Key Metrics
-- **Instructions Created:** 3 (1 always-on, 2 file-based)
-- **Prompts Created:** 3 reusable workflows
-- **Context Methods Mastered:** 4 (#file, #codebase, #selection, drag-drop)
-- **Approval Modes Understood:** 3 (default, bypass, autopilot)
-- **Time Investment:** 60 minutes
-- **Productivity Gain:** Permanent (instructions and prompts remain useful forever!)
 
 ---
 
