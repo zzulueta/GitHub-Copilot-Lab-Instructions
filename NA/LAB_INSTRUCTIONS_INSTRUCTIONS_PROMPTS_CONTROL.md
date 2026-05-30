@@ -917,13 +917,13 @@ This prompt involves multiple tool calls: file editing (endpoint creation), file
    ```
    Enter the test prompt from above
    ```
-6. **Observe that it asks for clarifying questions**. Select any of the choices to proceed with the Plan mode flow. 
+6. **Observe that it asks for clarifying questions** similar to Default Approval. Select any of the choices to proceed with the Plan mode flow. 
 
 7. Once Plan mode completes, go to Agent mode and prompt:
    ```
    Execute the plan.
    ```
-   - No approval dialogs appear!
+   - No approval dialogs appear.
    - Copilot automatically edits files and runs terminal commands
    - Actions happen in rapid succession without stopping
    - The agent may still ask you clarifying questions if needed
