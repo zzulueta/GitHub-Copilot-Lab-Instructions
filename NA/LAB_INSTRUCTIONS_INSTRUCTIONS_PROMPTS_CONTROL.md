@@ -4,19 +4,24 @@
 
 ---
 
-## Prerequisites
+## Pre-Lab Setup
 
-**Before starting this lab, you should have:**
-- ✅ Basic experience with GitHub Copilot Chat and inline suggestions
-- ✅ Understanding of how to use #file, #codebase, and context selection
-- ✅ Familiarity with Copilot's Ask and Agent modes
-- ✅ The steel-inventory-api application set up and running
+### 1. Prerequisites
+- GitHub Copilot license activated
+- VS Code with GitHub Copilot extensions installed
+- Python 3.9+ installed
+- Git configured
 
-**If you're new to GitHub Copilot**, complete the Basic Lab first to learn fundamental concepts like:
-- How to use Copilot Chat modes
-- Providing context with #file and #codebase
-- Model selection
-- Basic code generation
+### 2. Verify Setup
+Check that the steel inventory API is working. In your terminal, navigate to the project directory and start the API:
+```bash
+cd steel-inventory-api
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+uvicorn app.main:app --reload
+```
+Visit http://localhost:8000/docs - you should see the API documentation.
 
 ---
 
@@ -80,10 +85,9 @@ Custom Instructions are markdown files that provide **persistent context** to Co
 
 1. **Create the instructions file:**
    
-   Create a new file: `.github/copilot-instructions.md` in your workspace root
+   Create a new directory `.github` in your workspace root. Then create a file named `copilot-instructions.md` inside the `.github` folder:
+   ```
    
-   **Tip:** You can use the slash command `/instructions` in Copilot Chat to quickly access the instructions editor.
-
 2. **Add comprehensive project instructions:**
    
    Copy this content then **SAVE** the file:
@@ -377,8 +381,6 @@ Custom Prompts (also called slash commands) are **reusable templates** for commo
    
    Create directory: `.github/prompts/` in your workspace root
    
-   **Tip:** You can use the slash command `/prompts` in Copilot Chat to quickly access the prompts editor.
-
 2. **Create "Generate Tests" prompt:**
    
    Create file: `.github/prompts/generate-tests.prompt.md`
@@ -636,7 +638,7 @@ Context is how you tell Copilot what to focus on. The more precise your context,
 
 #### Method 1: Using #file
 
-1. Open Copilot Chat and type `#file` - you'll see a list of files
+1. Open Copilot Chat in Ask mode
 2. Select specific files to include:
    ```
    #file:models.py Explain the SteelProduct class
@@ -724,21 +726,41 @@ Agent mode can use various tools to complete tasks (reading files, editing code,
 - **read** - Read files and folders
 - **edit** - Modify existing files
 - **search** - Search across the codebase
-- **create** - Create new files
-- **terminal** - Run terminal commands
+- **createFile** - Create new files
+- **execute** - Run terminal commands
 - **web** - Fetch information from the web (via MCP servers)
 - **agent** - Invoke other custom agents
 
 #### Step 1: View Available Tools
 
 1. Open Copilot Chat and switch to **Agent** mode
-2. Click the **gear icon** (Open Customizations) in the chat toolbar
-3. Select **Configure Tools** (or similar option)
-4. You'll see which tools are currently available to Agent mode
+2. Select **Configure Tools** beside the model selector
+3. You'll see which tools are currently available to Agent mode
 
-#### Step 2: Restricting Tools in Prompts
+#### Step 3: Try Restricted vs Unrestricted
 
-When you create custom prompts, you can restrict which tools they can use:
+1. **Unrestricted Agent (all tools):**
+
+   Enter the following prompt:
+   ```
+   #file:inventory.py Add logging to all CRUD operations
+   ```
+   - Agent can read AND edit the file
+   - Changes applied automatically
+   - Undo the changes after reviewing to keep the file clean
+
+2. **Restricted Agent (read-only):**
+   
+   Remove all tools except "read" and "search" from the tool configuration for Agent mode. Then enter the same prompt but with tool restrictions:
+   ```
+   #file:inventory.py Add logging to all CRUD operations
+   ```
+   - Agent can only read and analyze
+   - Provides recommendations without editing
+
+#### Step 3: Restricting Tools in Prompts
+
+When you create custom prompts, you can restrict which tools they can use. We demonstratded this in Exercise 2.1 when we created the prompt files. Here's a reminder of how to specify tools in the prompt frontmatter:
 
 ```markdown
 ---
@@ -756,28 +778,11 @@ Do not make any changes, only provide recommendations.
 - Focus: Force analysis-only mode
 - Control: Ensure specific workflows
 
-#### Step 3: Try Restricted vs Unrestricted
-
-1. **Unrestricted Agent (all tools):**
-   ```
-   #file:inventory.py Add logging to all CRUD operations
-   ```
-   - Agent can read AND edit the file
-   - Changes applied automatically
-
-2. **Restricted Agent (read-only):**
-   
-   Create a quick test prompt in chat:
-   ```
-   @agent[tools:read,search] #file:inventory.py 
-   Analyze what logging should be added to CRUD operations, but don't make changes
-   ```
-   - Agent can only read and analyze
-   - Provides recommendations without editing
-
 #### Step 4: Tool Configuration in Custom Agents
 
-Custom agents (`.agent.md` files) can also specify tools:
+Custom agents (`.agent.md` files) can also specify tools. We can create a custom agent that acts as a code reviewer, only allowed to read and search.
+
+1. Create a directory `.github/agents/` and a file `code-reviewer.agent.md` with the following content:
 
 ```markdown
 ---
@@ -789,6 +794,11 @@ model: Claude Sonnet 4.5
 Review code for issues and provide recommendations.
 Do not modify any files.
 ```
+
+2. In Copilot Chat, select the `code-reviewer` agent and give it a prompt:
+```
+Review the create_product endpoint for potential improvements.
+```   
 
 **Expected Outcome:**
 - Understanding of available Copilot tools
