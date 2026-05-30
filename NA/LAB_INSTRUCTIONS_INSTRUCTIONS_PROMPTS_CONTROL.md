@@ -305,7 +305,7 @@ Custom Instructions are markdown files that provide **persistent context** to Co
 
 ---
 
-### Exercise 1.4: Instructions in Practice (2 min)
+### Exercise 1.4: Instructions in Practice
 
 **Task:** Experience the power of "set it and forget it" context
 
@@ -757,6 +757,12 @@ Agent mode can use various tools to complete tasks (reading files, editing code,
    - Agent can only read and analyze
    - Provides recommendations without editing
 
+3. **Compare the difference:**
+   - Unrestricted agent made changes directly
+   - Restricted agent provided analysis and recommendations without changing code
+
+4. Configure the tools back to the original settings after testing.
+
 #### Step 3: Restricting Tools in Prompts
 
 When you create custom prompts, you can restrict which tools they can use. We demonstrated this in Exercise 2.1 when we created the prompt files. Here's a reminder of how to specify tools in the prompt frontmatter:
@@ -875,33 +881,23 @@ This prompt involves multiple tool calls: file editing (endpoint creation), file
 
 #### Step 1: Experience Default Approvals
 
-1. Open Copilot Chat and switch to **Agent** mode. Ensure all Built-In tools are enabled for the agent. Start a New Chat session.
+1. Open Copilot Chat and switch to **Plan** mode. Start a New Chat session.
 2. Locate the **permissions dropdown** in the chat input area
 3. Ensure **"Default Approvals"** is selected (this is the default)
 4. Enter the test prompt:
    ```
-   Implement weight and dimension calculations for each steel shape (sheet, coil, plate, bar, tube) based on grade density. 
-
-   Requirements:
-   - Add density property to each steel grade (e.g., 304 stainless = 8000 kg/m³)
-   - Create calculate_weight() method for each shape type
-   - Use proper formulas:
-   - Sheet: length × width × thickness × density
-   - Coil: π × (outer_radius² - inner_radius²) × width × density
-   - Plate: length × width × thickness × density
-   - Bar: π × radius² × length × density (for round bars)
-   - Tube: π × (outer_radius² - inner_radius²) × length × density
-   - Add these calculations to the SteelProduct model
-   - Update the API responses to include calculated weight
-   - Write comprehensive tests to verify calculation accuracy for each shape and grade
-   - Run the tests and ensure they pass
+   Enter the test prompt from above
    ```
-5. **Observe the approval required:**
+5. **Observe that it asks for clarifying questions**. Select any of the choices to proceed with the Plan mode flow. 
+6. Once Plan mode completes, go to Agent mode and prompt:
+   ```
+   Execute the plan.
+   ```
    - A pytest approval dialog appears before running tests
    - Select "Allow" to approve the action
    - The agent runs the tests and shows results in the terminal
    
-6. **After completion, UNDO the changes:**
+7. **After completion, UNDO the changes:**
    - Select **Undo** to undo the file edits
    
 **What you learned:**
@@ -919,21 +915,7 @@ This prompt involves multiple tool calls: file editing (endpoint creation), file
 4. You'll see a confirmation warning about bypassing approvals - click to Enable
 5. Enter the **same test prompt**:
    ```
-   Implement weight and dimension calculations for each steel shape (sheet, coil, plate, bar, tube) based on grade density. 
-
-   Requirements:
-   - Add density property to each steel grade (e.g., 304 stainless = 8000 kg/m³)
-   - Create calculate_weight() method for each shape type
-   - Use proper formulas:
-   - Sheet: length × width × thickness × density
-   - Coil: π × (outer_radius² - inner_radius²) × width × density
-   - Plate: length × width × thickness × density
-   - Bar: π × radius² × length × density (for round bars)
-   - Tube: π × (outer_radius² - inner_radius²) × length × density
-   - Add these calculations to the SteelProduct model
-   - Update the API responses to include calculated weight
-   - Write comprehensive tests to verify calculation accuracy for each shape and grade
-   - Run the tests and ensure they pass
+   Enter the test prompt from above
    ```
 6. **Observe that it asks for clarifying questions**. Select any of the choices to proceed with the Plan mode flow. 
 
@@ -966,21 +948,7 @@ This prompt involves multiple tool calls: file editing (endpoint creation), file
 4. You'll see a confirmation warning about fully autonomous operation - click to confirm
 5. Enter the **same test prompt**:
    ```
-   Implement weight and dimension calculations for each steel shape (sheet, coil, plate, bar, tube) based on grade density. 
-
-   Requirements:
-   - Add density property to each steel grade (e.g., 304 stainless = 8000 kg/m³)
-   - Create calculate_weight() method for each shape type
-   - Use proper formulas:
-   - Sheet: length × width × thickness × density
-   - Coil: π × (outer_radius² - inner_radius²) × width × density
-   - Plate: length × width × thickness × density
-   - Bar: π × radius² × length × density (for round bars)
-   - Tube: π × (outer_radius² - inner_radius²) × length × density
-   - Add these calculations to the SteelProduct model
-   - Update the API responses to include calculated weight
-   - Write comprehensive tests to verify calculation accuracy for each shape and grade
-   - Run the tests and ensure they pass
+   Enter the test prompt from above
    ```
 6. **Observe that it creates a plan without asking for clarifying questions**. 
 
@@ -1077,7 +1045,7 @@ Congratulations! You've learned to customize and steer GitHub Copilot for maximu
 **Part 3: Steering Copilot**
 - ✅ Mastered context methods: #file, #codebase, #selection, drag-drop
 - ✅ Configured which tools Copilot can use
-- ✅ Experienced three approval modes: default, session, autopilot
+- ✅ Experienced three approval modes: default, bypass, autopilot
 - ✅ Combined all concepts in a complete workflow
 
 ### Key Takeaways
@@ -1154,7 +1122,7 @@ tools: [read, edit] [Tools: what actions allowed]
 - [ ] Configure agent modes and tools in prompts
 - [ ] Use #file, #codebase, #selection for context steering
 - [ ] Configure which tools Copilot can use
-- [ ] Understand default, session, and autopilot approval modes
+- [ ] Understand default, bypass, and autopilot approval modes
 - [ ] Combine context, tools, and approvals in real workflows
 
 ### Deliverables Created
@@ -1169,7 +1137,7 @@ tools: [read, edit] [Tools: what actions allowed]
 - **Instructions Created:** 3 (1 always-on, 2 file-based)
 - **Prompts Created:** 3 reusable workflows
 - **Context Methods Mastered:** 4 (#file, #codebase, #selection, drag-drop)
-- **Approval Modes Understood:** 3 (default, session, autopilot)
+- **Approval Modes Understood:** 3 (default, bypass, autopilot)
 - **Time Investment:** 60 minutes
 - **Productivity Gain:** Permanent (instructions and prompts remain useful forever!)
 
