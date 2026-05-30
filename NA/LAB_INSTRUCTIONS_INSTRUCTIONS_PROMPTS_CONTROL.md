@@ -85,8 +85,7 @@ Custom Instructions are markdown files that provide **persistent context** to Co
 
 1. **Create the instructions file:**
    
-   Create a new directory `.github` in your workspace root. Then create a file named `copilot-instructions.md` inside the `.github` folder:
-   ```
+   Create a new directory `.github` in your workspace root. Then create a file named `copilot-instructions.md` inside the `.github` folder.
    
 2. **Add comprehensive project instructions:**
    
